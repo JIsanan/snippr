@@ -1,0 +1,17 @@
+// fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+$display-font: 'Roboto Slab';
+$body-font: 'Source Sans Pro', sans-serif;
+
+// colors
+$black: #222222;
+$white: #ffffff;
+
+// screen widths
+$mobile-small: "screen and (max-width: 360px)";
+$mobile: "screen and (max-width: 576px)";
+$tablet: "screen and (max-width: 768px)";
+$laptop: "screen and (max-width: 1024px)";
+$laptop-medium: "screen and (max-width: 1200px)";
+$laptop-large: "screen and (max-width: 1440px)";
+$hi-res: "screen and (max-width: 2560px)";
