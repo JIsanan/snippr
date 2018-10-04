@@ -26,8 +26,8 @@ export default {
             test: /\.js$/,
             loader: 'babel-loader'
         }, {
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
+            test:/\.(s*)css$/,
+            use:['style-loader','css-loader', 'sass-loader']
         }, {
             test: /\.(png|jpe?g|gif|svg)$/,
             loader: 'url-loader',
