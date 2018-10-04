@@ -5,7 +5,7 @@ import EventBusCallbacks from './plugins/event-bus-callbacks';
 
 import eventBus from './lib/event-bus';
 import App from './components/App.vue';
-import './stylesheets/index.css';
+require('./stylesheets/index.scss');
 
 router.beforeEach((to, from, next) => {
     const isLoggedIn = store.getters['auth/isLoggedIn'];
