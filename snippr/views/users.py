@@ -22,6 +22,6 @@ class RegistrationViews(ViewSet):
 		x = UserSerializer(data=obj)
 		res = {"message": "Please input correct credentials",}
 		if x.is_valid() is True:
-			x.save()
+			user = x.save()
 			res['message'] = "Successfully registered"
 		return Response(res)
