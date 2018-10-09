@@ -22,6 +22,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', users.UserViews, base_name="users")
 router.register(r'register', users.RegistrationViews, base_name="register")
+router.register(r'login', users.LoginViews, base_name="login")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
