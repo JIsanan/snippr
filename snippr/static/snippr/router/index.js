@@ -10,6 +10,22 @@ const routes = [{
     meta: {
         loginRequired: false
     }
+},
+{
+	path: '/feed',
+    component: () => import('source/pages/MainFeed.vue'),
+    name: 'feed',
+    meta: {
+        loginRequired: false
+    }
+},
+{
+	path: '/createissue',
+    component: () => import('source/pages/CreateIssue.vue'),
+    name: 'createissue',
+    meta: {
+        loginRequired: false
+    }
 }];
 
 const router = new VueRouter({
