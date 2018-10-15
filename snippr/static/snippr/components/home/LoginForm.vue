@@ -12,7 +12,7 @@
       v-model="username"
      />
      <FormInput
-      type="text"
+      type="password"
       label="Password"
       placeholder=""
       inputClass="input"

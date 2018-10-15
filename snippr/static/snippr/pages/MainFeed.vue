@@ -72,11 +72,15 @@
 						</div>
 						<div class="media-content">
 							<div class="content">
-								<p>
-									<strong>{{ snippet.title }}</strong> 
-									<br>
+								<div class="title is-size-5">
+									<span class="tag is-success">Open</span>
+									<router-link :to="{name: 'issue', params: { id:snippet.pk }}" class="has-text-primary">
+										<strong>{{ snippet.title }}</strong>
+									</router-link>
+								</div>
+								<p class="subtitle is-size-6">
 									<small>Opened {{ timestamp(snippet.date_created) }} by</small>
-									<a><small>{{ snippet.username }}</small></a>
+									<router-link :to="{name:'user', params: {id:1} }"><small>{{ snippet.username }}</small></router-link>
 									<span class="tag is-light">{{ snippet.language }}</span>
 								</p>
 							</div>
