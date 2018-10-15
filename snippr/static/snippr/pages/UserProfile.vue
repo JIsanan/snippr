@@ -47,12 +47,12 @@
 						</div>
 					</div>
 					<hr>
-					<div class="column title">
-						Issues
+					<div class="column title is-size-4">
+						Issues <span class="tag is-medium">120</span>
 					</div>
 					<hr>
 					<div class="columns has-bottom-border">
-							<div class="column is-flex level is-marginless">
+							<div class="column is-flex level is-marginless is-paddingless">
 									<article class="media flex-vertical-center">
 										<div class="media-left has-text-centered">
 									<div>
@@ -71,8 +71,11 @@
 										</div>
 										<div class="media-content">
 											<div class="content">
-												<p class="title is-size-4"><strong>Error 500: SMPT Host Undefined</strong> </p>
-												<p class="subtitle">
+												<p class="title is-size-5">
+													<span class="tag is-success">Open</span>
+													<strong>Error 500: SMPT Host Undefined</strong>
+												</p>
+												<p class="subtitle is-size-6">
 													<small>Opened 2 months ago by</small>
 													<a><small>Xavier Luke Pulmones</small></a>
 													<span class="tag is-light">Java</span>
@@ -91,7 +94,54 @@
 													</span>
 													<span>120</span>
 											</span>
-											<div>updated 2 days ago</div>
+											<div class="is-size-6"><small>updated 2 days ago</small></div>
+									</div>
+							</div>
+					</div>
+					<div class="columns has-bottom-border">
+							<div class="column is-flex level is-marginless is-paddingless">
+									<article class="media flex-vertical-center">
+										<div class="media-left has-text-centered">
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-up" />
+											</span>
+									</div>
+									<div class="is-size-5">
+											<strong>120</strong>
+									</div>
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-down" />
+											</span>
+									</div>
+										</div>
+										<div class="media-content">
+											<div class="content">
+												<p class="title is-size-5">
+													<span class="tag is-success">Open</span>
+													<strong>Error 500: SMPT Host Undefined</strong>
+												</p>
+												<p class="subtitle is-size-6">
+													<small>Opened 2 months ago by</small>
+													<a><small>Xavier Luke Pulmones</small></a>
+													<span class="tag is-light">Java</span>
+													<span class="tag is-light">C#</span>
+													<span class="tag is-light">C++</span>
+												</p>
+											</div>
+										</div>
+									</article>
+							</div>
+							<div class="column is-2 is-flex level is-marginless">
+									<div class="level-item vertical flex-right">
+											<span class="flex-vertical-center">
+													<span class="icon">
+														<font-awesome-icon icon="comment-alt" />
+													</span>
+													<span>120</span>
+											</span>
+											<div class="is-size-6"><small>updated 2 days ago</small></div>
 									</div>
 							</div>
 					</div>
@@ -110,19 +160,9 @@
 
 				data () {
 						return {
-							tabOption: 0,
-							search: '',
-							searchType: '',
+
 						}
 				 },
-				 methods: {
-						isRegister () {
-								this.register = true
-						},
-						isSignin () {
-								this.register = false
-						}
-					}
 		}
 </script>
 
@@ -180,5 +220,9 @@
 
 		.code-line {
 			margin-bottom: 0px !important;
+		}
+
+		.list-hr {
+			margin: 1em 0;
 		}
 </style>

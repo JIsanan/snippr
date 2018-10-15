@@ -121,12 +121,6 @@ export default {
   },
 
   methods: {
-    isRegister() {
-      this.register = true;
-    },
-    isSignin() {
-      this.register = false;
-    },
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
     },
