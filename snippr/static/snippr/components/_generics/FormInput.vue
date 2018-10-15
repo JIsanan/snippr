@@ -1,7 +1,7 @@
 <template>
   <div class="field">
     <label class="label">{{ label }}</label>
-    <div class="control">
+    <div class="control is-expanded">
 		<input
 		  :placeholder="placeholder"
 		  :id="id"
@@ -11,6 +11,7 @@
 	      v-on="listeners"
 		>
 	</div>
+	<slot name="right-addon"></slot>
   </div>
 </template>
 

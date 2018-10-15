@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="app">
     	<TheNavBar />
-        <router-view class="app-page" />
+        <router-view />
     </div>
 </template>
 
@@ -17,7 +17,5 @@
 </script>
 
 <style scoped>
-    .app-page {
-        padding-top: 5rem;
-    }
+
 </style>
