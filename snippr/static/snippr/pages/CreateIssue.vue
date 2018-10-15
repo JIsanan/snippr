@@ -82,7 +82,7 @@ export default {
     async submit() {
       let payload = {
         title: this.title,
-        // description: this.description,
+        description: this.description,
         language: this.tags,
         code: this.code
       };
@@ -94,7 +94,6 @@ export default {
       };
 
       let response = await axios.post('http://127.0.0.1:8000/api/commit/', payload, headers);
-      console.log(response);
 
       if(response.data.message === "successfully created") {
         this.$router.push({ 
