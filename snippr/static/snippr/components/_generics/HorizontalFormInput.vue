@@ -81,4 +81,8 @@ export default {
 
 <style scoped lang="scss">
 
+  .issue-input {
+    margin-bottom: 2em;
+  }
+
 </style>
