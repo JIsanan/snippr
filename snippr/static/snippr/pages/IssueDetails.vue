@@ -1,5 +1,5 @@
 <template>
-		<div class="columns is-centered feed">
+		<div class="columns is-centered feed" v-if="issue != null">
 				<div class="column is-8">
 					<div class="columns is-marginless">
 						<div class="column is-3 is-paddingless">
@@ -23,7 +23,7 @@
 											</span>
 									</div>
 									<div class="is-size-5">
-											<strong>120</strong>
+											<strong>{{ issue.upvotes }}</strong>
 									</div>
 									<div>
 											<span class="icon">
@@ -33,13 +33,11 @@
 										</div>
 										<div class="media-content">
 											<div class="content">
-												<p class="title"><strong>Error 500: SMPT Host Undefined</strong> </p>
+												<p class="title"><strong>{{ issue.title }}</strong> </p>
 												<p class="subtitle">
-													<small>Opened 2 months ago by</small>
-													<a><small>Xavier Luke Pulmones</small></a>
-													<span class="tag is-light">Java</span>
-													<span class="tag is-light">C#</span>
-													<span class="tag is-light">C++</span>
+													<small>Opened {{ timestamp(issue.date_created) }} by</small>
+													<a><small>{{ issue.username }}</small></a>
+													<span class="tag is-light">{{ issue.language }}</span>
 												</p>
 											</div>
 										</div>
@@ -61,7 +59,8 @@
 						<div class="column is-11">
 							<div class="content description">
 								<h4 class="title is-size-5">Description</h4>
-								<p class="subtitle is-size-6">Lorem ipsum dolor sit amet, exerci posidonium ad his, eu vis equidem indoctum. Choro expetenda scribentur ex eum. Ei sed soleat voluptua theophrastus. No has meis tacimates. Eu erant ignota antiopam vix, case illum mandamus no quo. Vis ut tollit aperiri. At populo postea cum. Ne pro vero qualisque dissentiet. An magna verterem usu, ex has alterum aliquid. Cu vix appetere interesset, assum alterum pro no.
+								<p class="subtitle is-size-6">
+									{{ issue.description }}
 								</p>
 							</div>
 						</div>
@@ -69,7 +68,7 @@
 					<div class="columns is-centered">
 						<div class="column is-11">
 							<div class="content code">
-								<p>printf("something");</p>
+								<p>{{ issue.code }}</p>
 							</div>
 						</div>
 					</div>
@@ -144,85 +143,106 @@
 </template>
 
 <script>
-		import FormInput from '../components/_generics/FormInput.vue'
-		export default {
-				name: 'IssueDetails',
+import axios from 'axios';
+import moment from 'moment';
 
-				components: {
-						FormInput,
-				},
+import FormInput from "../components/_generics/FormInput.vue";
+export default {
+  name: "IssueDetails",
 
-				data () {
-						return {
-							tabOption: 0,
-							search: '',
-							searchType: '',
-						}
-				 },
-				 methods: {
-						isRegister () {
-								this.register = true
-						},
-						isSignin () {
-								this.register = false
-						}
-					}
+  components: {
+    FormInput
+  },
+
+  data() {
+    return {
+      tabOption: 0,
+      search: "",
+			searchType: "",
+			issue: null,
+    };
+  },
+  methods: {
+    isRegister() {
+      this.register = true;
+    },
+    isSignin() {
+      this.register = false;
+		},
+		timestamp(date) {
+      return moment(date, moment.ISO_8601).fromNow();
+    }
+	},
+
+	async mounted() {
+		let headers = {
+      headers: {
+        'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
+      }
+		};
+		
+		let response = await axios.get(`http://127.0.0.1:8000/api/commit/${this.$route.params.id}`, headers);
+
+		if(response.data.detail != "Not Found.") {
+			this.issue = response.data;
 		}
+	}
+};
 </script>
 
 <style scoped>
-		.feed {
-				padding-top: 2rem;
-		}
-		.tabs {
-				margin-bottom: 0px;
+.feed {
+  padding-top: 2rem;
+}
+.tabs {
+  margin-bottom: 0px;
 
-				.tab-item {
-						margin-right: 8px;
-				}
-		}
+  .tab-item {
+    margin-right: 8px;
+  }
+}
 
-		.description {
-			margin: 24px 0px;
+.description {
+  margin: 24px 0px;
 
-			.subtitle {
-				white-space:pre-wrap; 
-			}
-		}
+  .subtitle {
+    white-space: pre-wrap;
+  }
+}
 
-		.code {
-			padding: 12px;
-			background: hsl(0, 0%, 98%);
-			border: 1px solid hsl(0, 0%, 86%);
-			font-family: 'Source Code Pro', monospace;
-				font-size: .8em;
-		}
+.code {
+  padding: 12px;
+  background: hsl(0, 0%, 98%);
+  border: 1px solid hsl(0, 0%, 86%);
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.8em;
+}
 
-		.search-bar {
-				margin: 12px;
-		}
+.search-bar {
+  margin: 12px;
+}
 
-		.vertical {
-				flex-direction: column;
-		}
+.vertical {
+  flex-direction: column;
+}
 
-		.flex-right {
-				align-items: flex-end   !important;
-		}
+.flex-right {
+  align-items: flex-end !important;
+}
 
-		.flex-vertical-center {
-				display: flex;
-				align-items: center;
-		}
+.flex-vertical-center {
+  display: flex;
+  align-items: center;
+}
 
-		.has-bottom-border {
-				border-bottom: 1px solid hsl(0, 0%, 86%);
-		}
-		.media-left {
-			margin-right: 40px;
-		}
+.has-bottom-border {
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+}
+.media-left {
+  margin-right: 40px;
+}
 
-		.code-line {
-			margin-bottom: 0px !important;
-		}
+.code-line {
+  margin-bottom: 0px !important;
+}
 </style>
