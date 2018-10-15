@@ -6,6 +6,7 @@ from snippr.models.commit import Commit
 class CommitSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     upvotes = serializers.SerializerMethodField()
+    has_upvoted = serializers.SerializerMethodField()
 
     class Meta:
         model = Commit
@@ -17,7 +18,9 @@ class CommitSerializer(serializers.ModelSerializer):
             'code',
             'date_created',
             'title',
-            'upvotes')
+            'description',
+            'upvotes',
+            'has_upvoted')
 
     def get_username(self, obj):
         ret = obj.user.username
@@ -25,4 +28,8 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_upvotes(self, obj):
         ret = obj.upvote.count()
+        return ret
+
+    def get_has_upvoted(self, obj):
+        ret = False
         return ret

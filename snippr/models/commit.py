@@ -29,6 +29,7 @@ class Commit(models.Model):
     language = models.CharField(max_length=100)
     code = models.CharField(max_length=100)
     title = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=240, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     lastest_update = models.DateTimeField(auto_now_add=True)
     upvote = GenericRelation(Activity)
