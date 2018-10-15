@@ -7,44 +7,44 @@
     		<hr>
     		<div class="columns is-centered">
     		  <div class="column is-12">
-				<HorizontalFormInput
-				  class="issue-input"
-			      type="text"
-			      label="Title"
-			      placeholder="My First Issue"
-            v-bind:value="title"
-			      inputClass="input"
-			      v-model="title"
-			     />
-			     <HorizontalFormInput
-			      class="issue-input"
-			      type="textarea"
-			      label="Description"
-			      placeholder="My First Issue"
-			      v-bind:value="description"
-			      inputClass="textarea has-fixed-size"
-			      v-model="description"
-			      rows="5"
-			     />
-			     <HorizontalFormInput
-			      class="issue-input"
-			      type="text"
-			      label="Tags"
-			      placeholder="Please use commas ( , ) to separate your tags"
-			      v-bind:value="tags"
-			      inputClass="input"
-			      v-model="tags"
-			     />
-			     <hr>
-			     <HorizontalFormInput
-			      type="textarea"
-			      label="Code"
-			      placeholder="My First Issue"
-			      v-bind:value="code"
-			      inputClass="textarea has-fixed-size snippet"
-			      v-model="code"
-			      rows="5"
-			     />
+						<HorizontalFormInput
+						  class="issue-input"
+					    type="text"
+					    label="Title"
+					    placeholder="My First Issue"
+					    v-bind:value="title"
+					    inputClass="input"
+					    v-model="title"
+					  />
+						<HorizontalFormInput
+						  class="issue-input"
+							type="textarea"
+							label="Description"
+							placeholder="My First Issue"
+							v-bind:value="description"
+							inputClass="textarea has-fixed-size"
+							v-model="description"
+							rows="5"
+						/>
+						<HorizontalFormInput
+							class="issue-input"
+							type="text"
+							label="Tags"
+							placeholder="Please use commas ( , ) to separate your tags"
+							v-bind:value="tags"
+							inputClass="input"
+							v-model="tags"
+						/>
+						<hr>
+						<HorizontalFormInput
+							type="textarea"
+							label="Code"
+							placeholder="My First Issue"
+							v-bind:value="code"
+							inputClass="textarea has-fixed-size snippet"
+							v-model="code"
+							rows="5"
+						/>
     		  </div>
     		</div>
     		<hr>
