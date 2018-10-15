@@ -26,6 +26,14 @@ const routes = [{
     meta: {
         loginRequired: false
     }
+},
+{
+    path: '/issue/:id',
+    component: () => import('source/pages/IssueDetails.vue'),
+    name: 'issue',
+    meta: {
+        loginRequired: false
+    }
 }];
 
 const router = new VueRouter({
