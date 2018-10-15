@@ -52,7 +52,7 @@
 								</FormInput>
 							</div>
 						</div>
-						<div class="columns has-bottom-border">
+						<div class="columns has-bottom-border" v-for="snippet in snippets" :key="snippet.pk">
 								<div class="column is-flex level is-marginless">
 										<article class="media flex-vertical-center">
 											<div class="media-left has-text-centered">
@@ -62,7 +62,7 @@
 												</span>
 										</div>
 										<div class="is-size-5">
-												<strong>120</strong>
+												<strong>{{ snippet.upvotes }}</strong>
 										</div>
 										<div>
 												<span class="icon">
@@ -73,238 +73,11 @@
 											<div class="media-content">
 												<div class="content">
 													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
+														<strong>{{ snippet.title }}</strong> 
 														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
-													</p>
-												</div>
-											</div>
-										</article>
-								</div>
-								<div class="column is-2 is-flex level is-marginless">
-										<div class="level-item vertical flex-right">
-												<span class="flex-vertical-center">
-														<span class="icon">
-															<font-awesome-icon icon="comment-alt" />
-														</span>
-														<span>120</span>
-												</span>
-												<div>updated 2 days ago</div>
-										</div>
-								</div>
-						</div>
-						<div class="columns has-bottom-border">
-								<div class="column is-flex level is-marginless">
-										<article class="media flex-vertical-center">
-											<div class="media-left has-text-centered">
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-up" />
-												</span>
-										</div>
-										<div class="is-size-5">
-												<strong>120</strong>
-										</div>
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-down" />
-												</span>
-										</div>
-											</div>
-											<div class="media-content">
-												<div class="content">
-													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
-														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
-													</p>
-												</div>
-											</div>
-										</article>
-								</div>
-								<div class="column is-2 is-flex level is-marginless">
-										<div class="level-item vertical flex-right">
-												<span class="flex-vertical-center">
-														<span class="icon">
-															<font-awesome-icon icon="comment-alt" />
-														</span>
-														<span>120</span>
-												</span>
-												<div>updated 2 days ago</div>
-										</div>
-								</div>
-						</div>
-						<div class="columns has-bottom-border">
-								<div class="column is-flex level is-marginless">
-										<article class="media flex-vertical-center">
-											<div class="media-left has-text-centered">
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-up" />
-												</span>
-										</div>
-										<div class="is-size-5">
-												<strong>120</strong>
-										</div>
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-down" />
-												</span>
-										</div>
-											</div>
-											<div class="media-content">
-												<div class="content">
-													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
-														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
-													</p>
-												</div>
-											</div>
-										</article>
-								</div>
-								<div class="column is-2 is-flex level is-marginless">
-										<div class="level-item vertical flex-right">
-												<span class="flex-vertical-center">
-														<span class="icon">
-															<font-awesome-icon icon="comment-alt" />
-														</span>
-														<span>120</span>
-												</span>
-												<div>updated 2 days ago</div>
-										</div>
-								</div>
-						</div>
-						<div class="columns has-bottom-border">
-								<div class="column is-flex level is-marginless">
-										<article class="media flex-vertical-center">
-											<div class="media-left has-text-centered">
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-up" />
-												</span>
-										</div>
-										<div class="is-size-5">
-												<strong>120</strong>
-										</div>
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-down" />
-												</span>
-										</div>
-											</div>
-											<div class="media-content">
-												<div class="content">
-													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
-														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
-													</p>
-												</div>
-											</div>
-										</article>
-								</div>
-								<div class="column is-2 is-flex level is-marginless">
-										<div class="level-item vertical flex-right">
-												<span class="flex-vertical-center">
-														<span class="icon">
-															<font-awesome-icon icon="comment-alt" />
-														</span>
-														<span>120</span>
-												</span>
-												<div>updated 2 days ago</div>
-										</div>
-								</div>
-						</div>
-						<div class="columns has-bottom-border">
-								<div class="column is-flex level is-marginless">
-										<article class="media flex-vertical-center">
-											<div class="media-left has-text-centered">
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-up" />
-												</span>
-										</div>
-										<div class="is-size-5">
-												<strong>120</strong>
-										</div>
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-down" />
-												</span>
-										</div>
-											</div>
-											<div class="media-content">
-												<div class="content">
-													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
-														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
-													</p>
-												</div>
-											</div>
-										</article>
-								</div>
-								<div class="column is-2 is-flex level is-marginless">
-										<div class="level-item vertical flex-right">
-												<span class="flex-vertical-center">
-														<span class="icon">
-															<font-awesome-icon icon="comment-alt" />
-														</span>
-														<span>120</span>
-												</span>
-												<div>updated 2 days ago</div>
-										</div>
-								</div>
-						</div>
-						<div class="columns has-bottom-border">
-								<div class="column is-flex level is-marginless">
-										<article class="media flex-vertical-center">
-											<div class="media-left has-text-centered">
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-up" />
-												</span>
-										</div>
-										<div class="is-size-5">
-												<strong>120</strong>
-										</div>
-										<div>
-												<span class="icon">
-													<font-awesome-icon icon="caret-down" />
-												</span>
-										</div>
-											</div>
-											<div class="media-content">
-												<div class="content">
-													<p>
-														<strong>Error 500: SMPT Host Undefined</strong> 
-														<br>
-														<small>Opened 2 months ago by</small>
-														<a><small>Xavier Luke Pulmones</small></a>
-														<span class="tag is-light">Java</span>
-														<span class="tag is-light">C#</span>
-														<span class="tag is-light">C++</span>
+														<small>Opened {{ timestamp(snippet.date_created) }} by</small>
+														<a><small>{{ snippet.username }}</small></a>
+														<span class="tag is-light">{{ snippet.language }}</span>
 													</p>
 												</div>
 											</div>
@@ -327,62 +100,84 @@
 </template>
 
 <script>
-		import FormInput from '../components/_generics/FormInput.vue'
-		export default {
-				name: 'MainFeed',
+import axios from 'axios';
+import moment from 'moment';
 
-				components: {
-						FormInput,
-				},
+import FormInput from "../components/_generics/FormInput.vue";
+export default {
+  name: "MainFeed",
 
-				data () {
-						return {
-							tabOption: 0,
-							search: '',
-							searchType: '',
-						}
-				 },
-				 methods: {
-						isRegister () {
-								this.register = true
-						},
-						isSignin () {
-								this.register = false
-						}
-					}
-		}
+  components: {
+    FormInput
+  },
+
+  data() {
+    return {
+      tabOption: 0,
+      search: "",
+      searchbindType: "",
+      snippets: null,
+    };
+  },
+
+  methods: {
+    isRegister() {
+      this.register = true;
+    },
+    isSignin() {
+      this.register = false;
+    },
+    timestamp(date) {
+      return moment(date, moment.ISO_8601).fromNow();
+    },
+  },
+
+  async mounted() {
+    console.log('mounted');
+    let headers = {
+      headers: {
+        'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
+      }
+    };
+
+    console.log(headers);
+
+    let response = await axios.get('http://127.0.0.1:8000/api/commit/', headers);
+    this.snippets = response.data;
+  }
+};
 </script>
 
 <style scoped>
-		.feed {
-				padding-top: 2rem;
-		}
-		.tabs {
-				margin-bottom: 0px;
+.feed {
+  padding-top: 2rem;
+}
+.tabs {
+  margin-bottom: 0px;
 
-				.tab-item {
-						margin-right: 8px;
-				}
-		}
+  .tab-item {
+    margin-right: 8px;
+  }
+}
 
-		.search-bar {
-				margin: 12px;
-		}
+.search-bar {
+  margin: 12px;
+}
 
-		.vertical {
-				flex-direction: column;
-		}
+.vertical {
+  flex-direction: column;
+}
 
-		.flex-right {
-				align-items: flex-end   !important;
-		}
+.flex-right {
+  align-items: flex-end !important;
+}
 
-		.flex-vertical-center {
-				display: flex;
-				align-items: center;
-		}
+.flex-vertical-center {
+  display: flex;
+  align-items: center;
+}
 
-		.has-bottom-border {
-				border-bottom: 1px solid hsl(0, 0%, 86%);
-		}
+.has-bottom-border {
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+}
 </style>
