@@ -58,8 +58,8 @@ export default {
   methods: {
     async login() {
       let payload = {
-        username: this.username,
-        password: this.password
+        username: this.username.trim(),
+        password: this.password.trim()
       };
 
       let response = await axios.post(
