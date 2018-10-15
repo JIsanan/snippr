@@ -66,7 +66,12 @@ export default {
         "http://127.0.0.1:8000/api/login/",
         payload
       );
-      localStorage.setItem("token", response.data.token[0].key);
+
+      if(response.data.message === "successful") {
+        localStorage.setItem("token", response.data.token[0].key);
+        this.$router.push({ name: 'feed' });
+      }
+      
     }
   }
 };

@@ -7,6 +7,12 @@ import eventBus from './lib/event-bus';
 import App from './components/App.vue';
 require('./stylesheets/index.scss');
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCaretUp, faCaretDown, faCommentAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faCaretUp, faCaretDown, faCommentAlt)
+
 router.beforeEach((to, from, next) => {
     const isLoggedIn = store.getters['auth/isLoggedIn'];
     if (to.meta.loginRequired && !isLoggedIn) {
@@ -22,6 +28,7 @@ if (store.getters['auth/isLoggedIn']) {
 }
 
 Vue.use(EventBusCallbacks, eventBus);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
     el: '#app',
