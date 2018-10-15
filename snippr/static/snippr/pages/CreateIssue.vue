@@ -6,7 +6,7 @@
     		</div>
     		<hr>
     		<div class="columns is-centered">
-    		  <div class="column is-11">
+    		  <div class="column is-12">
 				<HorizontalFormInput
 				  class="issue-input"
 			      type="text"
@@ -21,7 +21,7 @@
 			      type="textarea"
 			      label="Description"
 			      placeholder="My First Issue"
-			      v-bind:value="desription"
+			      v-bind:value="description"
 			      inputClass="textarea has-fixed-size"
 			      v-model="description"
 			      rows="5"
@@ -35,32 +35,21 @@
 			      inputClass="input"
 			      v-model="tags"
 			     />
-			     <div class="field is-horizontal">
-			     	<div class="field-label is-normal">
-			     		<label class="label">Source Code</label>
-			     	</div>
-			     	<div class="file has-name field-body">
-					  <label class="file-label">
-					    <input class="file-input" type="file" name="resume">
-					    <span class="file-cta">
-					      <span class="file-icon">
-					        <i class="fas fa-upload"></i>
-					      </span>
-					      <span class="file-label">
-					        Choose a file…
-					      </span>
-					    </span>
-					    <span class="file-name">
-					      Screen Shot 2017-07-29 at 15.54.25.png
-					    </span>
-					  </label>
-					</div>
-			  	</div>
+			     <hr>
+			     <HorizontalFormInput
+			      type="textarea"
+			      label="Code"
+			      placeholder="My First Issue"
+			      v-bind:value="code"
+			      inputClass="textarea has-fixed-size snippet"
+			      v-model="code"
+			      rows="5"
+			     />
     		  </div>
     		</div>
     		<hr>
     		<div class="columns is-centered">
-    			<div class="column is-11 is-flex justify-between">
+    			<div class="column is-12 is-flex justify-between">
     				<button class="button is-success">Submit Issue</button>
     				<button class="button is-outlined">Cancel</button>
     			</div>
@@ -83,6 +72,7 @@
 		      title: '',
 		      description: '',
 		      tags: '',
+		      code: '',
 		    }
 		 },
     }

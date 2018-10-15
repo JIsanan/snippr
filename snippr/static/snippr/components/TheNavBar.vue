@@ -3,11 +3,11 @@
     <div class="container is-fluid">
       <div class="navbar-brand">
         <div class="navbar-item">
-          <a class="has-text-white">
+          <router-link class="has-text-white" :to="{ name: 'feed' }"">
           	<p class="is-size-4">
             	<strong>snippr</strong>
         	</p>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
