@@ -3,7 +3,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from snippr.serializers.user import UserSerializer
+from django.contrib.auth import authenticate
+
+from snippr.serializers.user import UserSerializer, LoginSerializer
 
 
 class UserViews(ViewSet):
@@ -25,3 +27,16 @@ class RegistrationViews(ViewSet):
 			user = x.save()
 			res['message'] = "Successfully registered"
 		return Response(res)
+
+
+class LoginViews(ViewSet):
+
+	def create(self, request):
+		obj = request.data
+		user = authenticate(username=obj['username'], password=obj['password'])
+		retval = {'message': 'incorrect'}
+		if user is not None:
+			retval = LoginSerializer(user)
+			retval = retval.data
+			retval['message'] = 'successful'
+		return Response(retval)
