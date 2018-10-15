@@ -34,6 +34,14 @@ const routes = [{
     meta: {
         loginRequired: false
     }
+},
+{
+    path: '/users/:id',
+    component: () => import('source/pages/UserProfile.vue'),
+    name: 'user',
+    meta: {
+        loginRequired: false
+    }
 }];
 
 const router = new VueRouter({

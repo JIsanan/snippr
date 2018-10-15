@@ -121,12 +121,6 @@ export default {
   },
 
   methods: {
-    isRegister() {
-      this.register = true;
-    },
-    isSignin() {
-      this.register = false;
-    },
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
     },
@@ -139,8 +133,6 @@ export default {
         'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
       }
     };
-
-    console.log(headers);
 
     let response = await axios.get('http://127.0.0.1:8000/api/commit/', headers);
     this.snippets = response.data;
