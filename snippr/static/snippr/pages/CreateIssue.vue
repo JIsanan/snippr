@@ -12,7 +12,7 @@
 			      type="text"
 			      label="Title"
 			      placeholder="My First Issue"
-			      v-bind:value="title"
+            v-bind:value="title"
 			      inputClass="input"
 			      v-model="title"
 			     />
@@ -50,8 +50,8 @@
     		<hr>
     		<div class="columns is-centered">
     			<div class="column is-12 is-flex justify-between">
-    				<button class="button is-success">Submit Issue</button>
-    				<button class="button is-outlined">Cancel</button>
+    				<button class="button is-success" @click="submit">Submit Issue</button>
+    				<button class="button is-outlined" @click="cancel">Cancel</button>
     			</div>
     		</div>
     	</div>
@@ -59,59 +59,94 @@
 </template>
 
 <script>
-	import HorizontalFormInput from '../components/_generics/HorizontalFormInput.vue'
-    export default {
-        name: 'CreateIssue',
+import axios from 'axios';
 
-        components: {
-        	HorizontalFormInput,
-        },
+import HorizontalFormInput from "../components/_generics/HorizontalFormInput.vue";
+export default {
+  name: "CreateIssue",
 
-		data () {
-		    return {
-		      title: '',
-		      description: '',
-		      tags: '',
-		      code: '',
-		    }
-		 },
+  components: {
+    HorizontalFormInput
+  },
+
+  data() {
+    return {
+      title: "",
+      description: "",
+      tags: "",
+      code: ""
+    };
+  },
+
+  methods: {
+    async submit() {
+      let payload = {
+        title: this.title,
+        // description: this.description,
+        language: this.tags,
+        code: this.code
+      };
+
+      let headers = {
+        headers: {
+          'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
+        }
+      };
+
+      let response = await axios.post('http://127.0.0.1:8000/api/commit/', payload, headers);
+      console.log(response);
+
+      if(response.data.message === "successfully created") {
+        this.$router.push({ 
+          name: 'issue', 
+          params: { 
+            id: response.data.pk
+          } 
+        });
+      }
+    },
+
+    cancel() {
+      this.$router.go(-1);
     }
+  }
+};
 </script>
 
 <style scoped>
-	.feed {
-        padding-top: 2rem;
-    }
-	.tabs {
-		margin-bottom: 0px;
+.feed {
+  padding-top: 2rem;
+}
+.tabs {
+  margin-bottom: 0px;
 
-		.tab-item {
-			margin-right: 8px;
-		}
-	}
+  .tab-item {
+    margin-right: 8px;
+  }
+}
 
-	.search-bar {
-		margin: 12px;
-	}
+.search-bar {
+  margin: 12px;
+}
 
-	.vertical {
-		flex-direction: column;
-	}
+.vertical {
+  flex-direction: column;
+}
 
-	.flex-right {
-		align-items: flex-end	!important;
-	}
+.flex-right {
+  align-items: flex-end !important;
+}
 
-	.flex-vertical-center {
-		display: flex;
-		align-items: center;
-	}
+.flex-vertical-center {
+  display: flex;
+  align-items: center;
+}
 
-	.has-bottom-border {
-		border-bottom: 1px solid hsl(0, 0%, 86%);
-	}
+.has-bottom-border {
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+}
 
-	.file-input {
-		opacity: 0;
-	}
+.file-input {
+  opacity: 0;
+}
 </style>
