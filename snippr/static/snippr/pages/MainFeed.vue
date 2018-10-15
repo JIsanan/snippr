@@ -127,7 +127,6 @@ export default {
   },
 
   async mounted() {
-    console.log('mounted');
     let headers = {
       headers: {
         'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
