@@ -85,4 +85,10 @@ export default {
     margin-bottom: 2em;
   }
 
+  .snippet {
+    font-family: 'Source Code Pro', monospace;
+    font-size: .8em;
+    background: hsl(0, 0%, 98%);
+  }
+
 </style>
