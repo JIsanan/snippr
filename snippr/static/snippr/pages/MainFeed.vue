@@ -133,14 +133,11 @@ export default {
   },
 
   async mounted() {
-    console.log('mounted');
     let headers = {
       headers: {
         'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
       }
     };
-
-    console.log(headers);
 
     let response = await axios.get('http://127.0.0.1:8000/api/commit/', headers);
     this.snippets = response.data;
