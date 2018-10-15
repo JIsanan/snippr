@@ -1,38 +1,144 @@
 <template>
 		<div class="columns is-centered feed">
 				<div class="column is-8">
-						<div class="columns is-marginless">
-							<div class="column is-3 is-paddingless">
-							</div>
-							<div class="column is-paddingless">
-								<div class="buttons is-right">
-									<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
-									<router-link :to="{ name: 'createissue' }" class="button is-success is-outlined">Answer</router-link>
-								</div>
+					<div class="columns is-marginless">
+						<div class="column is-3 is-paddingless">
+							<span class="tag is-success is-large">Open</span>
+						</div>
+						<div class="column is-paddingless">
+							<div class="buttons is-right">
+								<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
+								<router-link :to="{ name: 'createissue' }" class="button is-success is-outlined">Answer</router-link>
 							</div>
 						</div>
-						<hr>
-						<div class="columns">
-							<div class="column search-bar has-background-light">
-								<FormInput
-									type="text"
-									class="has-addons"
-									placeholder="Search"
-									v-bind:value="search"
-									inputClass="input"
-									v-model="search"
-									>
-									<div slot="right-addon" class="control">
-										<span class="select">
-											<select>
-												<option>Select dropdown</option>
-												<option>With options</option>
-											</select>
-										</span>
+					</div>
+					<hr>
+					<div class="columns has-bottom-border">
+							<div class="column is-flex level is-marginless">
+									<article class="media flex-vertical-center">
+										<div class="media-left has-text-centered">
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-up" />
+											</span>
 									</div>
-								</FormInput>
+									<div class="is-size-5">
+											<strong>120</strong>
+									</div>
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-down" />
+											</span>
+									</div>
+										</div>
+										<div class="media-content">
+											<div class="content">
+												<p class="title"><strong>Error 500: SMPT Host Undefined</strong> </p>
+												<p class="subtitle">
+													<small>Opened 2 months ago by</small>
+													<a><small>Xavier Luke Pulmones</small></a>
+													<span class="tag is-light">Java</span>
+													<span class="tag is-light">C#</span>
+													<span class="tag is-light">C++</span>
+												</p>
+											</div>
+										</div>
+									</article>
+							</div>
+							<div class="column is-2 is-flex level is-marginless">
+									<div class="level-item vertical flex-right">
+											<span class="flex-vertical-center">
+													<span class="icon">
+														<font-awesome-icon icon="comment-alt" />
+													</span>
+													<span>120</span>
+											</span>
+											<div>updated 2 days ago</div>
+									</div>
+							</div>
+					</div>
+					<div class="columns is-centered">
+						<div class="column is-11">
+							<div class="content description">
+								<h4 class="title is-size-5">Description</h4>
+								<p class="subtitle is-size-6">Lorem ipsum dolor sit amet, exerci posidonium ad his, eu vis equidem indoctum. Choro expetenda scribentur ex eum. Ei sed soleat voluptua theophrastus. No has meis tacimates. Eu erant ignota antiopam vix, case illum mandamus no quo. Vis ut tollit aperiri. At populo postea cum. Ne pro vero qualisque dissentiet. An magna verterem usu, ex has alterum aliquid. Cu vix appetere interesset, assum alterum pro no.
+								</p>
 							</div>
 						</div>
+					</div>
+					<div class="columns is-centered">
+						<div class="column is-11">
+							<div class="content code">
+								<p>printf("something");</p>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="column title">
+						Answers
+					</div>
+					<hr>
+					<div class="columns has-bottom-border">
+							<div class="column is-flex level is-marginless">
+									<article class="media flex-vertical-center">
+										<div class="media-left has-text-centered">
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-up" />
+											</span>
+									</div>
+									<div class="is-size-5">
+											<strong>120</strong>
+									</div>
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-down" />
+											</span>
+									</div>
+										</div>
+										<div class="media-content">
+											<div class="content">
+												<p class="title is-size-4"><strong>Error 500: SMPT Host Undefined</strong> </p>
+												<p class="subtitle">
+													<small>Opened 2 months ago by</small>
+													<a><small>Xavier Luke Pulmones</small></a>
+													<span class="tag is-light">Java</span>
+													<span class="tag is-light">C#</span>
+													<span class="tag is-light">C++</span>
+												</p>
+											</div>
+										</div>
+									</article>
+							</div>
+							<div class="column is-2 is-flex level is-marginless">
+									<div class="level-item vertical flex-right">
+											<span class="flex-vertical-center">
+													<span class="icon">
+														<font-awesome-icon icon="comment-alt" />
+													</span>
+													<span>120</span>
+											</span>
+											<div>updated 2 days ago</div>
+									</div>
+							</div>
+					</div>
+					<div class="columns is-centered">
+						<div class="column is-11">
+							<div class="content description">
+								<h4 class="title is-size-5">Description</h4>
+								<p class="subtitle is-size-6">Lorem ipsum dolor sit amet, exerci posidonium ad his, eu vis equidem indoctum. Choro expetenda scribentur ex eum. Ei sed soleat voluptua theophrastus. No has meis tacimates. Eu erant ignota antiopam vix, case illum mandamus no quo. Vis ut tollit aperiri. At populo postea cum. Ne pro vero qualisque dissentiet. An magna verterem usu, ex has alterum aliquid. Cu vix appetere interesset, assum alterum pro no.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="columns is-centered">
+						<div class="column is-11">
+							<div class="content code">
+								<p class="has-background-link code-line">printf("something");</p>
+								<p class="code-line">printf("something");</p>
+							</div>
+						</div>
+					</div>
 				</div>
 		</div>
 </template>
@@ -76,6 +182,22 @@
 				}
 		}
 
+		.description {
+			margin: 24px 0px;
+
+			.subtitle {
+				white-space:pre-wrap; 
+			}
+		}
+
+		.code {
+			padding: 12px;
+			background: hsl(0, 0%, 98%);
+			border: 1px solid hsl(0, 0%, 86%);
+			font-family: 'Source Code Pro', monospace;
+				font-size: .8em;
+		}
+
 		.search-bar {
 				margin: 12px;
 		}
@@ -95,5 +217,12 @@
 
 		.has-bottom-border {
 				border-bottom: 1px solid hsl(0, 0%, 86%);
+		}
+		.media-left {
+			margin-right: 40px;
+		}
+
+		.code-line {
+			margin-bottom: 0px !important;
 		}
 </style>
