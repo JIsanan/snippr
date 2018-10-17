@@ -10,6 +10,18 @@
           </router-link>
         </div>
       </div>
+          <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary">
+            <strong>Register</strong>
+          </a>
+          <a class="button is-light">
+            Sign in
+          </a>
+        </div>
+      </div>
+    </div>
     </div>
   </nav>
 </template>

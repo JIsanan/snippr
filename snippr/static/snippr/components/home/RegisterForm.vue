@@ -53,7 +53,7 @@
 		  v-model="confirmPassword"
 		/>
  		<p class="is-size-7 has-text-centered">By clicking "Sign up", you acknowledge that you have read our updated Terms and Services, Privacy Policy and Cookies Policy, and that your continued use of the website is subject to these policies.</p>
-		 <button class="button is-fullwidth is-success submit" v-on:click="onSubmit">Submit</button>
+		 <button class="button is-fullwidth is-success submit" v-on:click="onSubmit">Sign Up</button>
   	</div>
   </Card>
 </template>
