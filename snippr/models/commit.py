@@ -25,7 +25,7 @@ class Activity(models.Model):
 
 class Commit(models.Model):
     user = models.ForeignKey(
-        User, related_name='commit', on_delete=models.CASCADE)
+        User, related_name='commits', on_delete=models.CASCADE)
     language = models.CharField(max_length=100)
     code = models.CharField(max_length=100)
     title = models.CharField(max_length=100, null=True)
