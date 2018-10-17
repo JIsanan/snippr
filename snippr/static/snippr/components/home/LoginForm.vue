@@ -1,9 +1,9 @@
 <template>
   <Card>
-    <div class="card-header tab-control">
-      
-    </div>
     <div class="card-content">
+      <div class="notification is-danger" v-if="errorMessage">
+        {{ errorMessage }}
+      </div>
     <FormInput
       type="text"
       label="Username or Email"
@@ -51,7 +51,8 @@ export default {
     return {
       loggedIn: false,
       username: "",
-      password: ""
+      password: "",
+      errorMessage: ""
     };
   },
 
@@ -68,8 +69,14 @@ export default {
       );
 
       if(response.data.message === "successful") {
+        this.username = ''
+        this.password = ''
         localStorage.setItem("token", response.data.token[0].key);
         this.$router.push({ name: 'feed' });
+      } else {
+        this.errorMessage = "Invalid login or password."
+        this.username = ''
+        this.password = ''
       }
       
     }

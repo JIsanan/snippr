@@ -10,6 +10,7 @@
 	      :class="inputClass"
 	      v-on="listeners"
 		>
+    <slot name="icon-right"></slot>
 	</div>
 	<slot name="right-addon"></slot>
   </div>

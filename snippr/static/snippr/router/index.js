@@ -16,7 +16,7 @@ const routes = [{
     component: () => import('source/pages/MainFeed.vue'),
     name: 'feed',
     meta: {
-        loginRequired: false
+        loginRequired: true
     }
 },
 {
@@ -24,7 +24,7 @@ const routes = [{
     component: () => import('source/pages/CreateIssue.vue'),
     name: 'createissue',
     meta: {
-        loginRequired: false
+        loginRequired: true
     }
 },
 {
@@ -32,7 +32,7 @@ const routes = [{
     component: () => import('source/pages/IssueDetails.vue'),
     name: 'issue',
     meta: {
-        loginRequired: false
+        loginRequired: true
     }
 },
 {
@@ -40,7 +40,7 @@ const routes = [{
     component: () => import('source/pages/UserProfile.vue'),
     name: 'user',
     meta: {
-        loginRequired: false
+        loginRequired: true
     }
 }];
 
