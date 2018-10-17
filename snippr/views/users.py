@@ -9,7 +9,7 @@ from snippr.serializers.user import UserSerializer, LoginSerializer
 
 
 class UserViews(ViewSet):
-	authentication_classes = (TokenAuthentication,)
+	# authentication_classes = (TokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
 
 	def list(self, request):
