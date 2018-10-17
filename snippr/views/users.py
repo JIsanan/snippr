@@ -5,38 +5,40 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import authenticate
 
-from snippr.serializers.user import UserSerializer, LoginSerializer
+from snippr.serializers.user import UserSerializer, LoginSerializer, RegisterSerializer
+from django.contrib.auth.models import User
 
 
 class UserViews(ViewSet):
-	authentication_classes = (TokenAuthentication,)
-	permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
-	def list(self, request):
-		json = {"something": "hello"}
-		return Response(json)
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class RegistrationViews(ViewSet):
 
-	def create(self, request):
-		obj = request.data
-		x = UserSerializer(data=obj)
-		res = {"message": "Please input correct credentials",}
-		if x.is_valid() is True:
-			user = x.save()
-			res['message'] = "Successfully registered"
-		return Response(res)
+    def create(self, request):
+        obj = request.data
+        x = RegisterSerializer(data=obj)
+        res = {"message": "Please input correct credentials", }
+        if x.is_valid() is True:
+            user = x.save()
+            res['message'] = "Successfully registered"
+        return Response(res)
 
 
 class LoginViews(ViewSet):
 
-	def create(self, request):
-		obj = request.data
-		user = authenticate(username=obj['username'], password=obj['password'])
-		retval = {'message': 'incorrect'}
-		if user is not None:
-			retval = LoginSerializer(user)
-			retval = retval.data
-			retval['message'] = 'successful'
-		return Response(retval)
+    def create(self, request):
+        obj = request.data
+        user = authenticate(username=obj['username'], password=obj['password'])
+        retval = {'message': 'incorrect'}
+        if user is not None:
+            retval = LoginSerializer(user)
+            retval = retval.data
+            retval['message'] = 'successful'
+        return Response(retval)
