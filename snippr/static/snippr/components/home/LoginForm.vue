@@ -58,12 +58,13 @@ export default {
 
   methods: {
     async login() {
-      let payload = {
-        username: this.username.trim(),
-        password: this.password.trim()
-      };
+      
 
       try {
+        let payload = {
+          username: this.username.trim(),
+          password: this.password.trim()
+        };
         let response = await axios.post(
           "http://127.0.0.1:8000/api/token/",
           payload

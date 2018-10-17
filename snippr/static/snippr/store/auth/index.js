@@ -6,7 +6,9 @@ const state = {
 };
 
 const getters = {
+  getToken(){
 
+  }
 };
 
 const mutations = {
@@ -14,20 +16,24 @@ const mutations = {
 };
 
 const actions = {
-    createUser({commit}, data) {
-        return axios.post('api/register/',
-            data
-        ).then(response => {
-            return response;
-        });
-    },
-
+  createUser({commit}, data) {
+    return axios.post('api/register/',
+      data
+    ).then(response => {
+      return response;
+    });
+  },
+  removeJWT() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refresh');
+    return "success";
+  }
 };
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 };

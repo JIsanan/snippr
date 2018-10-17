@@ -12,7 +12,12 @@
       </div>
           <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
+        <div v-if="isLoggedin" class="buttons">
+          <a class="button is-light" v-on:click="logout">
+            Log out
+          </a>
+        </div>
+        <div v-else class="buttons">
           <a class="button is-primary">
             <strong>Register</strong>
           </a>
@@ -27,9 +32,28 @@
 </template>
 
 <script>
-export default {
-  name: 'TheNavBar'
-}
+  import { mapActions } from 'vuex'
+  export default {
+
+    name: 'TheNavBar',
+
+    watch: {
+      isLoggedin: function() {
+        return localStorage.getItem('token');
+      }
+    },
+
+    methods: {
+      ...mapActions('auth', ['removeJWT']),
+
+      async logout() {
+        const response = await this.removeJWT();
+        if(response) {
+          this.$router.push({ name: 'home' });
+        }
+      }
+    },
+  }
 </script>
 
 <style>
