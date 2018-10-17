@@ -15,15 +15,17 @@ const getters = {
 
 const mutations = {
   setToken(state, payload){
-  console.log(payload)
     if(payload) {
-      state.token = payload.access
-      localStorage.setItem('token', payload.access);
-      localStorage.setItem('refresh', payload.refresh);
-      axios.defaults.headers.common['Authorization'] = state.token;
+      state.token = payload
+      localStorage.setItem('token', payload);
+      //axios.defaults.headers.common['Authorization'] = state.token;
     }
-  }
-
+  },
+  setRefresh(state, payload){
+    if(payload) {
+      localStorage.setItem('refresh', payload);
+    }
+  },
 };
 
 const actions = {
@@ -44,12 +46,22 @@ const actions = {
     return axios.post('api/token/',
       data
     ).then(response => {
-      commit('setToken', response);
+      commit('setToken', response.access);
+      commit('setRefresh', response.refresh);
       return response;
     }).catch(response => {
       console.error(response);
     });
-  }
+  },
+  async refreshLogin({commit}){
+      let token = localStorage.getItem('token')
+      if(token) {
+        commit('setToken', token);
+      }
+      
+      return token;
+  },
+
 };
 
 export default {
