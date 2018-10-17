@@ -12,7 +12,7 @@
       </div>
           <div class="navbar-end">
       <div class="navbar-item">
-        <div v-if="isLoggedin" class="buttons">
+        <div v-if="isLoggedIn" class="buttons">
           <a class="button is-light" v-on:click="logout">
             Log out
           </a>
@@ -32,15 +32,14 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapGetters  } from 'vuex'
   export default {
 
     name: 'TheNavBar',
 
-    watch: {
-      isLoggedin: function() {
-        return localStorage.getItem('token');
-      }
+    computed: {
+      ...mapGetters('auth', ['isLoggedIn']),
+
     },
 
     methods: {

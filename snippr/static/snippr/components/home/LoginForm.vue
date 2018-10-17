@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
 import axios from "axios";
 
 import Card from "../Card.vue";
@@ -57,29 +58,21 @@ export default {
   },
 
   methods: {
-    async login() {
-      
+    ...mapActions('auth', ['tryLogIn']),
+    async login() {    
+      let payload = {
+        username: this.username.trim(),
+        password: this.password.trim()
+      };
 
-      try {
-        let payload = {
-          username: this.username.trim(),
-          password: this.password.trim()
-        };
-        let response = await axios.post(
-          "http://127.0.0.1:8000/api/token/",
-          payload
-        );
-        this.username = ''
-        this.password = ''
-        localStorage.setItem("token", response.data.access);
-        localStorage.setItem("refresh", response.data.refresh);
-        this.$router.push({ name: 'feed' });
-      }catch(e) {
+      const response = await this.tryLogIn(payload);
+      this.username = ''
+      this.password = ''
+      if(response) {
+        this.$router.push({ name: "feed" });
+      } else {
         this.errorMessage = "Invalid login or password."
-        this.username = ''
-        this.password = ''
       }
-      
     }
   }
 };
