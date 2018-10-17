@@ -16,7 +16,7 @@ const routes = [{
     component: () => import('source/pages/MainFeed.vue'),
     name: 'feed',
     meta: {
-        loginRequired: true
+        loginRequired: false
     }
 },
 {

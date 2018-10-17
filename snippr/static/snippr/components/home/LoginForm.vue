@@ -63,17 +63,17 @@ export default {
         password: this.password.trim()
       };
 
-      let response = await axios.post(
-        "http://127.0.0.1:8000/api/login/",
-        payload
-      );
-
-      if(response.data.message === "successful") {
+      try {
+        let response = await axios.post(
+          "http://127.0.0.1:8000/api/token/",
+          payload
+        );
         this.username = ''
         this.password = ''
-        localStorage.setItem("token", response.data.token[0].key);
+        localStorage.setItem("token", response.data.access);
+        localStorage.setItem("refresh", response.data.refresh);
         this.$router.push({ name: 'feed' });
-      } else {
+      }catch(e) {
         this.errorMessage = "Invalid login or password."
         this.username = ''
         this.password = ''
