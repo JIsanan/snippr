@@ -70,6 +70,7 @@ export default {
       this.password = ''
       if(response) {
         this.$router.push({ name: "feed" });
+        console.log("hello")
       } else {
         this.errorMessage = "Invalid login or password."
       }
