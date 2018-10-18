@@ -54,12 +54,11 @@ const actions = {
     });
   },
   async refreshLogin({commit}){
-      let token = localStorage.getItem('token')
-      if(token) {
-        commit('setToken', token);
-      }
-      
-      return token;
+    let token = localStorage.getItem('token')
+    if(token) {
+      commit('setToken', token);
+    }
+    return token;
   },
 
 };

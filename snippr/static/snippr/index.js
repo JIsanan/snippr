@@ -14,15 +14,19 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCaretUp, faCaretDown, faCommentAlt);
 
 (async () => {
-    await store.dispatch('auth/refreshLogin');
-    router.beforeEach((to, from, next) => {
-        const isLoggedIn = store.getters['auth/isLoggedIn'];
-        if (to.meta.loginRequired && !isLoggedIn) {
-            return next({replace: true, name: 'home'});
-        } else if (to.meta.loginRequired === false && isLoggedIn) {
-            return next({replace: true, name: 'home'});
-        }
-        next();
+    router.beforeEach(async (to, from, next) => {
+      if(localStorage.getItem('token') && !store.getters['auth/isLoggedIn']) {
+        await store.dispatch('auth/refreshLogin');
+      }
+      
+      const isLoggedIn = store.getters['auth/isLoggedIn'];
+
+      if (to.meta.loginRequired && !isLoggedIn) {
+          return next({replace: true, name: 'home'});
+      } else if (to.meta.loginRequired === false && isLoggedIn) {
+          return next({replace: true, name: 'feed'});
+      }
+      next();
     });
 })();
 

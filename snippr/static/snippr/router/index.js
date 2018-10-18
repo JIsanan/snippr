@@ -20,6 +20,14 @@ const routes = [{
     }
 },
 {
+    path: '/settings',
+    component: () => import('source/pages/UserSettings.vue'),
+    name: 'settings',
+    meta: {
+        loginRequired: true
+    }
+},
+{
 	path: '/createissue',
     component: () => import('source/pages/CreateIssue.vue'),
     name: 'createissue',
