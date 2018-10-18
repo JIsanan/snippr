@@ -6,12 +6,16 @@
 </template>
 
 <script>
+    import {mapGetters, mapActions, mapMutations} from 'vuex';
 	import TheNavBar from './TheNavBar.vue'
     export default {
         name: 'App',
 
         components: {
         	TheNavBar,
+        },
+        methods: {
+            ...mapMutations('auth', ['setToken'])
         }
     };
 </script>

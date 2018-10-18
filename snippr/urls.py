@@ -26,7 +26,6 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
 router = routers.DefaultRouter()
 router.register(r'users', users.UserViews, base_name="users")
 router.register(r'register', users.RegistrationViews, base_name="register")
-router.register(r'login', users.LoginViews, base_name="login")
 router.register(r'commit', commit.CommitViews, base_name="commit")
 
 # Wire up our API using automatic URL routing.
@@ -35,9 +34,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
 
 urlpatterns += [
