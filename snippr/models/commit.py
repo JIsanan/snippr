@@ -23,13 +23,18 @@ class Activity(models.Model):
     content_object = GenericForeignKey()
 
 
+class Language(models.Model):
+    name = models.CharField(max_length = 20)
+
+
 class Commit(models.Model):
     user = models.ForeignKey(
         User, related_name='commits', on_delete=models.CASCADE)
-    language = models.CharField(max_length=100)
+    language = models.ForeignKey(Language, related_name='commits', on_delete = models.CASCADE )
     code = models.CharField(max_length=100)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=240, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     lastest_update = models.DateTimeField(auto_now_add=True)
     upvote = GenericRelation(Activity)
+
