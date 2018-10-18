@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -10,7 +11,7 @@ from django.contrib.auth.models import User
 
 
 class UserViews(ViewSet):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def list(self, request):
@@ -36,16 +37,3 @@ class RegistrationViews(ViewSet):
             new_user = x.save()
             res['message'] = "Successfully registered"
         return Response(res)
-
-
-class LoginViews(ViewSet):
-
-    def create(self, request):
-        obj = request.data
-        auth_user = authenticate(username=obj['username'], password=obj['password'])
-        retval = {'message': 'incorrect'}
-        if auth_user is not None:
-            retval = user.LoginSerializer(user)
-            retval = retval.data
-            retval['message'] = 'successful'
-        return Response(retval)

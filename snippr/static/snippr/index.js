@@ -11,21 +11,20 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCaretUp, faCaretDown, faCommentAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faCaretUp, faCaretDown, faCommentAlt)
+library.add(faCaretUp, faCaretDown, faCommentAlt);
 
-router.beforeEach((to, from, next) => {
-    const isLoggedIn = store.getters['auth/isLoggedIn'];
-    if (to.meta.loginRequired && !isLoggedIn) {
-        return next({replace: true, name: 'home'});
-    } else if (to.meta.loginRequired === false && isLoggedIn) {
-        return next({replace: true, name: 'home'});
-    }
-    next();
-});
-
-if (store.getters['auth/isLoggedIn']) {
-    store.dispatch('auth/getCurrentUser');
-}
+(async () => {
+    await store.dispatch('auth/refreshLogin');
+    router.beforeEach((to, from, next) => {
+        const isLoggedIn = store.getters['auth/isLoggedIn'];
+        if (to.meta.loginRequired && !isLoggedIn) {
+            return next({replace: true, name: 'home'});
+        } else if (to.meta.loginRequired === false && isLoggedIn) {
+            return next({replace: true, name: 'home'});
+        }
+        next();
+    });
+})();
 
 Vue.use(EventBusCallbacks, eventBus);
 Vue.component('font-awesome-icon', FontAwesomeIcon)

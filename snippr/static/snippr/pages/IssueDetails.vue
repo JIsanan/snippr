@@ -177,7 +177,7 @@ export default {
 	async mounted() {
 		let headers = {
       headers: {
-        'AUTHORIZATION': `Token ${localStorage.getItem('token')}`
+        'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
       }
 		};
 		

@@ -46,6 +46,7 @@
     "url-loader": "1.0.1",
     "vue-loader": "15.2.6",
     "vue-template-compiler": "2.5.16",
+    "vuex-persistedstate": "^2.5.4",
     "webpack": "^4.16.2",
     "webpack-cli": "3.1.0"
   },
