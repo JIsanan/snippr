@@ -3,7 +3,7 @@
     <div class="container is-fluid">
       <div class="navbar-brand">
         <div class="navbar-item">
-          <router-link class="has-text-white" :to="{ name: 'feed' }"">
+          <router-link class="has-text-white" :to="{ name: 'feed' }">
           	<p class="is-size-4">
             	<strong>snippr</strong>
         	</p>
@@ -11,13 +11,21 @@
         </div>
       </div>
           <div class="navbar-end">
-      <div class="navbar-item">
-        <div v-if="isLoggedIn" class="buttons">
-          <a class="button is-light" v-on:click="logout">
-            Log out
-          </a>
+      <div 
+        v-if="isLoggedIn"
+        class="navbar-item has-dropdown"
+        v-bind:class="{'is-active': isOpen}"
+      >
+        <a class="navbar-link" @click="toggle()">
+          It's me
+        </a>
+        <div class="navbar-dropdown">
+          <router-link class="navbar-item" :to="{ name: 'settings' }">Settings</router-link>
+          <a class="navbar-item" @click="logout">Log out</a>
         </div>
-        <div v-else class="buttons">
+      </div>
+      <div class="navbar-item" v-else>
+        <div class="buttons">
           <a class="button is-primary">
             <strong>Register</strong>
           </a>
@@ -37,6 +45,12 @@
 
     name: 'TheNavBar',
 
+    data () {
+      return {
+        isOpen: false,
+      }
+    },
+
     computed: {
       ...mapGetters('auth', ['isLoggedIn']),
 
@@ -50,11 +64,16 @@
         if(response) {
           this.$router.push({ name: 'home' });
         }
+      },
+
+      toggle: function() {
+        this.isOpen = !this.isOpen;
       }
     },
+
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
