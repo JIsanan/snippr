@@ -30,7 +30,7 @@ class Language(models.Model):
 class Commit(models.Model):
     user = models.ForeignKey(
         User, related_name='commits', on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, related_name='commit', on_delete = models.CASCADE )
+    language = models.ForeignKey(Language, related_name='commits', on_delete = models.CASCADE )
     code = models.CharField(max_length=100)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=240, null=True)
