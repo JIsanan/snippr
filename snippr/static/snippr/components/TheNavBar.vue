@@ -62,6 +62,7 @@
       async logout() {
         const response = await this.removeJWT();
         if(response) {
+          this.isOpen = false,
           this.$router.push({ name: 'home' });
         }
       },
