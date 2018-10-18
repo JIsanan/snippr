@@ -1,152 +1,156 @@
 <template>
-		<div class="columns is-centered feed">
-				<div class="column is-8">
-					<div class="columns is-centered">
-						<div class="column is-11">
-							<div class="level">
-								<div class="level-item">
-									<figure>
-								    <p class="image is-128x128">
-								      <img src="https://bulma.io/images/placeholders/128x128.png">
-								    </p>
-								  </figure>
-								</div>
-							</div>
-							<div class="level">
-								<div class="level-item">
-									<p class="title is-size-2">Joshua Isanan</p>
-								</div>
-							</div>
-							<hr>
-							<nav class="level">
-							  <div class="level-item has-text-centered">
-							    <div>
-							      <p class="heading">Tweets</p>
-							      <p class="title">3,456</p>
-							    </div>
-							  </div>
-							  <div class="level-item has-text-centered">
-							    <div>
-							      <p class="heading">Following</p>
-							      <p class="title">123</p>
-							    </div>
-							  </div>
-							  <div class="level-item has-text-centered">
-							    <div>
-							      <p class="heading">Followers</p>
-							      <p class="title">456K</p>
-							    </div>
-							  </div>
-							  <div class="level-item has-text-centered">
-							    <div>
-							      <p class="heading">Likes</p>
-							      <p class="title">789</p>
-							    </div>
-							  </div>
-							</nav>
+	<div class="columns is-centered feed">
+		<div class="column is-8">
+			<div class="columns is-centered">
+				<div class="column is-11">
+					<div class="level">
+						<div class="level-item">
+							<fieldset></fieldset>igure>
+						    <p class="image is-128x128">
+						      <img src="https://bulma.io/images/placeholders/128x128.png">
+						    </p>
+						  </figure>
+						</div>
+					</div>
+					<div class="level">
+						<div class="level-item">
+							<p class="title is-size-2">Joshua Isanan</p>
 						</div>
 					</div>
 					<hr>
-					<div class="column title is-size-4">
-						Issues <span class="tag is-medium">120</span>
-					</div>
-					<hr>
-					<div class="columns has-bottom-border">
-							<div class="column is-flex level is-marginless is-paddingless">
-									<article class="media flex-vertical-center">
-										<div class="media-left has-text-centered">
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="caret-up" />
-											</span>
-									</div>
-									<div class="is-size-5">
-											<strong>120</strong>
-									</div>
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="caret-down" />
-											</span>
-									</div>
-										</div>
-										<div class="media-content">
-											<div class="content">
-												<p class="title is-size-5">
-													<span class="tag is-success">Open</span>
-													<strong>Error 500: SMPT Host Undefined</strong>
-												</p>
-												<p class="subtitle is-size-6">
-													<small>Opened 2 months ago by</small>
-													<a><small>Xavier Luke Pulmones</small></a>
-													<span class="tag is-light">Java</span>
-													<span class="tag is-light">C#</span>
-													<span class="tag is-light">C++</span>
-												</p>
-											</div>
-										</div>
-									</article>
+					<nav class="level">
+					  <div class="level-item has-text-centered">
+					    <div>
+					    	<p class="heading">Tweets</p>
+					    	<p class="title">3,456</p>
+					    </div>
+					  </div>
+					  <div class="level-item has-text-centered">
+					    <div>
+					      <p class="heading">Following</p>
+					      <p class="title">123</p>
+					    </div>
+					  </div>
+					  <div class="level-item has-text-centered">
+					    <div>
+					      <p class="heading">Followers</p>
+					      <p class="title">456K</p>
+					    </div>
+					  </div>
+					  <div class="level-item has-text-centered">
+					    <div>
+					      <p class="heading">Likes</p>
+					      <p class="title">789</p>
+					    </div>
+					  </div>
+					</nav>
+				</div>
+			</div>
+			<hr>
+			<div class="column title is-size-4">
+				Issues <span class="tag is-medium">120</span>
+			</div>
+			<hr>
+			<div class="columns has-bottom-border">
+				<div class="column is-flex level is-marginless is-paddingless">
+					<article class="media flex-vertical-center">
+						<div class="media-left has-text-centered">
+							<div>
+								<span class="icon">
+									<font-awesome-icon icon="caret-up" />
+								</span>
 							</div>
-							<div class="column is-2 is-flex level is-marginless">
-									<div class="level-item vertical flex-right">
-											<span class="flex-vertical-center">
-													<span class="icon">
-														<font-awesome-icon icon="comment-alt" />
-													</span>
-													<span>120</span>
-											</span>
-											<div class="is-size-6"><small>updated 2 days ago</small></div>
-									</div>
+							<div class="is-size-5">
+								<strong>120</strong>
 							</div>
-					</div>
-					<div class="columns has-bottom-border">
-							<div class="column is-flex level is-marginless is-paddingless">
-									<article class="media flex-vertical-center">
-										<div class="media-left has-text-centered">
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="caret-up" />
-											</span>
-									</div>
-									<div class="is-size-5">
-											<strong>120</strong>
-									</div>
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="caret-down" />
-											</span>
-									</div>
-										</div>
-										<div class="media-content">
-											<div class="content">
-												<p class="title is-size-5">
-													<span class="tag is-success">Open</span>
-													<strong>Error 500: SMPT Host Undefined</strong>
-												</p>
-												<p class="subtitle is-size-6">
-													<small>Opened 2 months ago by</small>
-													<a><small>Xavier Luke Pulmones</small></a>
-													<span class="tag is-light">Java</span>
-													<span class="tag is-light">C#</span>
-													<span class="tag is-light">C++</span>
-												</p>
-											</div>
-										</div>
-									</article>
+						<div>
+							<span class="icon">
+								<font-awesome-icon icon="caret-down" />
+							</span>
+						</div>
+						</div>
+						<div class="media-content">
+							<div class="content">
+								<p class="title is-size-5">
+									<span class="tag is-success">Open</span>
+									<strong>Error 500: SMPT Host Undefined</strong>
+								</p>
+								<p class="subtitle is-size-6">
+									<small>Opened 2 months ago by</small>
+									<a><small>Xavier Luke Pulmones</small></a>
+									<span class="tag is-light">Java</span>
+									<span class="tag is-light">C#</span>
+									<span class="tag is-light">C++</span>
+								</p>
 							</div>
-							<div class="column is-2 is-flex level is-marginless">
-									<div class="level-item vertical flex-right">
-											<span class="flex-vertical-center">
-													<span class="icon">
-														<font-awesome-icon icon="comment-alt" />
-													</span>
-													<span>120</span>
-											</span>
-											<div class="is-size-6"><small>updated 2 days ago</small></div>
-									</div>
-							</div>
+						</div>
+					</article>
+				</div>
+				<div class="column is-2 is-flex level is-marginless">
+					<div class="level-item vertical flex-right">
+						<span class="flex-vertical-center">
+							<span class="icon">
+								<font-awesome-icon icon="comment-alt" />
+							</span>
+							<span>120</span>
+						</span>
+						<div class="is-size-6">
+							<small>updated 2 days ago</small>
+						</div>
 					</div>
 				</div>
+			</div>
+			<div class="columns has-bottom-border">
+				<div class="column is-flex level is-marginless is-paddingless">
+					<article class="media flex-vertical-center">
+						<div class="media-left has-text-centered">
+							<div>
+								<span class="icon">
+									<font-awesome-icon icon="caret-up" />
+								</span>
+							</div>
+							<div class="is-size-5">
+								<strong>120</strong>
+							</div>
+							<div>
+								<span class="icon">
+									<font-awesome-icon icon="caret-down" />
+								</span>
+							</div>
+						</div>
+						<div class="media-content">
+							<div class="content">
+								<p class="title is-size-5">
+									<span class="tag is-success">Open</span>
+									<strong>Error 500: SMPT Host Undefined</strong>
+								</p>
+								<p class="subtitle is-size-6">
+									<small>Opened 2 months ago by</small>
+									<a><small>Xavier Luke Pulmones</small></a>
+									<span class="tag is-light">Java</span>
+									<span class="tag is-light">C#</span>
+									<span class="tag is-light">C++</span>
+								</p>
+							</div>
+						</div>
+					</article>
+				</div>
+				<div class="column is-2 is-flex level is-marginless">
+					<div class="level-item vertical flex-right">
+						<span class="flex-vertical-center">
+							<span class="icon">
+								<font-awesome-icon icon="comment-alt" />
+							</span>
+							<span>120</span>
+						</span>
+						<div class="is-size-6">
+							<small>updated 2 days ago</small>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
 </template>
 
 <script>
@@ -167,62 +171,63 @@
 </script>
 
 <style scoped>
-		.feed {
-				padding-top: 2rem;
-		}
-		.tabs {
-				margin-bottom: 0px;
+	.feed {
+		padding-top: 2rem;
+	}
 
-				.tab-item {
-						margin-right: 8px;
-				}
-		}
+	.tabs {
+		margin-bottom: 0px;
 
-		.description {
-			margin: 24px 0px;
+		.tab-item {
+			margin-right: 8px;
+		}
+	}
 
-			.subtitle {
-				white-space:pre-wrap; 
-			}
-		}
+	.description {
+		margin: 24px 0px;
 
-		.code {
-			padding: 12px;
-			background: hsl(0, 0%, 98%);
-			border: 1px solid hsl(0, 0%, 86%);
-			font-family: 'Source Code Pro', monospace;
-				font-size: .8em;
+		.subtitle {
+			white-space:pre-wrap; 
 		}
+	}
 
-		.search-bar {
-				margin: 12px;
-		}
+	.code {
+		padding: 12px;
+		background: hsl(0, 0%, 98%);
+		border: 1px solid hsl(0, 0%, 86%);
+		font-family: 'Source Code Pro', monospace;
+		font-size: .8em;
+	}
 
-		.vertical {
-				flex-direction: column;
-		}
+	.search-bar {
+		margin: 12px;
+	}
 
-		.flex-right {
-				align-items: flex-end   !important;
-		}
+	.vertical {
+		flex-direction: column;
+	}
 
-		.flex-vertical-center {
-				display: flex;
-				align-items: center;
-		}
+	.flex-right {
+		align-items: flex-end   !important;
+	}
 
-		.has-bottom-border {
-				border-bottom: 1px solid hsl(0, 0%, 86%);
-		}
-		.media-left {
-			margin-right: 40px;
-		}
+	.flex-vertical-center {
+		display: flex;
+		align-items: center;
+	}
 
-		.code-line {
-			margin-bottom: 0px !important;
-		}
+	.has-bottom-border {
+		border-bottom: 1px solid hsl(0, 0%, 86%);
+	}
+	.media-left {
+		margin-right: 40px;
+	}
 
-		.list-hr {
-			margin: 1em 0;
-		}
+	.code-line {
+		margin-bottom: 0px !important;
+	}
+
+	.list-hr {
+		margin: 1em 0;
+	}
 </style>
