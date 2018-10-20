@@ -15,15 +15,15 @@
 mkvirtualenv -p python3 [name of your virtualenv] -a .
 
 # install dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 npm install
 
 # django stuff
-python manage.py collectstatic
-python manage.py migrate
+python3 manage.py collectstatic
+python3 manage.py migrate
 
 # run backend server
-python manage.py runserver
+python3 manage.py runserver
 
 # build and watch changes to frontend code
 npm run build:watch
