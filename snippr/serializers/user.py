@@ -44,4 +44,3 @@ class LoginSerializer(serializers.HyperlinkedModelSerializer):
     def get_token(self, obj):
         ret = Token.objects.filter(user=obj).all().values('key')
         return ret
-
