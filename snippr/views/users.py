@@ -2,7 +2,6 @@ from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import authenticate
 
 from snippr.serializers import user
 from django.contrib.auth.models import User
