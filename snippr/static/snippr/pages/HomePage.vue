@@ -2,8 +2,8 @@
     <div class="columns is-centered landing">
     	<div class="column is-3">
     		<div class="content">
-    			<h1 class="title">Snippr</h1>
-    			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in felis nunc. Nulla facilisi. Nam ornare laoreet nulla, non pretium nulla pretium lacinia. Donec pretium in ante ac interdum. Mauris nibh orci, rhoncus in lectus non, feugiat tempor quam. In a porttitor nisl. Mauris id ultrices turpis.</p>
+    			<h1 class="title">Welcome to Snippr!</h1>
+    			<p>Snippr is the all new network for developers to have elaborative and friendly environment which allows them to exchange knowledge related to anything about computer programming. With Snippr there's no need to manually keep track of code versions Snippr has got that all covered! Join us now!</p>
     		</div>
     	</div>
     	<div class="column is-3">
