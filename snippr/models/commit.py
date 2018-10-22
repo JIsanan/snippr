@@ -24,17 +24,25 @@ class Activity(models.Model):
 
 
 class Language(models.Model):
-    name = models.CharField(max_length = 20)
+    name = models.CharField(max_length=20)
 
 
 class Commit(models.Model):
+    #for status field
+    OPEN = 'O'
+    CLOSED = 'C'
+    STATUS_TAG = (
+        (OPEN, 'Open'),
+        (CLOSED, 'Closed')
+    )
+
     user = models.ForeignKey(
         User, related_name='commits', on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, related_name='commits', on_delete = models.CASCADE )
+    language = models.ForeignKey(Language, related_name='commits', on_delete=models.CASCADE)
     code = models.CharField(max_length=100)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=240, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     lastest_update = models.DateTimeField(auto_now_add=True)
     upvote = GenericRelation(Activity)
-
+    status = models.CharField(max_length=1, default=OPEN, choices=STATUS_TAG)
