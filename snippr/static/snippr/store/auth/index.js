@@ -56,9 +56,9 @@ const actions = {
     return axios.post('api/token/',
       data
     ).then(response => {
-      console.log(response);
       commit('setToken', response.access);
       commit('setRefresh', response.refresh);
+      commit('setUser', response.user)
       return response;
     }).catch(response => {
       console.error(response);
@@ -70,6 +70,20 @@ const actions = {
       commit('setToken', token);
     }
     return token;
+  },
+  async getProfile({commit}){
+    let headers = {
+      headers: {
+        'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+      }
+    };
+    return axios.get('api/users/my_profile', headers
+    ).then(response => {
+      commit('setUser', response)
+      return response;
+    }).catch(response => {
+      console.error(response);
+    });
   },
 
 };
