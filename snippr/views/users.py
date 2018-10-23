@@ -3,6 +3,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from rest_framework.decorators import action
 
 from snippr.serializers import user
 from django.contrib.auth.models import User
@@ -18,9 +19,17 @@ class UserViews(ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        user = User.objects.filter(pk=pk).first()
-        if(user):
+        user_obj = User.objects.filter(pk=pk).first()
+        if(user_obj):
             serializer = user.UserSerializer(user)
+            return Response(serializer.data)
+        return Response("User does not exist.")
+
+    @action(detail=False)
+    def my_profile(self, request):
+        user_obj = request.user
+        if(user_obj):
+            serializer = user.UserSerializer(user_obj)
             return Response(serializer.data)
         return Response("User does not exist.")
 
