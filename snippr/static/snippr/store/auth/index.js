@@ -3,10 +3,15 @@ import router from 'source/router/index';
 
 const state = {
   token: null,
+  user: null
 };
 
 const getters = {
   token: state => state.token,
+
+  getUser(state) {
+    return state.user;
+  },
 
   isLoggedIn(state) {
     return state.token != null;
@@ -14,6 +19,11 @@ const getters = {
 };
 
 const mutations = {
+  setUser(state, payload){
+    if(payload) {
+      state.user = payload
+    }
+  },
   setToken(state, payload){
     if(payload) {
       state.token = payload
@@ -46,6 +56,7 @@ const actions = {
     return axios.post('api/token/',
       data
     ).then(response => {
+      console.log(response);
       commit('setToken', response.access);
       commit('setRefresh', response.refresh);
       return response;

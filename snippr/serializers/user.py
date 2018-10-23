@@ -3,7 +3,8 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from snippr.models.userprofile import UserProfile
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.utils.six import text_type
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -33,14 +34,16 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
 
-class LoginSerializer(serializers.HyperlinkedModelSerializer):
-    token = serializers.SerializerMethodField()
+class LoginSerializer(TokenObtainPairSerializer):
 
-    class Meta:
-        model = User
-        fields = (
-            'pk', 'username', 'first_name', 'last_name', 'email', 'token')
+    def validate(self, attrs):
+        data = super(TokenObtainPairSerializer, self).validate(attrs)
 
-    def get_token(self, obj):
-        ret = Token.objects.filter(user=obj).all().values('key')
-        return ret
+        refresh = self.get_token(self.user)
+
+        data['refresh'] = text_type(refresh)
+        data['access'] = text_type(refresh.access_token)
+        serializer = UserSerializer(self.user)
+        data['user'] = serializer.data
+
+        return data

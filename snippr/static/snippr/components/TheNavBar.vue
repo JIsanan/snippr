@@ -20,7 +20,8 @@
           It's me
         </a>
         <div class="navbar-dropdown">
-          <router-link class="navbar-item" :to="{ name: 'settings' }">Settings</router-link>
+          <router-link class="navbar-item" :to="{ name: 'myprofile', params: { id:1 } }" @click="toggle()">Profile</router-link>
+          <router-link class="navbar-item" :to="{ name: 'settings' }" @click="toggle()">Settings</router-link>
           <a class="navbar-item" @click="logout">Log out</a>
         </div>
       </div>
@@ -52,7 +53,7 @@
     },
 
     computed: {
-      ...mapGetters('auth', ['isLoggedIn']),
+      ...mapGetters('auth', ['isLoggedIn', 'getUser']),
 
     },
 
