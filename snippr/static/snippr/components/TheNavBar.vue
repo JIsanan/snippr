@@ -19,9 +19,9 @@
         <a class="navbar-link" @click="toggle()">
           It's me
         </a>
-        <div class="navbar-dropdown">
-          <router-link class="navbar-item" :to="{ name: 'myprofile', params: { id:1 } }" @click="toggle()">Profile</router-link>
-          <router-link class="navbar-item" :to="{ name: 'settings' }" @click="toggle()">Settings</router-link>
+        <div class="navbar-dropdown" v-if="getUser">
+          <router-link class="navbar-item" :to="{ name: 'user', params: { id:getUser.id} }">Profile</router-link>
+          <router-link class="navbar-item" :to="{ name: 'settings' }">Settings</router-link>
           <a class="navbar-item" @click="logout">Log out</a>
         </div>
       </div>

@@ -44,14 +44,6 @@ const routes = [{
     }
 },
 {
-    path: '/myprofile',
-    component: () => import('source/pages/UserProfile.vue'),
-    name: 'myprofile',
-    meta: {
-        loginRequired: true
-    }
-},
-{
     path: '/users/:id',
     component: () => import('source/pages/UserProfile.vue'),
     name: 'user',

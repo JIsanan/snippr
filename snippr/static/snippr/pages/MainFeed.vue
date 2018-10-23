@@ -80,7 +80,7 @@
 								</div>
 								<p class="subtitle is-size-6">
 									<small>Opened {{ timestamp(snippet.date_created) }} by</small>
-									<router-link :to="{name:'user', params: {id:1} }"><small>{{ snippet.username }}</small></router-link>
+									<router-link :to="{name:'user', params: {id:snippet.user_id} }"><small>{{ snippet.username }}</small></router-link>
 									<span class="tag is-light">{{ snippet.language }}</span>
 								</p>
 							</div>

@@ -20,9 +20,9 @@ class UserViews(ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        user_obj = User.objects.filter(pk=pk).first()
+        user_obj = User.objects.filter(userprofile__id=pk).first()
         if(user_obj):
-            serializer = user.UserSerializer(user)
+            serializer = user.UserSerializer(user_obj)
             return Response(serializer.data)
         return Response("User does not exist.")
 

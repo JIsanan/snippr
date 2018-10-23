@@ -157,6 +157,7 @@
 </template>
 
 <script>
+	import { mapActions, mapGetters  } from 'vuex'
 	import FormInput from '../components/_generics/FormInput.vue'
 	export default {
 		name: 'UserProfile',
@@ -167,19 +168,25 @@
 
 		data () {
 			return {
-				user: '',
+				profile: null,
 			}
 		},
 
-		computed: {
-			profile: function () {
+		async mounted() {
 				if(this.$route.path === '/myprofile/') {
 					return this.$store.getters['auth/getUser']
 				} else {
-					return null
+					this.getInfo()
 				}
 			},
-		},
+
+		methods: {
+			...mapActions('user', ['getUserProfile']),
+			async getInfo() {
+				let response = await this.getUserProfile(this.$route.params.id);
+		    this.profile = response
+			}
+		}
 	}
 </script>
 

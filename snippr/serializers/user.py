@@ -9,14 +9,25 @@ from django.utils.six import text_type
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     issue_count = serializers.SerializerMethodField()
+    id = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = (
-            'username', 'first_name', 'last_name', 'email', 'issue_count')
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'issue_count',
+            'id'
+        )
 
     def get_issue_count(self, obj):
         ret = obj.commits.count()
+        return ret
+
+    def get_id(self, obj):
+        ret = obj.userprofile.id
         return ret
 
 
