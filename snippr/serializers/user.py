@@ -41,7 +41,6 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         user = User.objects.create_user(**validated_data)
         user.save()
         UserProfile.objects.create(user=user)
-        Token.objects.create(user=user)
         return user
 
 
