@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 from snippr.models.commit import Commit
 
 
 class CommitSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
+    user_id = serializers.SerializerMethodField()
     upvotes = serializers.SerializerMethodField()
     language = serializers.SerializerMethodField()
     has_upvoted = serializers.SerializerMethodField()
@@ -13,7 +13,7 @@ class CommitSerializer(serializers.ModelSerializer):
         model = Commit
         fields = (
             'pk',
-            'user',
+            'user_id',
             'username',
             'language',
             'code',
@@ -25,6 +25,10 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_username(self, obj):
         ret = obj.user.username
+        return ret
+
+    def get_user_id(self, obj):
+        ret = obj.user.userprofile.id
         return ret
 
     def get_language(self, obj):

@@ -2,6 +2,9 @@ from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate
+from rest_framework.decorators import action
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from snippr.serializers import user
 from django.contrib.auth.models import User
@@ -17,9 +20,17 @@ class UserViews(ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        user = User.objects.filter(pk=pk).first()
-        if(user):
-            serializer = user.UserSerializer(user)
+        user_obj = User.objects.filter(userprofile__id=pk).first()
+        if(user_obj):
+            serializer = user.UserSerializer(user_obj)
+            return Response(serializer.data)
+        return Response("User does not exist.")
+
+    @action(detail=False)
+    def my_profile(self, request):
+        user_obj = request.user
+        if(user_obj):
+            serializer = user.UserSerializer(user_obj)
             return Response(serializer.data)
         return Response("User does not exist.")
 
@@ -34,3 +45,7 @@ class RegistrationViews(ViewSet):
             new_user = x.save()
             res['message'] = "Successfully registered"
         return Response(res)
+
+
+class LoginView(TokenObtainPairView):
+    serializer_class = user.LoginSerializer

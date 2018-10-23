@@ -19,7 +19,8 @@
         <a class="navbar-link" @click="toggle()">
           It's me
         </a>
-        <div class="navbar-dropdown">
+        <div class="navbar-dropdown" v-if="getUser">
+          <router-link class="navbar-item" :to="{ name: 'user', params: { id:getUser.id} }">Profile</router-link>
           <router-link class="navbar-item" :to="{ name: 'settings' }">Settings</router-link>
           <a class="navbar-item" @click="logout">Log out</a>
         </div>
@@ -52,7 +53,7 @@
     },
 
     computed: {
-      ...mapGetters('auth', ['isLoggedIn']),
+      ...mapGetters('auth', ['isLoggedIn', 'getUser']),
 
     },
 

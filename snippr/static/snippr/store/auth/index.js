@@ -3,10 +3,15 @@ import router from 'source/router/index';
 
 const state = {
   token: null,
+  user: null
 };
 
 const getters = {
   token: state => state.token,
+
+  getUser(state) {
+    return state.user;
+  },
 
   isLoggedIn(state) {
     return state.token != null;
@@ -14,6 +19,11 @@ const getters = {
 };
 
 const mutations = {
+  setUser(state, payload){
+    if(payload) {
+      state.user = payload
+    }
+  },
   setToken(state, payload){
     if(payload) {
       state.token = payload
@@ -48,6 +58,7 @@ const actions = {
     ).then(response => {
       commit('setToken', response.access);
       commit('setRefresh', response.refresh);
+      commit('setUser', response.user)
       return response;
     }).catch(response => {
       console.error(response);
@@ -59,6 +70,20 @@ const actions = {
       commit('setToken', token);
     }
     return token;
+  },
+  async getProfile({commit}){
+    let headers = {
+      headers: {
+        'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+      }
+    };
+    return axios.get('api/users/my_profile', headers
+    ).then(response => {
+      commit('setUser', response)
+      return response;
+    }).catch(response => {
+      console.error(response);
+    });
   },
 
 };

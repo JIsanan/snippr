@@ -1,11 +1,11 @@
 <template>
 	<div class="columns is-centered feed">
 		<div class="column is-8">
-			<div class="columns is-centered">
+			<div class="columns is-centered" v-if="profile">
 				<div class="column is-11">
 					<div class="level">
 						<div class="level-item">
-							<fieldset></fieldset>igure>
+							<figure>
 						    <p class="image is-128x128">
 						      <img src="https://bulma.io/images/placeholders/128x128.png">
 						    </p>
@@ -13,16 +13,19 @@
 						</div>
 					</div>
 					<div class="level">
-						<div class="level-item">
-							<p class="title is-size-2">Joshua Isanan</p>
+						<div class="level-item has-text-centered">
+							<div>
+								<p class="heading is-size-2"><strong>{{ profile.first_name }} {{ profile.last_name }}</strong></p>
+								<p class="subheading is-size-4">@{{ profile.username }}</p>
+							</div>
 						</div>
 					</div>
 					<hr>
 					<nav class="level">
 					  <div class="level-item has-text-centered">
 					    <div>
-					    	<p class="heading">Tweets</p>
-					    	<p class="title">3,456</p>
+					    	<p class="heading">Issues Submitted</p>
+					    	<p class="title">{{ profile.issue_count }}</p>
 					    </div>
 					  </div>
 					  <div class="level-item has-text-centered">
@@ -154,20 +157,37 @@
 </template>
 
 <script>
-		import FormInput from '../components/_generics/FormInput.vue'
-		export default {
-				name: 'UserProfile',
+	import { mapActions, mapGetters  } from 'vuex'
+	import FormInput from '../components/_generics/FormInput.vue'
+	export default {
+		name: 'UserProfile',
 
-				components: {
-						FormInput,
-				},
+		components: {
+			FormInput,
+		},
 
-				data () {
-						return {
+		data () {
+			return {
+				profile: null,
+			}
+		},
 
-						}
-				 },
+		async mounted() {
+				if(this.$route.path === '/myprofile/') {
+					return this.$store.getters['auth/getUser']
+				} else {
+					this.getInfo()
+				}
+			},
+
+		methods: {
+			...mapActions('user', ['getUserProfile']),
+			async getInfo() {
+				let response = await this.getUserProfile(this.$route.params.id);
+		    this.profile = response
+			}
 		}
+	}
 </script>
 
 <style scoped>
