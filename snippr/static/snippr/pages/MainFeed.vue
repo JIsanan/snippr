@@ -36,18 +36,19 @@
 					<FormInput
 						type="text"
 						class="has-addons"
-						placeholder="Search"
-						v-bind:value="search"
+						placeholder=""
+						:value="search"
 						inputClass="input"
 						v-model="search"
 						>
+						<div slot="addon" class="control">
+							<LanguageFilter 
+								:value="languageFilter"
+								@filter="filter"
+							/>
+						</div>
 						<div slot="right-addon" class="control">
-							<span class="select">
-								<select>
-									<option>Select dropdown</option>
-									<option>With options</option>
-								</select>
-							</span>
+							<router-link :to="{name: 'feed', query: {filter: languageFilter}}" class="button is-link">Search</router-link>
 						</div>
 					</FormInput>
 				</div>
@@ -110,11 +111,13 @@ import axios from 'source/plugins/axios';
 import moment from 'moment';
 
 import FormInput from "../components/_generics/FormInput.vue";
+import LanguageFilter from "../components/filters/LanguageFilter.vue";
 export default {
   name: "MainFeed",
 
   components: {
-    FormInput
+    FormInput,
+    LanguageFilter
   },
 
   data() {
@@ -125,13 +128,16 @@ export default {
       snippets: null,
       register: false,
       statusFilter: null,
-      languageFilter: null,
+      languageFilter: 'All',
     };
   },
 
   methods: {
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
+    },
+    filter(value){
+    	this.languageFilter = value
     },
   },
 
@@ -141,8 +147,13 @@ export default {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     };
-    let languageFilter = this.languageFilter
-    let query = 'http://127.0.0.1:8000/api/commit' + (languageFilter ? ('?language=' + this.languageFilter) : '/')
+    let languageFilter = null
+    if(this.$route.query.filter && this.$route.query.filter != 'All'){
+    	languageFilter = this.$route.query.filter
+    	this.languageFilter = this.$route.query.filter
+    }
+    
+    let query = 'http://127.0.0.1:8000/api/commit' + (languageFilter ? ('?language=' + languageFilter) : '/')
     let response = await axios.get(query, headers);
     this.snippets = response;
   }

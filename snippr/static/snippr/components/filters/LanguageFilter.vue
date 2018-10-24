@@ -1,8 +1,9 @@
 <template>
 	<span class="select">
-		<select>
-			<option v-for="language in languages">
-				Select dropdown
+		<select v-model="valueFilter" >
+			<option value="All">All</option>
+			<option v-for="language in languages" :value="language.name">
+				{{language.name}}
 			</option>
 		</select>
 	</span>
@@ -13,13 +14,34 @@ import axios from 'source/plugins/axios';
 export default {
   name: "LanguageFilter",
 
+  props: {
+  	value: {
+  		type: String,
+  	}
+  },
+
   data() {
     return {
       languages: null,
     };
   },
+  computed: {
+    listeners() {
+      const { ...listeners } = this.$listeners;
+      delete listeners.input;
+      return listeners;
+    },
 
-  methods: {
+    valueFilter: {
+      get(){
+        return this.value;
+      },
+
+      set(value) {
+      	
+        this.$emit('filter', value);
+      }
+    }
   },
 
   async mounted() {
@@ -29,10 +51,9 @@ export default {
       }
     };
     let languageFilter = this.languageFilter
-    let query = 'http://127.0.0.1:8000/api/commit' + (languageFilter ? ('?language=' + this.languageFilter) : '/')
+    let query = 'http://127.0.0.1:8000/api/language/'
     let response = await axios.get(query, headers);
-    this.snippets = response;
-    console.log(this.snippets)
+    this.languages = response;
   }
 };
 </script>

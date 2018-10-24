@@ -49,8 +49,9 @@ class Commit(models.Model):
 
 class Snippet(models.Model):
     #for status field
-    user = models.ForeignKey(
-        User, related_name='snippets', on_delete=models.CASCADE)
     commit = models.ForeignKey(Commit, related_name='snippets', on_delete=models.CASCADE)
     code = models.CharField(max_length=500)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        get_latest_by = 'date_created'

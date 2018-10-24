@@ -28,7 +28,7 @@ class CommitViews(ModelViewSet):
         language = Language.objects.filter(name=request.data['language']).first()
         retval = {}
         retval['message'] = 'something you inputted is wrong'
-        if language:
+        if language and 'code' in request.data:
             obj = request.data.copy()
             obj['user'] = request.user.pk
             obj['language'] = language.pk

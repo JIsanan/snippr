@@ -3,7 +3,7 @@
     <TheNavBar />
     <section class="section">
       <div class="container is-fluid">
-        <router-view :key="$route.path" />
+        <router-view :key="$route.fullPath" />
       </div>
     </section>  
   </div>
