@@ -8,10 +8,10 @@ import App from './components/App.vue';
 require('./stylesheets/index.scss');
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCaretUp, faCaretDown, faCommentAlt, faUser, faKey, faWrench } from '@fortawesome/free-solid-svg-icons'
+import { faCaretUp, faCaretDown, faCommentAlt, faUser, faKey, faWrench, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faCaretUp, faCaretDown, faCommentAlt, faUser, faKey, faWrench);
+library.add(faCaretUp, faCaretDown, faCommentAlt, faUser, faKey, faWrench, faPlus);
 
 (async () => {
     router.beforeEach(async (to, from, next) => {

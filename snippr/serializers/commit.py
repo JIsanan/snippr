@@ -60,3 +60,4 @@ class CommitSerializer(serializers.ModelSerializer):
     def get_has_upvoted(self, obj):
         ret = False
         return ret
+

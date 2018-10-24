@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app has-background-white-bis">
+  <div id="app" class="app has-background-white-ter">
     <TheNavBar />
     <section class="section">
       <div class="container is-fluid">

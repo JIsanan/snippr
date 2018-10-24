@@ -10,13 +10,21 @@
           </router-link>
         </div>
       </div>
-          <div class="navbar-end">
+      <div class="navbar-end">
+        <div class="navbar-item" v-if="isLoggedIn">
+          <router-link :to="{ name: 'createissue' }" class="button is-primary is-outlined is-inverted">
+            <span class="icon">
+              <font-awesome-icon icon="plus" />
+            </span>
+            <span>Create Issue</span>
+          </router-link>
+        </div>
       <div 
         v-if="isLoggedIn"
         class="navbar-item has-dropdown"
         v-bind:class="{'is-active': isOpen}"
       >
-        <a class="navbar-link" @click="toggle()">
+        <a class="navbar-link" @click="toggle()" v-if="getUser">
           {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">

@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet');
 $tabs-border-bottom-color: transparent;
-$navbar-item-hover-color: black;
-$navbar-dropdown-arrow: black;
+$navbar-item-hover-color: white;
+$navbar-dropdown-arrow: none;
+$box-shadow: none;
+$navbar-item-hover-background-color: none;
 .justify-between {
 	justify-content: space-between;
 }
