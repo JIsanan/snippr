@@ -5,23 +5,23 @@
 				<div class="column is-10 is-paddingless">
 					<div class="tabs is-borderless">
 						<ul>
-							<li :class="{tabOption: statusFilter === 'Open'}">
-								<a>
+							<li :class="{'is-active': statusFilter == 'O'}">
+								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Open'})}">
 									<span class="tab-item">Open</span>
 									<span class="tag is-light">12</span>
-								</a>
+								</router-link>
 							</li>
-							<li :class="{'is-active': statusFilter === 'Closed'}">
-								<a>
+							<li :class="{'is-active': statusFilter == 'C'}">
+								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Closed'})}">
 									<span class="tab-item">Closed</span>
-									<span class="tag is-light">8</span>
-								</a>
+									<span class="tag is-light">12</span>
+								</router-link>
 							</li>
 							<li :class="{'is-active': !statusFilter}">
-								<a>
+								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'All'})}">
 									<span class="tab-item">All</span>
-									<span class="tag is-light">4</span>
-								</a>
+									<span class="tag is-light">12</span>
+								</router-link>
 							</li>
 						</ul>
 					</div>
@@ -48,7 +48,7 @@
 							/>
 						</div>
 						<div slot="right-addon" class="control">
-							<router-link :to="{name: 'feed', query: {filter: languageFilter}}" class="button is-link">Search</router-link>
+							<router-link :to="{name: 'feed', query: submitFilter(filterset, {filter: languageFilter, title: searchText()})}" class="button is-link">Search</router-link>
 						</div>
 					</FormInput>
 				</div>
@@ -75,7 +75,13 @@
 							<div class="media-content">
 								<div class="content">
 									<div class="title is-size-5">
-										<span class="tag is-success">Open</span>
+										<span 
+										 :class="['tag',
+															{'is-success': snippet.status == 'Open'},
+															{'is-light': snippet.status == 'Closed'}
+														 ]" >
+											{{ snippet.status }}
+										</span>
 										<router-link :to="{name: 'issue', params: { id:snippet.pk }}" class="has-text-primary">
 											<strong>{{ snippet.title }}</strong>
 										</router-link>
@@ -124,10 +130,10 @@ export default {
     return {
       tabOption: 0,
       search: "",
-      searchbindType: "",
+      filterset: {},
       snippets: null,
       register: false,
-      statusFilter: null,
+      statusFilter: 'O',
       languageFilter: 'All',
     };
   },
@@ -139,21 +145,58 @@ export default {
     filter(value){
     	this.languageFilter = value
     },
+    submitFilter(old, add){
+    	return Object.assign({}, old, add);
+    },
+    searchText(){
+    	if(this.search == ""){
+    		return "All";
+    	} else {
+    		return this.search
+    	}
+    }
   },
 
   async mounted() {
+
+  	this.filterset = this.$route.query
     let headers = {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     };
     let languageFilter = null
-    if(this.$route.query.filter && this.$route.query.filter != 'All'){
-    	languageFilter = this.$route.query.filter
-    	this.languageFilter = this.$route.query.filter
+    let query = 'http://127.0.0.1:8000/api/commit' 
+    let route = this.$route.query
+    if(route.filter || route.status || route.title){
+    	query = query + '?'
+	    if(route.filter && route.filter != 'All'){
+	    	languageFilter = route.filter
+	    	this.languageFilter = route.filter
+	    	query = query + 'language=' + languageFilter + '&'
+	    }
+	    if(route.title && route.title != "All"){
+	    	this.search = route.title
+	    	query = query + 'title=' + this.search + '&'
+	    }
+	    if(route.status){
+	    	let status = route.status
+	    	if (status == 'Open') {
+	    		query = query + 'status=O'
+	    		this.statusFilter = 'O'
+	    	} else if (status == 'Closed'){
+	    		query = query + 'status=C'
+	    		this.statusFilter = 'C'
+	    	} else {
+	    		this.statusFilter = null
+	    	}
+	    }
+    }
+    if(!this.$route.query.filter && !this.$route.query.status){
+    	query = query + '/'
     }
     
-    let query = 'http://127.0.0.1:8000/api/commit' + (languageFilter ? ('?language=' + languageFilter) : '/')
+    
     let response = await axios.get(query, headers);
     this.snippets = response;
   }
