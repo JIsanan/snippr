@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
-    <div class="container is-fluid">
+    <div class="container is-widescreen">
       <div class="navbar-brand">
         <div class="navbar-item">
           <router-link class="has-text-white" :to="{ name: 'feed' }">
@@ -10,14 +10,22 @@
           </router-link>
         </div>
       </div>
-          <div class="navbar-end">
+      <div class="navbar-end">
+        <div class="navbar-item" v-if="isLoggedIn">
+          <router-link :to="{ name: 'createissue' }" class="button is-primary is-outlined is-inverted">
+            <span class="icon">
+              <font-awesome-icon icon="plus" />
+            </span>
+            <span>Create Issue</span>
+          </router-link>
+        </div>
       <div 
         v-if="isLoggedIn"
         class="navbar-item has-dropdown"
         v-bind:class="{'is-active': isOpen}"
       >
-        <a class="navbar-link" @click="toggle()">
-          It's me
+        <a class="navbar-link" @click="toggle()" v-if="getUser">
+          {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">
           <router-link class="navbar-item" :to="{ name: 'user', params: { id:getUser.id} }">Profile</router-link>

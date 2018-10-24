@@ -2,7 +2,7 @@ import axios from 'source/plugins/axios';
 import router from 'source/router/index';
 
 const state = {
-  token: null,
+  token: localStorage.getItem('token') || null,
   user: null
 };
 
@@ -52,6 +52,22 @@ const actions = {
     state.token = null;
     return "success";
   },
+  verifyJWT({commit}, data){
+    return axios.post('api/token/verify/',
+      data
+    ).then(response => {
+      console.log(response)
+    }).catch(response => {
+      console.error(response);
+    })
+  },
+  refreshJWT({commit}, data){
+    return axios.post('api/token/refresh/',
+      data
+    ).then(response => {
+      commit('setToken', response.access)
+    });
+  },
   tryLogIn({commit}, data) {
     return axios.post('api/token/',
       data
@@ -67,7 +83,14 @@ const actions = {
   async refreshLogin({commit}){
     let token = localStorage.getItem('token')
     if(token) {
-      commit('setToken', token);
+      axios.post('api/token/verify/',
+        {'token': token}
+      ).then(response => {
+        commit('setToken', token);
+      }).catch(response => {
+        localStorage.removeItem('token')
+        token = null
+      })
     }
     return token;
   },

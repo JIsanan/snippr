@@ -37,7 +37,7 @@
 												<p class="subtitle">
 													<small>Opened {{ timestamp(issue.date_created) }} by</small>
 													<a><small>{{ issue.username }}</small></a>
-													<span class="tag is-light">{{ issue.language }}</span>
+													<span class="tag is-light">{{ issue.language_name }}</span>
 												</p>
 											</div>
 										</div>
@@ -68,7 +68,7 @@
 					<div class="columns is-centered">
 						<div class="column is-11">
 							<div class="content code">
-								<p>{{ issue.code }}</p>
+								<p>{{ issue.snippet.code }}</p>
 							</div>
 						</div>
 					</div>
@@ -204,10 +204,6 @@ export default {
 
 .description {
   margin: 24px 0px;
-
-  .subtitle {
-    white-space: pre-wrap;
-  }
 }
 
 .code {

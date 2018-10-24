@@ -9,6 +9,7 @@ class SnippetSerializer(serializers.ModelSerializer):
         fields = (
             'pk', 'code', 'date_created',)
 
+
 class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -16,17 +17,20 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = (
             'pk', 'name')
 
+
 class CommitSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     user_id = serializers.SerializerMethodField()
     upvotes = serializers.SerializerMethodField()
     has_upvoted = serializers.SerializerMethodField()
     language_name = serializers.SerializerMethodField()
+    snippet = serializers.SerializerMethodField()
 
     class Meta:
         model = Commit
         fields = (
             'pk',
+            'snippet',
             'user',
             'user_id',
             'username',
@@ -59,4 +63,9 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_has_upvoted(self, obj):
         ret = False
+        return ret
+
+    def get_snippet(self, obj):
+        snippet = obj.snippets.latest()
+        ret = SnippetSerializer(snippet).data
         return ret

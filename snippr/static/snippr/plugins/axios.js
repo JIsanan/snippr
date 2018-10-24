@@ -1,13 +1,18 @@
 import axios from 'axios';
-
+import store from 'source/store/index';
 const instance = axios.create({
     baseURL: window.location.origin,
-    xsrfCookieName: 'csrftoken',
-    xsrfHeaderName: 'X-CSRFToken',
     headers: {
         'X-Requested-With': 'XMLHttpRequest'
+    },
+    xsrfCookieName: 'csrftoken',
+    xsrfHeaderName: 'X-CSRFToken'
+});
 
-    }
+instance.interceptors.request.use(function (config) {
+	return config;
+}, function (error) {
+	return Promise.reject("something");
 });
 
 instance.interceptors.response.use(

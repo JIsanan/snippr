@@ -1,18 +1,19 @@
 <template>
   <div class="field">
-    <label class="label">{{ label }}</label>
+    <slot name="addon"></slot>
+    <label class="label" v-if="label">{{ label }}</label>
     <div class="control is-expanded">
-		<input
-		  :placeholder="placeholder"
-		  :id="id"
-	      v-model="inputValue"
-	      v-bind="$attrs"
-	      :class="inputClass"
-	      v-on="listeners"
-		>
-    <slot name="icon-right"></slot>
-	</div>
-	<slot name="right-addon"></slot>
+  		<input
+  		  :placeholder="placeholder"
+  		  :id="id"
+  	      v-model="inputValue"
+  	      v-bind="$attrs"
+  	      :class="inputClass"
+  	      v-on="listeners"
+  		>
+      <slot name="icon-right"></slot>
+	  </div>
+	  <slot name="right-addon"></slot>
   </div>
 </template>
 
