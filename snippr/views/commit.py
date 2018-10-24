@@ -4,9 +4,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from snippr.models.commit import Commit
+from snippr.models.commit import Commit, Language, Snippet
 from snippr.serializers.user import UserSerializer
-from snippr.serializers.commit import CommitSerializer
+from snippr.serializers.commit import CommitSerializer, SnippetSerializer
 
 
 class CommitFilter(filters.FilterSet):
@@ -26,14 +26,19 @@ class CommitViews(ModelViewSet):
 
 
     def create(self, request):
-        obj = request.data.copy()
-        obj['user'] = request.user.pk
-        data = CommitSerializer(data=obj)
+        language = Language.objects.filter(name=request.data['language']).first()
         retval = {}
         retval['message'] = 'something you inputted is wrong'
-        if data.is_valid() is True:
-            data.save()
-            retval = data.data
-            retval['message'] = 'successfully created'
-        print(data.errors)
+        if language:
+            obj = request.data.copy()
+            obj['user'] = request.user.pk
+            obj['language'] = language.pk
+            data = CommitSerializer(data=obj)
+            if data.is_valid() is True:
+                commit = data.save()
+                snippet = Snippet.objects.create(user=request.user, commit=commit, code=request.data['code'])  
+                snippet = SnippetSerializer(snippet)
+                retval = data.data
+                retval['snippet'] = snippet.data
+                retval['message'] = 'successfully created'
         return Response(retval)
