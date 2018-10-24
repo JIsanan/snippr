@@ -1,8 +1,12 @@
 <template>
-    <div id="app" class="app">
-    	<TheNavBar />
+  <div id="app" class="app has-background-white-bis">
+    <TheNavBar />
+    <section class="section">
+      <div class="container is-fluid">
         <router-view :key="$route.path" />
-    </div>
+      </div>
+    </section>  
+  </div>
 </template>
 
 <script>
@@ -21,5 +25,9 @@
 </script>
 
 <style scoped>
+
+  .app {
+    min-height: 100vh;
+  }
 
 </style>

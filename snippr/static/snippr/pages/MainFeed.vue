@@ -1,7 +1,7 @@
 <template>
 	<div class="columns is-centered feed">
 		<div class="column is-8">
-			<div class="columns is-marginless">
+			<div class="columns is-marginless is-mobile">
 				<div class="column is-10 is-paddingless">
 					<div class="tabs is-borderless">
 						<ul>
@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'source/plugins/axios';
 import moment from 'moment';
 
 import FormInput from "../components/_generics/FormInput.vue";
@@ -121,6 +121,8 @@ export default {
       search: "",
       searchbindType: "",
       snippets: null,
+      register: false,
+      languageFilter: null,
     };
   },
 
@@ -136,17 +138,16 @@ export default {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     };
-
-    let response = await axios.get('http://127.0.0.1:8000/api/commit/', headers);
-    this.snippets = response.data;
+    let languageFilter = this.languageFilter
+    let query = 'http://127.0.0.1:8000/api/commit' + (languageFilter ? ('?language=' + this.languageFilter) : '/')
+    let response = await axios.get(query, headers);
+    this.snippets = response;
+    console.log(this.snippets)
   }
 };
 </script>
 
 <style scoped>
-.feed {
-  padding-top: 2rem;
-}
 .tabs {
   margin-bottom: 0px;
 

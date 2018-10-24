@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
-    <div class="container is-fluid">
+    <div class="container is-widescreen">
       <div class="navbar-brand">
         <div class="navbar-item">
           <router-link class="has-text-white" :to="{ name: 'feed' }">
@@ -17,7 +17,7 @@
         v-bind:class="{'is-active': isOpen}"
       >
         <a class="navbar-link" @click="toggle()">
-          It's me
+          {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">
           <router-link class="navbar-item" :to="{ name: 'user', params: { id:getUser.id} }">Profile</router-link>

@@ -15,7 +15,7 @@ library.add(faCaretUp, faCaretDown, faCommentAlt, faUser, faKey, faWrench);
 
 (async () => {
     router.beforeEach(async (to, from, next) => {
-      if(localStorage.getItem('token') && !store.getters['auth/isLoggedIn']) {
+      if(localStorage.getItem('token')) {
         if(await store.dispatch('auth/refreshLogin')) {
           store.dispatch('auth/getProfile');
         }

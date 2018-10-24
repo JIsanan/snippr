@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const instance = axios.create({
     baseURL: window.location.origin,
     headers: {
@@ -7,6 +6,14 @@ const instance = axios.create({
     },
     xsrfCookieName: 'csrftoken',
     xsrfHeaderName: 'X-CSRFToken'
+});
+
+instance.interceptors.request.use(function (config) {
+	const token = this.$store.getters.token;
+	this.$store.dispatch('auth/verifyJWT', {token});
+	alert('test');
+}, function (error) {
+	return Promise.reject("something");
 });
 
 instance.interceptors.response.use(
