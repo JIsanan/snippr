@@ -26,7 +26,7 @@
 								</p>
 								<ul class="menu-list">
 									<li>
-										<router-link :to="{name: 'settings', query:{mode: 'userinfo'}}" class="has-text-white">
+										<router-link :to="{name: 'settings', query:{mode: 'userinfo'}}" :class="[{'is-active': mode == 'userinfo'}]">
 											<span class="icon">
 												<font-awesome-icon icon="user" />
 											</span>
@@ -34,7 +34,7 @@
 										</router-link>
 									</li>
 									<li>
-										<router-link :to="{name: 'settings', query:{mode: 'changepassword'}}" class="has-text-white">
+										<router-link :to="{name: 'settings', query:{mode: 'changepassword'}}" :class="[{'is-active': mode == 'changepassword'}]">
 											<span class="icon">
 												<font-awesome-icon icon="key" />
 											</span>
@@ -76,7 +76,7 @@
 		},
 		computed: {
       mode() {
-        return this.$route.query ? this.$route.query.mode : ''
+        return this.$route.query.mode ? this.$route.query.mode : 'userinfo'
       },
     },
 	}
@@ -85,6 +85,7 @@
 <style scoped>
 	.menu{
 		margin-top: 1.5rem;
+		border-radius: 4px;
 	}
 	.info-description {
 		font-size: .9rem;
