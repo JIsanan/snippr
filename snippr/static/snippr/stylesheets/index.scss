@@ -4,6 +4,13 @@ $navbar-item-hover-color: white;
 $navbar-dropdown-arrow: none;
 $box-shadow: none;
 $navbar-item-hover-background-color: none;
+$menu-item-color: white;
+$menu-item-active-background-color: grey;
+$menu-item-hover-background-color: hsl(0, 0%, 60%);
+$menu-item-hover-color: white;
+$menu-item-active-color: white;
+$menu-item-radius: 0px;
+$notification-padding: .5rem 1rem;
 .justify-between {
 	justify-content: space-between;
 }

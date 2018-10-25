@@ -26,6 +26,18 @@ class UserViews(ViewSet):
             return Response(serializer.data)
         return Response("User does not exist.")
 
+    def patch(self, request, pk=None):
+        user_obj = request.user
+        res = {"message": "Please input correct credentials", }
+        if(user_obj):
+            serializer = user.UserSerializer(user_obj, data=request.data, partial=True)
+            if(serializer.is_valid()):
+                serializer.save()
+                res['message'] = "Successfully updated"
+            else:
+                print(serializer.errors)
+        return Response(res)
+
     @action(detail=False)
     def my_profile(self, request):
         user_obj = request.user
