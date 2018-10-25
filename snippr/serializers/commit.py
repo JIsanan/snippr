@@ -25,11 +25,13 @@ class CommitSerializer(serializers.ModelSerializer):
     has_upvoted = serializers.SerializerMethodField()
     language_name = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = Commit
         fields = (
             'pk',
+            'status',
             'snippet',
             'user',
             'user_id',
@@ -63,6 +65,10 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_has_upvoted(self, obj):
         ret = False
+        return ret
+
+    def get_status(self, obj):
+        ret = obj.get_status_display()
         return ret
 
     def get_snippet(self, obj):

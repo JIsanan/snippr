@@ -11,10 +11,11 @@ from snippr.serializers.commit import CommitSerializer, SnippetSerializer, Langu
 
 class CommitFilter(filters.FilterSet):
     language = filters.CharFilter(field_name='language__name')
+    title = filters.CharFilter(field_name='title', lookup_expr='icontains')
 
     class Meta:
         model = Commit
-        fields = ['language']
+        fields = ['language', 'status', 'title']
 
 
 class CommitViews(ModelViewSet):
