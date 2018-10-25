@@ -26,20 +26,20 @@
 								</p>
 								<ul class="menu-list">
 									<li>
-										<a class="has-text-white">
+										<router-link :to="{name: 'settings', query:{mode: 'userinfo'}}" class="has-text-white">
 											<span class="icon">
 												<font-awesome-icon icon="user" />
 											</span>
 											<span>Account Settings</span>
-										</a>
+										</router-link>
 									</li>
 									<li>
-										<a class="has-text-white">
+										<router-link :to="{name: 'settings', query:{mode: 'changepassword'}}" class="has-text-white">
 											<span class="icon">
 												<font-awesome-icon icon="key" />
 											</span>
 											<span>Change Password</span>
-										</a>
+										</router-link>
 									</li>
 								</ul>
 							</aside>
@@ -48,105 +48,8 @@
 				</div>
 				<div class="column is-6 tile is-ancestor is-paddingless">
 					<div class="tile is-parent is-vertical right-content">
-						<article class="person-info tile is-vertical notification box is-white">
-							<div class="tile is-white is-parent">
-								<div class="icon tile is-child is-1	 is-size-3">
-									<font-awesome-icon icon="user" />
-								</div>
-								<div class="tile is-child is-vertical">
-									<p class=" tile title is-size-5">
-										Personal Information
-									</p>
-									<p class="subtitle info-description">
-										Lorem ipsum dolor sit amet, 
-										consectetur adipiscing elit. Nam massa nibh, ullamcorper eget 
-										tortor non, blandit congue massa.
-									</p>
-								</div>
-							</div>
-							<div class="form tile is-parent">
-								<div class="tile is-child is-1"></div>
-								<div class="tile is-child is-5">
-									<FormInput
-							      type="text"
-							      label="First Name"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="user.fname"
-							     />
-							     <FormInput
-							      type="text"
-							      label="Last Name"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="user.lname"
-							     />
-							     <FormInput
-							      type="text"
-							      label="Username"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="user.username"
-							     />
-							     <FormInput
-							      type="email"
-							      label="Email Address"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="user.email"
-							     />
-									<button class="button submit is-success">
-										Update Settings
-									</button>
-								</div>
-							</div>
-						</article>
-						<article class="person-info tile is-vertical notification box is-white">
-							<div class="tile is-white is-parent">
-								<div class="icon tile is-child is-1 is-size-3">
-									<font-awesome-icon icon="key" />
-								</div>
-								<div class="tile is-child is-vertical">
-									<p class=" tile title is-size-5">
-										Change Password
-									</p>
-									<p class="subtitle info-description">
-										Lorem ipsum dolor sit amet, 
-										consectetur adipiscing elit. Nam massa nibh, ullamcorper eget 
-										tortor non, blandit congue massa.
-									</p>
-								</div>
-							</div>
-							<div class="form tile is-parent">
-								<div class="tile is-child is-1"></div>
-								<div class="tile is-child is-5">
-									<FormInput
-							      type="password"
-							      label="Password"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="password.oldPword"
-							     />
-									<FormInput
-							      type="password"
-							      label="New Password"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="password.newPword"
-							     />
-							     <FormInput
-							      type="password"
-							      label="Confirm Password"
-							      placeholder=""
-							      inputClass="input has-background-white-bis"
-							      v-model="password.confirmPword"
-							     />
-									<button class="button is-success submit">
-										Change Password
-									</button>
-								</div>
-							</div>
-						</article>
+						<UserInfoSettings v-if="mode == 'userinfo'"/>
+						<ChangePasswordSettings v-if="mode == 'changepassword'"/>
 					</div>
 				</div>
 			</div>
@@ -155,29 +58,27 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	import FormInput from '../components/_generics/FormInput.vue'
+	import UserInfoSettings from '../components/settings/UserInfoSettings.vue'
+	import ChangePasswordSettings from '../components/settings/ChangePasswordSettings.vue'
 	export default {
 		name: 'UserSettings',
 
 		components: {
 			FormInput,
+			UserInfoSettings,
+			ChangePasswordSettings
 		},
-
 		data () {
 			return {
-				user: {
-					fname: '',
-					lname: '',
-					username: '',
-					email: '',
-				},
-				password: {
-					oldPword: '',
-					newPword: '',
-					confirmPword: ''
-				}
 			}
 		},
+		computed: {
+      mode() {
+        return this.$route.query ? this.$route.query.mode : ''
+      },
+    },
 	}
 </script>
 
