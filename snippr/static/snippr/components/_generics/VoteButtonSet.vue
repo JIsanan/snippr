@@ -1,41 +1,42 @@
 <template>
-	<span class="select">
-		<select v-model="valueFilter" >
-			<option value="All">All</option>
-			<option v-for="language in languages" :value="language.name">
-				{{language.name}}
-			</option>
-		</select>
-	</span>
+  <div class="">
+    <div>
+      <span class="icon">
+        <font-awesome-icon icon="caret-up" />
+      </span>
+    </div>
+    <div class="is-size-5">
+      <strong>{{ upvotes }}</strong>
+    </div>
+    <div>
+      <span class="icon">
+        <font-awesome-icon icon="caret-down" />
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'source/plugins/axios';
 export default {
-  name: "LanguageFilter",
+  name: "VoteButtonSet",
 
   props: {
-  	value: {
-  		type: String,
-  	}
+    hasUpvoted: {
+      type: Boolean,
+      required: true,
+    },
+    upvotes: {
+      type: String,
+      required: true,
+    }
   },
 
   data() {
     return {
-      languages: null,
     };
   },
   computed: {
-    valueFilter: {
-      get(){
-        return this.value;
-      },
-
-      set(value) {
-      	
-        this.$emit('filter', value);
-      }
-    }
   },
 
   async mounted() {

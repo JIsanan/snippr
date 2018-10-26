@@ -3,7 +3,7 @@ import router from './router';
 import store from './store';
 import EventBusCallbacks from './plugins/event-bus-callbacks';
 
-import eventBus from './lib/event-bus';
+import eventBus from './plugins/event-bus';
 import App from './components/App.vue';
 require('./stylesheets/index.scss');
 

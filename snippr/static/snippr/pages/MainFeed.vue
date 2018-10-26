@@ -57,21 +57,11 @@
 				<div class="columns snippet" v-for="snippet in snippets" :key="snippet.pk">
 					<div class="column is-flex level is-marginless">
 						<article class="media flex-vertical-center">
-							<div class="media-left has-text-centered">
-								<div>
-									<span class="icon">
-										<font-awesome-icon icon="caret-up" />
-									</span>
-								</div>
-								<div class="is-size-5">
-									<strong>{{ snippet.upvotes }}</strong>
-								</div>
-								<div>
-									<span class="icon">
-										<font-awesome-icon icon="caret-down" />
-									</span>
-								</div>
-							</div>
+							<VoteButtonSet 
+								class="media-left has-text-centered"
+								:upvotes="snippet.upvotes"
+								:hasUpvoted="snippet.has_upvoted"
+							/>
 							<div class="media-content">
 								<div class="content">
 									<div class="title is-size-5">
@@ -116,6 +106,7 @@
 import axios from 'source/plugins/axios';
 import moment from 'moment';
 
+import VoteButtonSet from "../components/_generics/VoteButtonSet.vue";
 import FormInput from "../components/_generics/FormInput.vue";
 import LanguageFilter from "../components/filters/LanguageFilter.vue";
 export default {
@@ -123,7 +114,8 @@ export default {
 
   components: {
     FormInput,
-    LanguageFilter
+    LanguageFilter,
+    VoteButtonSet
   },
 
   data() {
