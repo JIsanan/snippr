@@ -3,8 +3,9 @@ from rest_framework.viewsets import ViewSet, ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 
-from snippr.models.commit import Commit, Language, Snippet
+from snippr.models.commit import Commit, Language, Snippet, Activity
 from snippr.serializers.user import UserSerializer
 from snippr.serializers.commit import CommitSerializer, SnippetSerializer, LanguageSerializer
 
@@ -25,6 +26,13 @@ class CommitViews(ModelViewSet):
     serializer_class = CommitSerializer
     filterset_class = CommitFilter
 
+    def list(self, request):
+        user = request.user.pk
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(
+            queryset, many=True, context={'request': user})
+        return Response(serializer.data)
+
     def create(self, request):
         language = Language.objects.filter(name=request.data['language']).first()
         retval = {}
@@ -42,6 +50,42 @@ class CommitViews(ModelViewSet):
                 retval['snippet'] = snippet.data
                 retval['message'] = 'successfully created'
         return Response(retval)
+
+    @action(detail=True, methods=['get'])
+    def upvote(self, request, pk=None):
+        user_obj = request.user
+        commit = self.get_object()
+        ret = {}
+        ret['upvote'] = True
+        ret['downvote'] = False
+        if(user_obj and commit):
+            upvote = commit.upvote.filter(user=user_obj).first()
+            if(upvote and not upvote.is_active):
+                upvote.is_active = True
+                upvote.save()
+            elif(not upvote):
+                commit.upvote.create(
+                    activity_type=Activity.UPVOTE, user=user_obj)
+        return Response(ret)
+
+    @action(detail=True, methods=['get'])
+    def downvote(self, request, pk=None):
+        user_obj = request.user
+        commit = self.get_object()
+        ret = {}
+        ret['upvote'] = False
+        ret['downvote'] = True
+        if(user_obj and commit):
+            upvote = commit.upvote.filter(user=user_obj).first()
+            if(upvote and upvote.is_active):
+                upvote.is_active = False
+                upvote.save()
+            elif(not upvote):
+                commit.upvote.create(
+                    activity_type=Activity.UPVOTE,
+                    user=user_obj,
+                    is_active=False)
+        return Response(ret)
 
 
 class LanguageViews(ReadOnlyModelViewSet):

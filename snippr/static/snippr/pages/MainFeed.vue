@@ -2,8 +2,8 @@
 	<div class="columns is-centered feed">
 		<div class="column is-8">
 			<div class="columns is-marginless is-mobile">
-				<div class="column is-10 is-paddingless">
-					<div class="tabs is-borderless">
+				<div class="column is-paddingless is-narrow">
+					<div class="tabs is-borderless is-toggle has-background-white">
 						<ul>
 							<li :class="{'is-active': statusFilter == 'O'}">
 								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Open'})}">
@@ -26,13 +26,12 @@
 						</ul>
 					</div>
 				</div>
-				<div class="column is-2 is-paddingless">
+				<div class="column is-paddingless">
 					<router-link :to="{ name: 'createissue' }" class="button is-success is-pulled-right">New Issue</router-link>
 				</div>
 			</div>
-			<hr class="is-marginless">
-			<div class="columns">
-				<div class="column search-bar box">
+			<div class="columns search-bar">
+				<div class="column box">
 					<FormInput
 						type="text"
 						class="has-addons"
@@ -54,59 +53,7 @@
 				</div>
 			</div>
 			<div class="box snippet-list">
-				<div class="columns snippet" v-for="snippet in snippets" :key="snippet.pk">
-					<div class="column is-flex level is-marginless">
-						<article class="media flex-vertical-center">
-							<div class="media-left has-text-centered">
-								<div>
-									<span class="icon">
-										<font-awesome-icon icon="caret-up" />
-									</span>
-								</div>
-								<div class="is-size-5">
-									<strong>{{ snippet.upvotes }}</strong>
-								</div>
-								<div>
-									<span class="icon">
-										<font-awesome-icon icon="caret-down" />
-									</span>
-								</div>
-							</div>
-							<div class="media-content">
-								<div class="content">
-									<div class="title is-size-5">
-										<span 
-										 :class="['tag',
-															{'is-success': snippet.status == 'Open'},
-															{'is-light': snippet.status == 'Closed'}
-														 ]" >
-											{{ snippet.status }}
-										</span>
-										<router-link :to="{name: 'issue', params: { id:snippet.pk }}" class="has-text-primary">
-											<strong>{{ snippet.title }}</strong>
-										</router-link>
-									</div>
-									<p class="subtitle is-size-6">
-										<small>Opened {{ timestamp(snippet.date_created) }} by</small>
-										<router-link :to="{name:'user', params: {id:snippet.user_id} }"><small>{{ snippet.username }}</small></router-link>
-										<span class="tag is-light">{{ snippet.language_name }}</span>
-									</p>
-								</div>
-							</div>
-						</article>
-					</div>
-					<div class="column is-3 is-flex level is-marginless">
-						<div class="level-item vertical flex-right">
-							<span class="flex-vertical-center">
-								<span class="icon">
-									<font-awesome-icon icon="comment-alt" />
-								</span>
-								<span>120</span>
-							</span>
-							<div>updated 2 days ago</div>
-						</div>
-					</div>
-				</div>
+				<SnippetRow v-for="snippet in snippets" :snippet="snippet" :key="snippet.pk" />
 			</div>
 		</div>
 	</div>
@@ -117,13 +64,15 @@ import axios from 'source/plugins/axios';
 import moment from 'moment';
 
 import FormInput from "../components/_generics/FormInput.vue";
+import SnippetRow from "../components/feed/SnippetRow.vue";
 import LanguageFilter from "../components/filters/LanguageFilter.vue";
 export default {
   name: "MainFeed",
 
   components: {
     FormInput,
-    LanguageFilter
+    LanguageFilter,
+    SnippetRow
   },
 
   data() {
@@ -139,9 +88,6 @@ export default {
   },
 
   methods: {
-    timestamp(date) {
-      return moment(date, moment.ISO_8601).fromNow();
-    },
     filter(value){
     	this.languageFilter = value
     },
@@ -213,29 +159,12 @@ export default {
 }
 
 .search-bar {
-  margin: 12px;
-}
-
-.vertical {
-  flex-direction: column;
-}
-
-.flex-right {
-  align-items: flex-end !important;
-}
-
-.flex-vertical-center {
-  display: flex;
-  align-items: center;
+  margin: 12px 0px;
 }
 
 .snippet-list {
 	padding-left: 40px;
 	padding-right: 40px;
 }
-.snippet{
-	&:not(:last-child) {
-  	border-bottom: 1px solid hsl(0, 0%, 86%);
-	}
-}
+
 </style>

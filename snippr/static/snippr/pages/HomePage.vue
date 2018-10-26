@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-centered landing">
+    <div class="columns is-centered">
     	<div class="column is-4">
     		<div class="content">
     			<h1 class="title is-2">Welcome to Snippr!</h1>
@@ -7,7 +7,7 @@
     		</div>
     	</div>
     	<div class="column is-3">
-		    <div class="tabs is-toggle is-fullwidth">
+		    <div class="tabs is-toggle is-fullwidth has-background-white">
 			  <ul>
 			    <li :class="{'is-active': !register}">
 			    	<a v-on:click="isSignin">Sign in</a>
@@ -54,7 +54,4 @@
 	.tabs {
 		margin-bottom: 0px;
 	}
-	.landing {
-        padding-top: 4rem;
-    }
 </style>

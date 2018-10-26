@@ -26,12 +26,6 @@ export default {
     };
   },
   computed: {
-    listeners() {
-      const { ...listeners } = this.$listeners;
-      delete listeners.input;
-      return listeners;
-    },
-
     valueFilter: {
       get(){
         return this.value;
