@@ -9,6 +9,7 @@
           class="media-left has-text-centered"
           :upvotes="snippet.upvotes"
           :hasUpvoted="snippet.has_upvoted"
+          :hasDownvoted="snippet.has_downvoted"
         />
         <div class="media-content">
           <div class="content">

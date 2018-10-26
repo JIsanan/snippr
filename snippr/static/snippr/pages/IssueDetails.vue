@@ -19,6 +19,7 @@
 							<VoteButtonSet
 							 :upvotes="issue.upvotes"
 							 :hasUpvoted="issue.has_upvoted"
+							 :hasDownvoted="issue.has_downvoted"
 							 class="media-left has-text-centered"
 							/>
 							<div class="media-content">

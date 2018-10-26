@@ -1,15 +1,15 @@
 <template>
   <div class="">
-    <button class="button upvote">
-      <span class="icon">
+    <button class="button upvote" @click="upvote">
+      <span :class="['icon', {'has-text-success': hasUpvoted}]">
         <font-awesome-icon icon="caret-up" />
       </span>
     </button>
     <p class="is-size-5 vote">
       <strong>{{ upvotes }}</strong>
     </p>
-    <button class="button downvote">
-      <span class="icon">
+    <button :class="['button', 'downvote']">
+      <span :class="['icon', {'has-text-success': hasDownvoted}]">
         <font-awesome-icon icon="caret-down" />
       </span>
     </button>
@@ -26,10 +26,14 @@ export default {
       type: Boolean,
       required: true,
     },
+    hasDownvoted: {
+      type: Boolean,
+      required: true,
+    },
     upvotes: {
       type: Number,
       required: true,
-    }
+    },
   },
 
   data() {
@@ -38,7 +42,18 @@ export default {
   },
   computed: {
   },
-
+  methods: {
+    async upvote() {
+      let headers = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+      let query = `http://127.0.0.1:8000/api/commit/${this.$route.params.id}/upvote/`
+      let response = await axios.get(query, headers);
+      this.hasUpvoted = response;
+    }
+  },
   async mounted() {
     let headers = {
       headers: {

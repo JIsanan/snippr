@@ -23,6 +23,7 @@ class CommitSerializer(serializers.ModelSerializer):
     user_id = serializers.SerializerMethodField()
     upvotes = serializers.SerializerMethodField()
     has_upvoted = serializers.SerializerMethodField()
+    has_downvoted = serializers.SerializerMethodField()
     language_name = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
@@ -42,10 +43,14 @@ class CommitSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'upvotes',
-            'has_upvoted')
+            'has_upvoted',
+            'has_downvoted')
         extra_kwargs = {
             'user': {'write_only': True}
         }
+
+    def get_current_user(self):
+        return self.context['request'].user
 
     def get_username(self, obj):
         ret = obj.user.username
@@ -64,8 +69,14 @@ class CommitSerializer(serializers.ModelSerializer):
         return ret
 
     def get_has_upvoted(self, obj):
-        ret = False
-        return ret
+        user = self.get_current_user()
+        ret = obj.upvote.filter(user=user).first()
+        return True if (ret and ret.is_active) else False
+
+    def get_has_downvoted(self, obj):
+        user = self.get_current_user()
+        ret = obj.upvote.filter(user=user).first()
+        return True if (ret and not ret.is_active) else False
 
     def get_status(self, obj):
         ret = obj.get_status_display()
