@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div class="box snippet-list">
-				<SnippetRow v-for="snippet in snippets" :snippet="snippet"/>
+				<SnippetRow v-for="snippet in snippets" :snippet="snippet" :key="snippet.pk" />
 			</div>
 		</div>
 	</div>

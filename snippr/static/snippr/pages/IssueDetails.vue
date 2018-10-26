@@ -20,6 +20,7 @@
 							 :upvotes="issue.upvotes"
 							 :hasUpvoted="issue.has_upvoted"
 							 :hasDownvoted="issue.has_downvoted"
+							 :issueId="issue.pk"
 							 class="media-left has-text-centered"
 							/>
 							<div class="media-content">

@@ -1,8 +1,5 @@
 <template>
-  <div 
-   class="columns snippet"
-   :key="snippet.pk"
-   >
+  <div class="columns snippet">
     <div class="column is-flex level is-marginless">
       <article class="media flex-vertical-center">
         <VoteButtonSet 
@@ -10,6 +7,7 @@
           :upvotes="snippet.upvotes"
           :hasUpvoted="snippet.has_upvoted"
           :hasDownvoted="snippet.has_downvoted"
+          :issueId="snippet.pk"
         />
         <div class="media-content">
           <div class="content">

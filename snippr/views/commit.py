@@ -55,33 +55,37 @@ class CommitViews(ModelViewSet):
     def upvote(self, request, pk=None):
         user_obj = request.user
         commit = self.get_object()
+        ret = {}
+        ret['upvote'] = True
+        ret['downvote'] = False
         if(user_obj and commit):
             upvote = commit.upvote.filter(user=user_obj).first()
             if(upvote and not upvote.is_active):
-                upvote.is_active = not upvote.is_active
+                upvote.is_active = True
                 upvote.save()
-                return Response(upvote.is_active)
             elif(not upvote):
                 commit.upvote.create(
                     activity_type=Activity.UPVOTE, user=user_obj)
-                return Response(True)
-        return Response(True)
+        return Response(ret)
 
     @action(detail=True, methods=['get'])
     def downvote(self, request, pk=None):
         user_obj = request.user
         commit = self.get_object()
+        ret = {}
+        ret['upvote'] = False
+        ret['downvote'] = True
         if(user_obj and commit):
             upvote = commit.upvote.filter(user=user_obj).first()
             if(upvote and upvote.is_active):
-                upvote.is_active = not upvote.is_active
+                upvote.is_active = False
                 upvote.save()
-                return Response(upvote.is_active)
             elif(not upvote):
                 commit.upvote.create(
-                    activity_type=Activity.UPVOTE, user=user_obj, is_active=False)
-                return Response(False)
-        return Response(False)
+                    activity_type=Activity.UPVOTE,
+                    user=user_obj,
+                    is_active=False)
+        return Response(ret)
 
 
 class LanguageViews(ReadOnlyModelViewSet):

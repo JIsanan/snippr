@@ -8,7 +8,7 @@
     <p class="is-size-5 vote">
       <strong>{{ upvotes }}</strong>
     </p>
-    <button :class="['button', 'downvote']">
+    <button :class="['button', 'downvote']" @click="downvote">
       <span :class="['icon', {'has-text-success': hasDownvoted}]">
         <font-awesome-icon icon="caret-down" />
       </span>
@@ -34,6 +34,10 @@ export default {
       type: Number,
       required: true,
     },
+    issueId: {
+      type: Number,
+      required: true,
+    }
   },
 
   data() {
@@ -49,10 +53,22 @@ export default {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       }
-      let query = `http://127.0.0.1:8000/api/commit/${this.$route.params.id}/upvote/`
+      let query = `http://127.0.0.1:8000/api/commit/${this.issueId}/upvote/`
       let response = await axios.get(query, headers);
-      this.hasUpvoted = response;
-    }
+      this.hasUpvoted = response.upvote;
+      this.hasDownvoted = response.downvote;
+    },
+    async downvote() {
+      let headers = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+      let query = `http://127.0.0.1:8000/api/commit/${this.issueId}/downvote/`
+      let response = await axios.get(query, headers);
+      this.hasUpvoted = response.upvote;
+      this.hasDownvoted = response.downvote;
+    },
   },
   async mounted() {
     let headers = {
