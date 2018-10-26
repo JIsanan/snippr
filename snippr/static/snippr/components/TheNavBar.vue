@@ -28,8 +28,8 @@
           {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">
-          <router-link class="navbar-item" :to="{ name: 'user', params: { id:getUser.id} }">Profile</router-link>
-          <router-link class="navbar-item" :to="{ name: 'settings' }">Settings</router-link>
+          <a class="navbar-item" @click="routePage({ name: 'user', params: { id:getUser.id} })">Profile</a>
+          <a class="navbar-item" @click="routePage({ name: 'settings' })">Settings</a>
           <a class="navbar-item" @click="logout">Log out</a>
         </div>
       </div>
@@ -78,6 +78,11 @@
 
       toggle: function() {
         this.isOpen = !this.isOpen;
+      },
+
+      routePage(params) {
+        this.toggle();
+        this.$router.push(params);
       }
     },
 

@@ -1,18 +1,18 @@
 <template>
   <div class="">
-    <div>
+    <button class="button upvote">
       <span class="icon">
         <font-awesome-icon icon="caret-up" />
       </span>
-    </div>
-    <div class="is-size-5">
+    </button>
+    <p class="is-size-5 vote">
       <strong>{{ upvotes }}</strong>
-    </div>
-    <div>
+    </p>
+    <button class="button downvote">
       <span class="icon">
         <font-awesome-icon icon="caret-down" />
       </span>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
       required: true,
     },
     upvotes: {
-      type: String,
+      type: Number,
       required: true,
     }
   },
@@ -53,6 +53,25 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+
+  .upvote, .downvote {
+    border: none;
+    background: none;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+    &:active {
+      border: none;
+    }
+    &:hover {
+      color: green;
+    }
+  }
+
+  .vote {
+  }
 
 </style>
