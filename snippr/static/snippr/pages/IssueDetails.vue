@@ -60,7 +60,10 @@
 			<div class="columns is-centered">
 				<div class="column is-11">
 					<div class="content code">
-						<p>{{ issue.snippet.code }}</p>
+						<p v-for="line in issue.snippet.code.split('\n')">
+							{{ line }}
+						</p>
+
 					</div>
 				</div>
 			</div>
@@ -135,11 +138,13 @@
 			<div class="box">
 				<div class="content">
 					<p class="title is-5">Related Issues</p>
-					<ul>
-						<li>Something</li>
-						<li>Something</li>
-						<li>Something</li>
-						<li>Something</li>
+					<ul class="related-list is-marginless">
+						<li v-for="related in relatedIssues" :keys="related.pk">
+							<span class="tag is-primary">{{ related.upvotes }}</span>
+							<a class="is-size-6">
+								{{ related.title }}
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -167,6 +172,7 @@ export default {
       search: "",
 			searchType: "",
 			issue: null,
+			relatedIssues: {}
     };
   },
   methods: {
@@ -193,6 +199,9 @@ export default {
 		if(response.data.detail != "Not Found.") {
 			this.issue = response.data;
 		}
+
+		response = await axios.get(`http://127.0.0.1:8000/api/commit?language=${this.issue.language_name}`, headers)
+		this.relatedIssues = response.data;
 	}
 };
 </script>
@@ -201,8 +210,8 @@ export default {
 .addon-content {
 	padding-top: 0px;
 }
-.feed {
-
+.related-list {
+	list-style: none;
 }
 .tabs {
   margin-bottom: 0px;

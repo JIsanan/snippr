@@ -1,7 +1,7 @@
 <template>
 	<span class="select">
 		<select v-model="valueFilter" >
-			<option value="All">All</option>
+			<option value="All" v-if="hasFilterAll">All</option>
 			<option v-for="language in languages" :value="language.name">
 				{{language.name}}
 			</option>
@@ -17,6 +17,9 @@ export default {
   props: {
   	value: {
   		type: String,
+  	},
+  	hasFilterAll: {
+  		type: Boolean
   	}
   },
 

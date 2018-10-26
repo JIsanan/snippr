@@ -50,7 +50,9 @@ class CommitSerializer(serializers.ModelSerializer):
         }
 
     def get_current_user(self):
-        return self.context['request'].user
+        if(self.context):
+            return self.context['request'].user
+        return False
 
     def get_username(self, obj):
         ret = obj.user.username
@@ -65,7 +67,7 @@ class CommitSerializer(serializers.ModelSerializer):
         return ret
 
     def get_upvotes(self, obj):
-        ret = obj.upvote.count()
+        ret = obj.upvote.filter(is_active=True).count()
         return ret
 
     def get_has_upvoted(self, obj):

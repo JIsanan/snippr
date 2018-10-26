@@ -44,6 +44,7 @@
 							<LanguageFilter 
 								:value="languageFilter"
 								@filter="filter"
+								hasFilterAll="true"
 							/>
 						</div>
 						<div slot="right-addon" class="control">

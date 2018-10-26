@@ -57,6 +57,7 @@ export default {
       let response = await axios.get(query, headers);
       this.hasUpvoted = response.upvote;
       this.hasDownvoted = response.downvote;
+      this.upvotes = response.upvote_count;
     },
     async downvote() {
       let headers = {
@@ -68,6 +69,7 @@ export default {
       let response = await axios.get(query, headers);
       this.hasUpvoted = response.upvote;
       this.hasDownvoted = response.downvote;
+      this.upvotes = response.upvote_count;
     },
   },
   async mounted() {
