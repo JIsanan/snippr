@@ -1,6 +1,6 @@
 <template>
 		<div class="columns is-centered feed" v-if="issue != null">
-				<div class="column is-8">
+				<div class="column is-6 box">
 					<div class="columns is-marginless">
 						<div class="column is-3 is-paddingless">
 							<span class="tag is-success is-large">Open</span>
@@ -12,7 +12,7 @@
 							</div>
 						</div>
 					</div>
-					<hr>
+					<hr class="">
 					<div class="columns has-bottom-border">
 							<div class="column is-flex level is-marginless">
 									<article class="media flex-vertical-center">
@@ -43,7 +43,7 @@
 										</div>
 									</article>
 							</div>
-							<div class="column is-2 is-flex level is-marginless">
+							<div class="column is-3 is-flex level is-marginless">
 									<div class="level-item vertical flex-right">
 											<span class="flex-vertical-center">
 													<span class="icon">
@@ -109,7 +109,7 @@
 										</div>
 									</article>
 							</div>
-							<div class="column is-2 is-flex level is-marginless">
+							<div class="column is-3 is-flex level is-marginless">
 									<div class="level-item vertical flex-right">
 											<span class="flex-vertical-center">
 													<span class="icon">
@@ -136,6 +136,19 @@
 								<p class="has-background-link code-line">printf("something");</p>
 								<p class="code-line">printf("something");</p>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div class="column is-2 addon-content">
+					<div class="box">
+						<div class="content">
+							<p class="title is-5">Related Issues</p>
+							<ul>
+								<li>Something</li>
+								<li>Something</li>
+								<li>Something</li>
+								<li>Something</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -191,8 +204,11 @@ export default {
 </script>
 
 <style scoped>
+.addon-content {
+	padding-top: 0px;
+}
 .feed {
-  padding-top: 2rem;
+
 }
 .tabs {
   margin-bottom: 0px;
