@@ -1,9 +1,9 @@
 <template>
 	<div class="columns is-centered feed">
 		<div class="column is-8">
-			<div class="columns is-marginless is-mobile">
+			<div class="columns is-marginless">
 				<div class="column is-paddingless is-narrow">
-					<div class="tabs is-borderless is-toggle has-background-white">
+					<div class="tabs is-toggle has-background-white">
 						<ul>
 							<li :class="{'is-active': statusFilter == 'O'}">
 								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Open'})}">

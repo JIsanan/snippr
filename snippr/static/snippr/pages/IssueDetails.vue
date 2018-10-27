@@ -2,18 +2,18 @@
 	<div class="columns is-centered feed" v-if="issue != null">
 		<div class="column is-6 box">
 			<div class="columns is-marginless">
-				<div class="column is-3 is-paddingless">
+				<div class="column is-3">
 					<span class="tag is-success is-large">Open</span>
 				</div>
-				<div class="column is-paddingless">
+				<div class="column">
 					<div class="buttons is-right">
 						<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
 						<router-link :to="{ name: 'createissue' }" class="button is-success is-outlined">Answer</router-link>
 					</div>
 				</div>
 			</div>
-			<hr class="">
-			<div class="columns has-bottom-border">
+			<hr class="is-marginless">
+			<div class="columns is-marginless has-bottom-border main-issue">
 				<div class="column is-flex level is-marginless">
 						<article class="media flex-vertical-center">
 							<VoteButtonSet
@@ -25,8 +25,8 @@
 							/>
 							<div class="media-content">
 								<div class="content">
-									<p class="title"><strong>{{ issue.title }}</strong> </p>
-									<p class="subtitle">
+									<p class="title is-size-4"><strong>{{ issue.title }}</strong> </p>
+									<p class="subtitle is-size-6">
 										<small>Opened {{ timestamp(issue.date_created) }} by</small>
 										<a><small>{{ issue.username }}</small></a>
 										<span class="tag is-light">{{ issue.language_name }}</span>
@@ -43,11 +43,13 @@
 									</span>
 									<span>120</span>
 							</span>
-							<div>updated 2 days ago</div>
+							<div class="is-size-6">
+								<small>updated 2 days ago</small>
+							</div>
 					</div>
 				</div>
 			</div>
-			<div class="columns is-centered">
+			<div class="columns is-centered is-marginless">
 				<div class="column is-11">
 					<div class="content description">
 						<h4 class="title is-size-5">Description</h4>
@@ -207,6 +209,9 @@ export default {
 </script>
 
 <style scoped>
+.main-issue {
+	margin-top: 12px;
+}
 .addon-content {
 	padding-top: 0px;
 }

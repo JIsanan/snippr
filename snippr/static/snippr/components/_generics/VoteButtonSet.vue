@@ -112,5 +112,6 @@ export default {
 
   .vote {
     font-size: 2rem;
+    margin: 0px 4px;
   }
 </style>
