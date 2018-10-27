@@ -4,7 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-
+from rest_framework.pagination import LimitOffsetPagination
 from snippr.models.commit import Commit, Language, Snippet, Activity
 from snippr.serializers.user import UserSerializer
 from snippr.serializers.commit import CommitSerializer, SnippetSerializer, LanguageSerializer
@@ -25,6 +25,7 @@ class CommitViews(ModelViewSet):
     queryset = Commit.objects.all()
     serializer_class = CommitSerializer
     filterset_class = CommitFilter
+    pagination_class = LimitOffsetPagination
 
     def list(self, request):
         user = request.user.pk
