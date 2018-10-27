@@ -146,7 +146,8 @@ export default {
     
     
     let response = await axios.get(query, headers);
-    this.snippets = response;
+    console.log(response.results)
+    this.snippets = response.results;
   }
 };
 </script>

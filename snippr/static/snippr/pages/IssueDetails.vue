@@ -74,64 +74,70 @@
 				Answers
 			</div>
 			<hr>
-			<div class="columns has-bottom-border">
-				<div class="column is-flex level is-marginless">
-						<article class="media flex-vertical-center">
-							<div class="media-left has-text-centered">
-						<div>
-								<span class="icon">
-									<font-awesome-icon icon="caret-up" />
-								</span>
-						</div>
-						<div class="is-size-5">
-								<strong>120</strong>
-						</div>
-						<div>
-								<span class="icon">
-									<font-awesome-icon icon="caret-down" />
-								</span>
-						</div>
-							</div>
-							<div class="media-content">
-								<div class="content">
-									<p class="title is-size-4"><strong>Error 500: SMPT Host Undefined</strong> </p>
-									<p class="subtitle">
-										<small>Opened 2 months ago by</small>
-										<a><small>Xavier Luke Pulmones</small></a>
-										<span class="tag is-light">Java</span>
-										<span class="tag is-light">C#</span>
-										<span class="tag is-light">C++</span>
-									</p>
+			<div v-for="comment in issue.comments">
+				<div class="columns has-bottom-border">
+					<div class="column is-flex level is-marginless">
+							<article class="media flex-vertical-center">
+								<div class="media-left has-text-centered">
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-up" />
+											</span>
+									</div>
+									<div class="is-size-5">
+											<strong>120</strong>
+									</div>
+									<div>
+											<span class="icon">
+												<font-awesome-icon icon="caret-down" />
+											</span>
+									</div>
 								</div>
-							</div>
-						</article>
-				</div>
-				<div class="column is-3 is-flex level is-marginless">
-					<div class="level-item vertical flex-right">
-						<span class="flex-vertical-center">
-								<span class="icon">
-									<font-awesome-icon icon="comment-alt" />
-								</span>
-								<span>120</span>
-						</span>
-						<div>updated 2 days ago</div>
+								<div class="media-content">
+									<div class="content">
+										<p class="title is-size-4"><strong>Error 500: SMPT Host Undefined</strong> </p>
+										<p class="subtitle">
+											<small>Answered on {{ timestamp(comment.date_created) }} by</small>
+											<a><small>Xavier Luke Pulmones</small></a>
+											<span class="tag is-light">Java</span>
+											<span class="tag is-light">C#</span>
+											<span class="tag is-light">C++</span>
+										</p>
+									</div>
+								</div>
+							</article>
+					</div>
+					<div class="column is-3 is-flex level is-marginless">
+						<div class="level-item vertical flex-right">
+							<span class="flex-vertical-center">
+									<span class="icon">
+										<font-awesome-icon icon="comment-alt" />
+									</span>
+									<span>120</span>
+							</span>
+							<div>updated 2 days ago</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="columns is-centered">
-				<div class="column is-11">
-					<div class="content description">
-						<h4 class="title is-size-5">Description</h4>
-						<p class="subtitle is-size-6">Lorem ipsum dolor sit amet, exerci posidonium ad his, eu vis equidem indoctum. Choro expetenda scribentur ex eum. Ei sed soleat voluptua theophrastus. No has meis tacimates. Eu erant ignota antiopam vix, case illum mandamus no quo. Vis ut tollit aperiri. At populo postea cum. Ne pro vero qualisque dissentiet. An magna verterem usu, ex has alterum aliquid. Cu vix appetere interesset, assum alterum pro no.
-						</p>
+				<div class="columns is-centered">
+					<div class="column is-11">
+						<div class="content description">
+							<h4 class="title is-size-5">Description</h4>
+							<p class="subtitle is-size-6">
+								{{ comment.description }}
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="columns is-centered">
-				<div class="column is-11">
-					<div class="content code">
-						<p class="has-background-link code-line">printf("something");</p>
-						<p class="code-line">printf("something");</p>
+				<div class="columns is-centered">
+					<div class="column is-11">
+						<div class="content code">
+							<p class="code-line">
+								{{ comment.code }}
+							</p>
+							<p class="has-background-link code-line">printf("something");</p>
+							<p class="code-line">printf("something");</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -202,8 +208,8 @@ export default {
 			this.issue = response.data;
 		}
 
-		response = await axios.get(`http://127.0.0.1:8000/api/commit?language=${this.issue.language_name}`, headers)
-		this.relatedIssues = response.data;
+		response = await axios.get(`http://127.0.0.1:8000/api/commit?limit=5&language=${this.issue.language_name}`, headers)
+		this.relatedIssues = response.data.results;
 	}
 };
 </script>

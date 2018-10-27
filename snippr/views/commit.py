@@ -12,6 +12,7 @@ from snippr.serializers.commit import CommitSerializer, SnippetSerializer, Langu
 
 import datetime
 
+
 class CommitFilter(filters.FilterSet):
     language = filters.CharFilter(field_name='language__name')
     title = filters.CharFilter(field_name='title', lookup_expr='icontains')
@@ -32,6 +33,11 @@ class CommitViews(ModelViewSet):
     def list(self, request):
         user = request.user.pk
         queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(
+                page, many=True, context={'request': user})
+            return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(
             queryset, many=True, context={'request': user})
         return Response(serializer.data)
@@ -142,3 +148,10 @@ class LanguageViews(ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
+
+
+class TrackingViews(ModelViewSet):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    queryset = Tracking.objects.all()
+    serializer_class = TrackingSerializer

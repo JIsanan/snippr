@@ -78,6 +78,7 @@ class CommitSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    comments = TrackingSerializer(many=True)
 
     class Meta:
         model = Commit
@@ -85,6 +86,7 @@ class CommitSerializer(serializers.ModelSerializer):
             'pk',
             'status',
             'snippet',
+            'comments',
             'user',
             'comments',
             'user_id',
