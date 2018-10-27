@@ -6,9 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from snippr.models.commit import Commit, Language, Snippet, Activity
+from snippr.models.tracking import Tracking
 from snippr.serializers.user import UserSerializer
-from snippr.serializers.commit import CommitSerializer, SnippetSerializer, LanguageSerializer
+from snippr.serializers.commit import CommitSerializer, SnippetSerializer, LanguageSerializer, TrackingSerializer
 
+import datetime
 
 class CommitFilter(filters.FilterSet):
     language = filters.CharFilter(field_name='language__name')
@@ -92,6 +94,46 @@ class CommitViews(ModelViewSet):
                     user=user_obj,
                     is_active=False)
                 ret['upvote_count'] -= 1
+        return Response(ret)
+
+    @action(detail=True, methods=['post'])
+    def comment(self, request, pk=None):
+        user_obj = request.user
+        commit = self.get_object()
+        ret = {}
+        if_exists = Tracking.objects.filter(user=request.user, commit=commit).first()
+        if not if_exists:
+            if 'overwrite' not in request.data:
+                ret['message'] = 'already has commit'
+                return Response(ret)
+            else:
+                if_exists.delete()
+        tracking_data = request.data.copy()
+        tracking_data['user'] = request.user.pk
+        tracking_data['snippet'] = commit.snippets.first().pk
+        tracking_data['commit'] = commit.pk
+        tracking = TrackingSerializer(data=tracking_data)
+        if tracking.is_valid() is True:
+            track = tracking.save()
+            ret['message'] = "successfully commented"
+            track = TrackingSerializer(track)
+            ret['comment'] = track.data
+        return Response(ret)
+
+    @action(detail=True, methods=['post'])
+    def edit_comment(self, request, pk=None):
+        user_obj = request.user
+        commit = self.get_object()
+        ret = {}
+        track = Tracking.objects.filter(user=request.user, commit=commit).first()
+        ret['message'] = 'no comment yet'
+        if track:
+            track.latest_update = datetime.datetime.now()
+            track.snippet = commit.snippets.first()
+            track.code = request.data['code']
+            track.description = request.data['description']
+            track.save()
+            ret['message'] = 'editing successful'
         return Response(ret)
 
 
