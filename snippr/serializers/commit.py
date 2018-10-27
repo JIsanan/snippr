@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from snippr.models.commit import Commit, Snippet, Language
+from snippr.models.tracking import Tracking
+from snipprcomparison import snipprcomparison
 
 
 class SnippetSerializer(serializers.ModelSerializer):
@@ -18,6 +20,54 @@ class LanguageSerializer(serializers.ModelSerializer):
             'pk', 'name')
 
 
+class TrackingSerializer(serializers.ModelSerializer):
+    upvotes = serializers.SerializerMethodField()
+    user_id = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
+    snippet_code = serializers.SerializerMethodField()
+    line_changed = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Tracking
+        fields = (
+            'pk',
+            'code',
+            'snippet',
+            'date_created',
+            'latest_update',
+            'user',
+            'commit',
+            'description',
+            'upvotes',
+            'snippet_code',
+            'line_changed',
+            'user_id',
+            'username',)
+        extra_kwargs = {
+            'user': {'write_only': True}
+        }
+
+    def get_upvotes(self, obj):
+        ret = obj.upvote.count()
+        return ret
+
+    def get_username(self, obj):
+        ret = obj.user.username
+        return ret
+
+    def get_user_id(self, obj):
+        ret = obj.user.userprofile.id
+        return ret
+
+    def get_snippet_code(self, obj):
+        ret = obj.snippet.code
+        return ret
+
+    def get_line_changed(self, obj):
+        ret = snipprcomparison.get_lines_changed(obj.snippet.code, obj.code)
+        return ret
+
+
 class CommitSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     user_id = serializers.SerializerMethodField()
@@ -25,6 +75,7 @@ class CommitSerializer(serializers.ModelSerializer):
     has_upvoted = serializers.SerializerMethodField()
     has_downvoted = serializers.SerializerMethodField()
     language_name = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
 
@@ -35,6 +86,7 @@ class CommitSerializer(serializers.ModelSerializer):
             'status',
             'snippet',
             'user',
+            'comments',
             'user_id',
             'username',
             'language_name',
@@ -58,6 +110,12 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_user_id(self, obj):
         ret = obj.user.userprofile.id
+        return ret
+
+    def get_comments(self, obj):
+        obj = obj.comments.all()
+        obj = TrackingSerializer(obj, many=True)
+        ret = obj.data
         return ret
 
     def get_language_name(self, obj):
