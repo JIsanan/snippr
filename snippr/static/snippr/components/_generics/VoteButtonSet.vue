@@ -1,16 +1,16 @@
 <template>
-  <div class="">
-    <button class="button upvote" @click="upvote">
+  <div class="voteSet">
+    <button class="button upvote is-medium" @click="upvote">
       <span :class="['icon', {'has-text-success': hasUpvoted}]">
-        <font-awesome-icon icon="caret-up" />
+        <font-awesome-icon icon="arrow-alt-circle-up" />
       </span>
     </button>
-    <p class="is-size-5 vote">
+    <p class="is-size-4 vote">
       <strong>{{ upvotes }}</strong>
     </p>
-    <button :class="['button', 'downvote']" @click="downvote">
+    <button :class="['button', 'downvote', 'is-medium']" @click="downvote">
       <span :class="['icon', {'has-text-success': hasDownvoted}]">
-        <font-awesome-icon icon="caret-down" />
+        <font-awesome-icon icon="arrow-alt-circle-down" />
       </span>
     </button>
   </div>
@@ -104,7 +104,13 @@ export default {
     }
   }
 
-  .vote {
+  .voteSet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
+  .vote {
+    font-size: 2rem;
+  }
 </style>

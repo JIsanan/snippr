@@ -44,7 +44,7 @@
 							<LanguageFilter 
 								:value="languageFilter"
 								@filter="filter"
-								hasFilterAll="true"
+								:hasFilterAll="hasFilterAll"
 							/>
 						</div>
 						<div slot="right-addon" class="control">
@@ -85,6 +85,7 @@ export default {
       register: false,
       statusFilter: 'O',
       languageFilter: 'All',
+      hasFilterAll: true,
     };
   },
 

@@ -4,13 +4,15 @@ $navbar-item-hover-color: white;
 $navbar-dropdown-arrow: none;
 $box-shadow: none;
 $navbar-item-hover-background-color: none;
-$menu-item-color: white;
+$menu-item-color: blue;
 $menu-item-active-background-color: grey;
 $menu-item-hover-background-color: hsl(0, 0%, 60%);
 $menu-item-hover-color: white;
 $menu-item-active-color: white;
 $menu-item-radius: 0px;
 $notification-padding: .5rem 1rem;
+
+$turquoise: hsla(142, 82%, 32%, 1);
 
 .justify-between {
 	justify-content: space-between;

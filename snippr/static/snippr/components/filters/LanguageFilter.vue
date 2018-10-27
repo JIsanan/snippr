@@ -50,7 +50,7 @@ export default {
     let languageFilter = this.languageFilter
     let query = 'http://127.0.0.1:8000/api/language/'
     let response = await axios.get(query, headers);
-    this.languages = response;
+    this.languages = response.results;
   }
 };
 </script>

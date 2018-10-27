@@ -40,7 +40,9 @@
           </span>
           <span>120</span>
         </span>
-        <div>updated 2 days ago</div>
+        <div class="is-size-6">
+          <small>updated 2 days ago</small>
+        </div>
       </div>
     </div>
   </div>
