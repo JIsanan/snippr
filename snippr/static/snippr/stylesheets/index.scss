@@ -24,4 +24,9 @@ $size-4: 1.4rem;
 	justify-content: space-between;
 }
 
+.flex-vertical-center {
+	display: flex ;
+	align-items: center ;
+}
+  
 @import '~bulma/bulma'

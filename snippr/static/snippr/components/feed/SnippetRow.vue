@@ -90,10 +90,6 @@ export default {
       border-bottom: 1px solid hsl(0, 0%, 86%);
     }
   }
-  .flex-vertical-center {
-    display: flex ;
-    align-items: center ;
-  }
 
   .flex-right {
     align-items: flex-end !important;
