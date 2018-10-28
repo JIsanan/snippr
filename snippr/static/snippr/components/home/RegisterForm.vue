@@ -95,6 +95,10 @@
 				if(this.userData.username.trim() != '') {
 					if(this.userData.password.trim() != '' && this.confirmPassword.trim() == this.userData.password.trim()) {
 						const response = await this.createUser(this.userData);
+						if(response.status == 400){
+							this.errorMessage = response.message[0]
+						}
+
 					} else {
 						this.errorMessage = "Please input the correct password."
 					}

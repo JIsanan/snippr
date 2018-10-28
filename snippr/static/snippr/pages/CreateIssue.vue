@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-centered feed">
-    	<div class="column is-8">
+    	<div class="column is-8 box">
     		<div class="columns is-marginless">
     			<p class="title">New Issue</p>
     		</div>
