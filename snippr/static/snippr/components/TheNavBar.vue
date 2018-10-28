@@ -24,7 +24,7 @@
         class="navbar-item has-dropdown"
         v-bind:class="{'is-active': isOpen}"
       >
-        <a class="navbar-link" @click="toggle()" v-if="getUser">
+        <a :class="['navbar-link', {'has-text-white': isOpen}]" @click="toggle()" v-if="getUser">
           {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">

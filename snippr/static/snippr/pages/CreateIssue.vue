@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-centered feed">
-    	<div class="column is-8">
+    	<div class="column is-8 box">
     		<div class="columns is-marginless">
     			<p class="title">New Issue</p>
     		</div>
@@ -26,15 +26,21 @@
 							v-model="description"
 							rows="5"
 						/>
-						<HorizontalFormInput
-							class="issue-input"
-							type="text"
-							label="Tags"
-							placeholder="Please use commas ( , ) to separate your tags"
-							v-bind:value="tags"
-							inputClass="input"
-							v-model="tags"
-						/>
+						<div class="field is-horizontal">
+							<div class="field-label is-normal">
+								<label class="label">Language</label>
+							</div>
+							<div class="field-body">
+								<div class="field is-narrow">
+									<div class="control">
+										<LanguageFilter
+										 :value="language"
+										 @filter="selectLanguage"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
 						<hr>
 						<HorizontalFormInput
 							type="textarea"
@@ -61,19 +67,21 @@
 <script>
 import axios from 'axios';
 
+import LanguageFilter from "../components/filters/LanguageFilter.vue";
 import HorizontalFormInput from "../components/_generics/HorizontalFormInput.vue";
 export default {
   name: "CreateIssue",
 
   components: {
-    HorizontalFormInput
+    HorizontalFormInput,
+    LanguageFilter
   },
 
   data() {
     return {
       title: "",
       description: "",
-      tags: "",
+      language: "C",
       code: ""
     };
   },
@@ -83,7 +91,7 @@ export default {
       let payload = {
         title: this.title,
         description: this.description,
-        language: this.tags,
+        language: this.language,
         code: this.code
       };
 
@@ -103,6 +111,10 @@ export default {
           } 
         });
       }
+    },
+
+    selectLanguage(value){
+    	this.language = value
     },
 
     cancel() {

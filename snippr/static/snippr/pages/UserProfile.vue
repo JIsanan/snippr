@@ -1,30 +1,29 @@
 <template>
 	<div class="columns is-centered feed">
 		<div class="column is-8">
-			<div class="columns is-centered" v-if="profile">
-				<div class="column is-11">
-					<div class="level">
-						<div class="level-item">
-							<figure>
+			<div class="columns level" v-if="profile">
+				<div class="column is-narrow level-left">
+					<article class="media flex-vertical-center">
+					  <figure class="media-left">
 						    <p class="image is-128x128">
-						      <img src="https://bulma.io/images/placeholders/128x128.png">
+						      <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
 						    </p>
 						  </figure>
-						</div>
-					</div>
-					<div class="level">
-						<div class="level-item has-text-centered">
-							<div>
-								<p class="heading is-size-2"><strong>{{ profile.first_name }} {{ profile.last_name }}</strong></p>
-								<p class="subheading is-size-4">@{{ profile.username }}</p>
-							</div>
-						</div>
-					</div>
-					<hr>
+					  <div class="media-content">
+					    <div class="content">
+								<p class="title is-size-3 name"><strong>{{ profile.first_name }} {{ profile.last_name }}</strong></p>
+								<p class="subtitle is-size-5">
+									@{{ profile.username }}
+								</p>
+					    </div>
+					  </div>
+					</article>
+				</div>
+				<div class="column is-6 level-right">
 					<nav class="level">
 					  <div class="level-item has-text-centered">
 					    <div>
-					    	<p class="heading">Issues Submitted</p>
+					    	<p class="heading">Issues</p>
 					    	<p class="title">{{ profile.issue_count }}</p>
 					    </div>
 					  </div>
@@ -249,5 +248,10 @@
 
 	.list-hr {
 		margin: 1em 0;
+	}
+
+	.name {
+		text-transform: uppercase;
+		font-weight: 600;
 	}
 </style>

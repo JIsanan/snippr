@@ -12,8 +12,21 @@ $menu-item-active-color: white;
 $menu-item-radius: 0px;
 $notification-padding: .5rem 1rem;
 
+$turquoise: hsla(142, 82%, 32%, 1);
+
+$title-weight: 500;
+$strong-weight: 500;
+
+$size-5: 1.1rem;
+$size-4: 1.4rem;
+
 .justify-between {
 	justify-content: space-between;
 }
 
+.flex-vertical-center {
+	display: flex ;
+	align-items: center ;
+}
+  
 @import '~bulma/bulma'

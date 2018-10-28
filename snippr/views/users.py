@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
@@ -56,6 +57,10 @@ class RegistrationViews(ViewSet):
         if x.is_valid() is True:
             new_user = x.save()
             res['message'] = "Successfully registered"
+        else:
+            if(x.errors['username']):
+                res['message'] = x.errors['username']
+                res['status'] = status.HTTP_400_BAD_REQUEST
         return Response(res)
 
 

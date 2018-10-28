@@ -40,7 +40,9 @@
           </span>
           <span>120</span>
         </span>
-        <div>updated 2 days ago</div>
+        <div class="is-size-6">
+          <small>updated 2 days ago</small>
+        </div>
       </div>
     </div>
   </div>
@@ -87,10 +89,6 @@ export default {
     &:not(:last-child) {
       border-bottom: 1px solid hsl(0, 0%, 86%);
     }
-  }
-  .flex-vertical-center {
-    display: flex ;
-    align-items: center ;
   }
 
   .flex-right {

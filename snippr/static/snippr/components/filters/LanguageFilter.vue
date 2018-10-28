@@ -1,7 +1,7 @@
 <template>
 	<span class="select">
 		<select v-model="valueFilter" >
-			<option value="All">All</option>
+			<option value="All" v-if="hasFilterAll">All</option>
 			<option v-for="language in languages" :value="language.name">
 				{{language.name}}
 			</option>
@@ -17,6 +17,9 @@ export default {
   props: {
   	value: {
   		type: String,
+  	},
+  	hasFilterAll: {
+  		type: Boolean
   	}
   },
 
@@ -47,7 +50,7 @@ export default {
     let languageFilter = this.languageFilter
     let query = 'http://127.0.0.1:8000/api/language/'
     let response = await axios.get(query, headers);
-    this.languages = response;
+    this.languages = response.results;
   }
 };
 </script>
