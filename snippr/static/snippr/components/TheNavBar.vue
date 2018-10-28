@@ -2,12 +2,33 @@
   <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
     <div class="container is-widescreen">
       <div class="navbar-brand">
-        <div class="navbar-item">
+        <div class="navbar-item logo">
+          <img class="is-rounded" src="../assets/img/logo.png">
+        </div>
+        <div class="navbar-item logo-name">
           <router-link class="has-text-white" :to="{ name: 'feed' }">
           	<p class="is-size-4">
             	<strong>snippr</strong>
         	</p>
           </router-link>
+        </div>
+        <div class="navbar-item" v-if="isLoggedIn">
+          <FormInput
+            type="text"
+            class="has-addons"
+            placeholder=""
+            :value="search"
+            inputClass="input"
+            v-model="search"
+            >
+            <div slot="right-addon" class="control">
+              <router-link :to="{name: 'feed', query: {title: search, status: 'Open'}}" class="button is-success">
+                <span class="icon">
+                  <font-awesome-icon icon="search" />
+                </span>
+              </router-link>
+            </div>
+          </FormInput>
         </div>
       </div>
       <div class="navbar-end">
@@ -24,7 +45,7 @@
         class="navbar-item has-dropdown"
         v-bind:class="{'is-active': isOpen}"
       >
-        <a :class="['navbar-link', {'has-text-white': isOpen}]" @click="toggle()" v-if="getUser">
+        <a :class="['navbar-link', {'has-text-white': !isOpen}, {'has-text-grey-lighter': isOpen}]" @click="toggle()" v-if="getUser">
           {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">
@@ -50,13 +71,19 @@
 
 <script>
   import { mapActions, mapGetters  } from 'vuex'
+  import FormInput from "../components/_generics/FormInput.vue";
   export default {
 
     name: 'TheNavBar',
 
+    components: {
+      FormInput,
+    },
+
     data () {
       return {
         isOpen: false,
+        search: '',
       }
     },
 
@@ -90,5 +117,13 @@
 </script>
 
 <style lang="scss" scoped>
+
+.logo {
+  padding: 0.25rem;
+}
+
+.logo-name {
+  padding-left: 0;
+}
 
 </style>

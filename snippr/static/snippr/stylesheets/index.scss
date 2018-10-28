@@ -19,14 +19,10 @@ $strong-weight: 500;
 
 $size-5: 1.1rem;
 $size-4: 1.4rem;
+$size-3: 1.9rem;
 
 .justify-between {
 	justify-content: space-between;
-}
-
-.flex-vertical-center {
-	display: flex ;
-	align-items: center ;
 }
   
 @import '~bulma/bulma'

@@ -2,13 +2,18 @@
   <div class="columns snippet">
     <div class="column is-flex level is-marginless">
       <article class="media flex-vertical-center">
-        <VoteButtonSet 
-          class="media-left has-text-centered"
-          :upvotes="snippet.upvotes"
-          :hasUpvoted="snippet.has_upvoted"
-          :hasDownvoted="snippet.has_downvoted"
-          :issueId="snippet.pk"
-        />
+        <div class="media-left">
+          <div class="level is-marginless">
+            <div class="level-item vertical has-text-centered">
+              <p class="subheading">
+                <strong>30</strong>
+              </p>
+              <p class="heading is-marginless">
+                upvotes
+              </p>
+            </div>
+          </div>
+        </div>
         <div class="media-content">
           <div class="content">
             <div class="title is-size-5">
@@ -97,6 +102,11 @@ export default {
 
   .vertical {
     flex-direction: column;
+  }
+
+  .flex-vertical-center {
+    display: flex;
+    align-items: center;
   }
 
 </style>
