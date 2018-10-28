@@ -162,3 +162,5 @@ USE_TZ = True
 STATIC_URL = os.environ.get('STATIC_URL', 'http://localhost:9001/')
 
 STATIC_ROOT = 'static-root'
+
+FIXTURE_DIRS = ['snippr/snippr/fixtures/']
