@@ -1,12 +1,19 @@
 <template>
-    <div class="columns is-centered feed">
+    <div class="columns is-centered">
     	<div class="column is-8 box">
     		<div class="columns is-marginless">
-    			<p class="title">New Issue</p>
+    			<div class="column level">
+						<div class="level-item vertical content">
+							<p class="title has-text-primary">
+								New Issue
+							</p>
+							<p class="subtitle"><small>Have you experience a problem on your code? Ask for help in our community.</small></p>
+						</div>
+					</div>
     		</div>
-    		<hr>
-    		<div class="columns is-centered">
-    		  <div class="column is-12">
+    		<hr class="is-marginless">
+    		<div class="columns is-centered is-marginless">
+    		  <div class="column is-10">
 						<HorizontalFormInput
 						  class="issue-input"
 					    type="text"
@@ -54,7 +61,7 @@
     		  </div>
     		</div>
     		<hr>
-    		<div class="columns is-centered">
+    		<div class="columns is-centered is-marginless">
     			<div class="column is-12 is-flex justify-between">
     				<button class="button is-success" @click="submit">Submit Issue</button>
     				<button class="button is-outlined" @click="cancel">Cancel</button>

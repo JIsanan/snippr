@@ -26,6 +26,9 @@ class Activity(models.Model):
 class Language(models.Model):
     name = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
+
 
 class Commit(models.Model):
     #for status field
@@ -55,3 +58,6 @@ class Snippet(models.Model):
 
     class Meta:
         get_latest_by = 'date_created'
+
+    def __str__(self):
+        return self.code

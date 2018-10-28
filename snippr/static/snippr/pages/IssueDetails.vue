@@ -69,75 +69,66 @@
 					</div>
 				</div>
 			</div>
-			<hr>
-			<div class="column title">
-				Answers
+			<div class="columns is-marginless">
+				<div class="column title is-size-4">
+					Answers
+				</div>
 			</div>
-			<hr>
-			<div v-for="comment in issue.comments">
-				<div class="columns has-bottom-border">
-					<div class="column is-flex level is-marginless">
+			<div v-for="comment in issue.comments" class="comment">
+				<hr class="is-marginless">
+				<div class="columns is-marginless">
+					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
 									<div>
 											<span class="icon">
-												<font-awesome-icon icon="caret-up" />
+												<font-awesome-icon icon="arrow-alt-circle-up" />
 											</span>
 									</div>
-									<div class="is-size-5">
+									<div class="is-size-5 vote-count">
 											<strong>120</strong>
 									</div>
 									<div>
 											<span class="icon">
-												<font-awesome-icon icon="caret-down" />
+												<font-awesome-icon icon="arrow-alt-circle-down" />
 											</span>
 									</div>
 								</div>
 								<div class="media-content">
 									<div class="content">
-										<p class="title is-size-4"><strong>Error 500: SMPT Host Undefined</strong> </p>
+										<p class="subtitle is-size-6">
+											{{ comment.description }}
+										</p>
 										<p class="subtitle">
-											<small>Answered on {{ timestamp(comment.date_created) }} by</small>
+											<small>Answered {{ timestamp(comment.date_created) }} by</small>
 											<a><small>Xavier Luke Pulmones</small></a>
 											<span class="tag is-light">Java</span>
 											<span class="tag is-light">C#</span>
 											<span class="tag is-light">C++</span>
 										</p>
+										<div class="code">
+											<p class="code-line">
+												{{ comment.code }}
+											</p>
+											<p class="has-background-link code-line">printf("something");</p>
+											<p class="code-line">printf("something");</p>
+										</div>
 									</div>
 								</div>
 							</article>
 					</div>
-					<div class="column is-3 is-flex level is-marginless">
-						<div class="level-item vertical flex-right">
-							<span class="flex-vertical-center">
-									<span class="icon">
-										<font-awesome-icon icon="comment-alt" />
-									</span>
-									<span>120</span>
-							</span>
-							<div>updated 2 days ago</div>
-						</div>
-					</div>
 				</div>
-				<div class="columns is-centered">
-					<div class="column is-11">
-						<div class="content description">
-							<h4 class="title is-size-5">Description</h4>
-							<p class="subtitle is-size-6">
-								{{ comment.description }}
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="columns is-centered">
-					<div class="column is-11">
-						<div class="content code">
-							<p class="code-line">
-								{{ comment.code }}
-							</p>
-							<p class="has-background-link code-line">printf("something");</p>
-							<p class="code-line">printf("something");</p>
-						</div>
+			</div>
+			<div v-if="!hasComments" class="columns is-marginless">
+				<hr class="is-marginless">
+				<div class="column level">
+					<div class="level-item vertical">
+						<p class="image is-128x128 heading">
+						      <img class="is-rounded" src="../assets/img/empty.svg">
+						</p>
+						<p class="subheading">
+							No answers are currently submitted.
+						</p>
 					</div>
 				</div>
 			</div>
@@ -180,7 +171,8 @@ export default {
       search: "",
 			searchType: "",
 			issue: null,
-			relatedIssues: {}
+			relatedIssues: {},
+			hasComments: false,
     };
   },
   methods: {
@@ -206,6 +198,7 @@ export default {
 
 		if(response.data.detail != "Not Found.") {
 			this.issue = response.data;
+			this.hasComments = this.issue.comments.length == 0 ? false: true;
 		}
 
 		response = await axios.get(`http://127.0.0.1:8000/api/commit?limit=5&language=${this.issue.language_name}`, headers)
@@ -270,5 +263,13 @@ export default {
 
 .code-line {
   margin-bottom: 0px !important;
+}
+
+.comment {
+	margin-top: 12px;
+}
+
+.vote-count {
+	margin: 12px 0;
 }
 </style>
