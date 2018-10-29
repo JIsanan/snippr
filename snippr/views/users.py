@@ -55,10 +55,11 @@ class RegistrationViews(ViewSet):
         x = user.RegisterSerializer(data=obj)
         res = {"message": "Please input correct credentials", }
         if x.is_valid() is True:
-            new_user = x.save()
+            x.save()
             res['message'] = "Successfully registered"
+            res['status'] = status.HTTP_200_OK
         else:
-            if(x.errors['username']):
+            if(x.errors and x.errors['username']):
                 res['message'] = x.errors['username']
                 res['status'] = status.HTTP_400_BAD_REQUEST
         return Response(res)

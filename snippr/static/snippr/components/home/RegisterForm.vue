@@ -88,15 +88,25 @@
 		  }
 		},
 		methods: {
-			...mapActions('auth', ['createUser']),
+			...mapActions('auth', ['createUser', 'tryLogIn']),
 
 			async onSubmit() {
 
 				if(this.userData.username.trim() != '') {
 					if(this.userData.password.trim() != '' && this.confirmPassword.trim() == this.userData.password.trim()) {
 						const response = await this.createUser(this.userData);
-						if(response.status == 400){
+						console.log(response.status)
+						if(response.status == 400) {
 							this.errorMessage = response.message[0]
+						} else if (response.status == 200) {
+							let payload = {
+								username: this.userData.username,
+								password: this.userData.password
+							};
+							const login = await this.tryLogIn(payload)
+							if(login) {
+								this.$router.push({ name: "feed" });
+							}
 						}
 
 					} else {

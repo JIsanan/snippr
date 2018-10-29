@@ -1,12 +1,12 @@
 <template>
 	<div class="columns is-centered feed">
 		<div class="column is-8">
-			<div class="columns level" v-if="profile">
+			<div class="columns level box" v-if="profile">
 				<div class="column is-narrow level-left">
 					<article class="media flex-vertical-center">
 					  <figure class="media-left">
 						    <p class="image is-128x128">
-						      <img class="is-rounded" src="../assets/img/logo.png">
+						      <img class="is-rounded avatar" src="../assets/img/avatars/boy-2.png">
 						    </p>
 						  </figure>
 					  <div class="media-content">
@@ -48,12 +48,14 @@
 					</nav>
 				</div>
 			</div>
-			<hr>
-			<div class="column title is-size-4">
-				Issues <span class="tag is-medium">120</span>
+			<hr class="is-marginless">
+			<div class="columns">
+				<div class="column title is-size-4 box">
+					Issues <span class="tag is-medium">120</span>
+				</div>
 			</div>
-			<hr>
-			<div class="columns has-bottom-border">
+			<hr class="is-marginless">
+			<div class="columns has-bottom-border box">
 				<div class="column is-flex level is-marginless is-paddingless">
 					<article class="media flex-vertical-center">
 						<div class="media-left has-text-centered">
@@ -70,55 +72,6 @@
 								<font-awesome-icon icon="caret-down" />
 							</span>
 						</div>
-						</div>
-						<div class="media-content">
-							<div class="content">
-								<p class="title is-size-5">
-									<span class="tag is-success">Open</span>
-									<strong>Error 500: SMPT Host Undefined</strong>
-								</p>
-								<p class="subtitle is-size-6">
-									<small>Opened 2 months ago by</small>
-									<a><small>Xavier Luke Pulmones</small></a>
-									<span class="tag is-light">Java</span>
-									<span class="tag is-light">C#</span>
-									<span class="tag is-light">C++</span>
-								</p>
-							</div>
-						</div>
-					</article>
-				</div>
-				<div class="column is-2 is-flex level is-marginless">
-					<div class="level-item vertical flex-right">
-						<span class="flex-vertical-center">
-							<span class="icon">
-								<font-awesome-icon icon="comment-alt" />
-							</span>
-							<span>120</span>
-						</span>
-						<div class="is-size-6">
-							<small>updated 2 days ago</small>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="columns has-bottom-border">
-				<div class="column is-flex level is-marginless is-paddingless">
-					<article class="media flex-vertical-center">
-						<div class="media-left has-text-centered">
-							<div>
-								<span class="icon">
-									<font-awesome-icon icon="caret-up" />
-								</span>
-							</div>
-							<div class="is-size-5">
-								<strong>120</strong>
-							</div>
-							<div>
-								<span class="icon">
-									<font-awesome-icon icon="caret-down" />
-								</span>
-							</div>
 						</div>
 						<div class="media-content">
 							<div class="content">
@@ -253,5 +206,11 @@
 	.name {
 		text-transform: uppercase;
 		font-weight: 600;
+	}
+
+	.avatar {
+		background: white;
+		padding: 12px;
+		box-shadow: 0px 0px 20px 2px rgba(grey, 0.1);
 	}
 </style>

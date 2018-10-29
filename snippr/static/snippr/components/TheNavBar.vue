@@ -46,6 +46,9 @@
         v-bind:class="{'is-active': isOpen}"
       >
         <a :class="['navbar-link', {'has-text-white': !isOpen}, {'has-text-grey-lighter': isOpen}]" @click="toggle()" v-if="getUser">
+          <figure class="image navbar-item is-48x48">
+            <img class="is-rounded avatar" src="../assets/img/avatars/boy-2.png">
+          </figure>
           {{ getUser.username }}
         </a>
         <div class="navbar-dropdown" v-if="getUser">
@@ -124,6 +127,11 @@
 
 .logo-name {
   padding-left: 0;
+}
+
+.avatar {
+  background: white;
+  padding: 2px;
 }
 
 </style>
