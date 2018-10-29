@@ -202,7 +202,7 @@ export default {
 		}
 
 		response = await axios.get(`http://127.0.0.1:8000/api/commit?limit=5&language=${this.issue.language_name}`, headers)
-		this.relatedIssues = response.data.results;
+		this.relatedIssues = response.data.results.commits;
 	}
 };
 </script>

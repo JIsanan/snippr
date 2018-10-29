@@ -19,7 +19,7 @@ class CommitFilter(filters.FilterSet):
 
     class Meta:
         model = Commit
-        fields = ['language', 'status', 'title']
+        fields = ['language', 'title']
 
 
 class CommitViews(ModelViewSet):
@@ -31,16 +31,28 @@ class CommitViews(ModelViewSet):
     pagination_class = LimitOffsetPagination
 
     def list(self, request):
+        print(request.query_params)
         user = request.user.pk
         queryset = self.filter_queryset(self.get_queryset())
+        open_count = queryset.filter(status='O').count()
+        closed_count = queryset.filter(status='C').count()
+        all_count = queryset.count()
+        status_filter = request.query_params.get('status', None)
+        if status_filter is not None:
+            queryset = queryset.filter(status=status_filter)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(
                 page, many=True, context={'request': user})
-            return self.get_paginated_response(serializer.data)
+            return self.get_paginated_response(
+                {'commits': serializer.data,
+                 'open_count': open_count,
+                 'closed_count': closed_count,
+                 'all_count': all_count
+                 })
         serializer = self.get_serializer(
             queryset, many=True, context={'request': user})
-        return Response(serializer.data)
+        return Response({'commits': serializer.data, 'something': 'something'})
 
     def create(self, request):
         language = Language.objects.filter(name=request.data['language']).first()
@@ -116,7 +128,7 @@ class CommitViews(ModelViewSet):
                 if_exists.delete()
         tracking_data = request.data.copy()
         tracking_data['user'] = request.user.pk
-        tracking_data['snippet'] = commit.snippets.first().pk
+        tracking_data['snippet'] = commit.snippetippets.first().pk
         tracking_data['commit'] = commit.pk
         tracking = TrackingSerializer(data=tracking_data)
         if tracking.is_valid() is True:

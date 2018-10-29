@@ -8,19 +8,25 @@
 							<li :class="{'is-active': statusFilter == 'O'}">
 								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Open'})}">
 									<span class="tab-item">Open</span>
-									<span class="tag is-light">12</span>
+									<span class="tag is-light">{{
+										openCount
+									}}</span>
 								</router-link>
 							</li>
 							<li :class="{'is-active': statusFilter == 'C'}">
 								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'Closed'})}">
 									<span class="tab-item">Closed</span>
-									<span class="tag is-light">12</span>
+									<span class="tag is-light">{{
+										closedCount
+									}}</span>
 								</router-link>
 							</li>
 							<li :class="{'is-active': !statusFilter}">
 								<router-link :to="{name: 'feed', query: submitFilter(filterset, {status: 'All'})}">
 									<span class="tab-item">All</span>
-									<span class="tag is-light">12</span>
+									<span class="tag is-light">{{
+										allCount
+									}}</span>
 								</router-link>
 							</li>
 						</ul>
@@ -86,6 +92,9 @@ export default {
       statusFilter: 'O',
       languageFilter: 'All',
       hasFilterAll: true,
+      openCount: 0,
+      closedCount: 0,
+      allCount: 0,
     };
   },
 
@@ -147,7 +156,10 @@ export default {
     
     let response = await axios.get(query, headers);
     console.log(response.results)
-    this.snippets = response.results;
+    this.snippets = response.results.commits;
+    this.openCount = response.results.open_count
+    this.closedCount = response.results.closed_count
+    this.allCount = response.results.all_count
   }
 };
 </script>
