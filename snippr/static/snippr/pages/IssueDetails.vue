@@ -8,7 +8,7 @@
 				<div class="column">
 					<div class="buttons is-right">
 						<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
-						<router-link :to="{ name: 'createissue' }" class="button is-success is-outlined">Answer</router-link>
+						<router-link :to="{ name: 'answer', query: {c: issue.snippet.code}, params: {id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
 					</div>
 				</div>
 			</div>
@@ -138,7 +138,7 @@
 				<div class="content">
 					<p class="title is-5">Related Issues</p>
 					<ul class="related-list is-marginless">
-						<li v-for="related in relatedIssues" :keys="related.pk">
+						<li v-for="related in relatedIssues" :key="related.pk">
 							<span class="tag is-primary">{{ related.upvotes }}</span>
 							<a class="is-size-6">
 								{{ related.title }}
