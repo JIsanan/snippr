@@ -56,7 +56,12 @@ export default {
     }
   },
   mounted() {
-    this.code = this.$route.query.c;
+    if(this.$route.params.c) {
+      this.code = this.$route.params.c;
+    } else {
+      this.$router.push({ name: 'feed' });
+    }
+    
   }
 };
 </script>

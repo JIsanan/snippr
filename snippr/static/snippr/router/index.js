@@ -58,7 +58,7 @@ const routes = [{
     meta: {
         loginRequired: true
     },
-    props: (route) => ({ query: route.query.c })
+    props: true
 },];
 
 const router = new VueRouter({

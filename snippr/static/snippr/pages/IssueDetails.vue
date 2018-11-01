@@ -8,7 +8,7 @@
 				<div class="column">
 					<div class="buttons is-right">
 						<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
-						<router-link :to="{ name: 'answer', query: {c: issue.snippet.code}, params: {id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
+						<router-link :to="{ name: 'answer', params: {c: issue.snippet.code, id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
 					</div>
 				</div>
 			</div>
@@ -152,8 +152,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import moment from 'moment';
+import axios from "axios";
+import moment from "moment";
 
 import FormInput from "../components/_generics/FormInput.vue";
 import VoteButtonSet from "../components/_generics/VoteButtonSet.vue";
@@ -169,10 +169,10 @@ export default {
     return {
       tabOption: 0,
       search: "",
-			searchType: "",
-			issue: null,
-			relatedIssues: {},
-			hasComments: false,
+      searchType: "",
+      issue: null,
+      relatedIssues: {},
+      hasComments: false
     };
   },
   methods: {
@@ -181,41 +181,49 @@ export default {
     },
     isSignin() {
       this.register = false;
-		},
-		timestamp(date) {
+    },
+    timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
     }
-	},
+  },
 
-	async mounted() {
-		let headers = {
+  async mounted() {
+    let headers = {
       headers: {
-        'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+        AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
       }
-		};
-		
-		let response = await axios.get(`http://127.0.0.1:8000/api/commit/${this.$route.params.id}`, headers);
+    };
 
-		if(response.data.detail != "Not Found.") {
-			this.issue = response.data;
-			this.hasComments = this.issue.comments.length == 0 ? false: true;
-		}
+    let response = await axios.get(
+      `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
+      headers
+    );
 
-		response = await axios.get(`http://127.0.0.1:8000/api/commit?limit=5&language=${this.issue.language_name}`, headers)
-		this.relatedIssues = response.data.results.commits;
-	}
+    if (response.data.detail != "Not Found.") {
+      this.issue = response.data;
+      this.hasComments = this.issue.comments.length == 0 ? false : true;
+    }
+
+    response = await axios.get(
+      `http://127.0.0.1:8000/api/commit?limit=5&language=${
+        this.issue.language_name
+      }`,
+      headers
+    );
+    this.relatedIssues = response.data.results.commits;
+  }
 };
 </script>
 
 <style scoped>
 .main-issue {
-	margin-top: 12px;
+  margin-top: 12px;
 }
 .addon-content {
-	padding-top: 0px;
+  padding-top: 0px;
 }
 .related-list {
-	list-style: none;
+  list-style: none;
 }
 .tabs {
   margin-bottom: 0px;
@@ -266,10 +274,10 @@ export default {
 }
 
 .comment {
-	margin-top: 12px;
+  margin-top: 12px;
 }
 
 .vote-count {
-	margin: 12px 0;
+  margin: 12px 0;
 }
 </style>
