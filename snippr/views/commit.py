@@ -120,7 +120,7 @@ class CommitViews(ModelViewSet):
         commit = self.get_object()
         ret = {}
         if_exists = Tracking.objects.filter(user=request.user, commit=commit).first()
-        if not if_exists:
+        if if_exists:
             if 'overwrite' not in request.data:
                 ret['message'] = 'already has commit'
                 return Response(ret)
@@ -128,7 +128,7 @@ class CommitViews(ModelViewSet):
                 if_exists.delete()
         tracking_data = request.data.copy()
         tracking_data['user'] = request.user.pk
-        tracking_data['snippet'] = commit.snippetippets.first().pk
+        tracking_data['snippet'] = commit.snippets.first().pk
         tracking_data['commit'] = commit.pk
         tracking = TrackingSerializer(data=tracking_data)
         if tracking.is_valid() is True:
