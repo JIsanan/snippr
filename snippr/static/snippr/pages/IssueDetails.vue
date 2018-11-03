@@ -37,11 +37,11 @@
 				</div>
 				<div class="column is-3 is-flex level is-marginless">
 					<div class="level-item vertical flex-right">
-							<span class="flex-vertical-center">
+							<span class="flex-vertical-center" v-if="issue">
 									<span class="icon">
 										<font-awesome-icon icon="comment-alt" />
 									</span>
-									<span>120</span>
+									<span>{{ issue.comments.length }}</span>
 							</span>
 							<div class="is-size-6">
 								<small>updated 2 days ago</small>
@@ -62,9 +62,9 @@
 			<div class="columns is-centered">
 				<div class="column is-11">
 					<div class="content code">
-						<p v-for="line in issue.snippet.code.split('\n')">
-							{{ line }}
-						</p>
+						<pre class="code-line" v-for="line in issue.snippet.code.split('\n')">
+{{ line }}
+						</pre>
 
 					</div>
 				</div>
@@ -74,19 +74,24 @@
 					Answers
 				</div>
 			</div>
-			<div v-for="comment in issue.comments" class="comment">
+			<div v-for="(comment, commentIndex) in issue.comments" class="comment">
 				<hr class="is-marginless">
 				<div class="columns is-marginless">
 					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
+								<button style="margin-bottom: 10px;" class="button is-warning" :class="{'is-outlined': !isResolved(commentIndex)}">
+									<span class="icon">
+										<font-awesome-icon icon="star" />	
+									</span>
+								</button>	
 									<div>
 											<span class="icon">
 												<font-awesome-icon icon="arrow-alt-circle-up" />
 											</span>
 									</div>
 									<div class="is-size-5 vote-count">
-											<strong>120</strong>
+											<strong>{{ comment.upvotes }}</strong>
 									</div>
 									<div>
 											<span class="icon">
@@ -101,17 +106,17 @@
 										</p>
 										<p class="subtitle">
 											<small>Answered {{ timestamp(comment.date_created) }} by</small>
-											<a><small>Xavier Luke Pulmones</small></a>
-											<span class="tag is-light">Java</span>
+											<a><small>{{ comment.username }}</small></a>
+											<!-- <span class="tag is-light">Java</span>
 											<span class="tag is-light">C#</span>
-											<span class="tag is-light">C++</span>
+											<span class="tag is-light">C++</span> -->
 										</p>
 										<div class="code">
-											<p class="code-line">
-												{{ comment.code }}
-											</p>
-											<p class="has-background-link code-line">printf("something");</p>
-											<p class="code-line">printf("something");</p>
+											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}">
+{{ line }}
+											</pre>
+											<!-- <p class="has-background-link code-line">printf("something");</p>
+											<p class="code-line">printf("something");</p> -->
 										</div>
 									</div>
 								</div>
@@ -184,7 +189,13 @@ export default {
     },
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
-    }
+		},
+		isChanged(lineIndex, commentIndex) {
+			return lineIndex in this.issue.comments[commentIndex].line_changed
+		},
+		isResolved(commentIndex) {
+			return true;
+		}
   },
 
   async mounted() {
@@ -197,10 +208,12 @@ export default {
     let response = await axios.get(
       `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
       headers
-    );
+		);
+		
 
     if (response.data.detail != "Not Found.") {
-      this.issue = response.data;
+			this.issue = response.data;
+			console.log(this.issue);
       this.hasComments = this.issue.comments.length == 0 ? false : true;
     }
 
@@ -271,6 +284,10 @@ export default {
 
 .code-line {
   margin-bottom: 0px !important;
+	line-height: normal;
+	padding: 0;
+	/* white-space: nowrap; */
+	overflow: hidden;
 }
 
 .comment {

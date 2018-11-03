@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import HorizontalFormInput from "../components/_generics/HorizontalFormInput.vue";
 export default {
@@ -35,8 +35,8 @@ export default {
   data() {
     return {
       code: "",
-      description: "",
-    }
+      description: ""
+    };
   },
   methods: {
     async submit() {
@@ -47,21 +47,32 @@ export default {
 
       let headers = {
         headers: {
-          'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+          AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
         }
       };
 
-      let response = await axios.post(`http://127.0.0.1:8000/api/commit/${this.$route.params.id}/comment/`, payload, headers);
-      console.log(response);
+      let response = await axios.post(
+        `http://127.0.0.1:8000/api/commit/${this.$route.params.id}/comment/`,
+        payload,
+        headers
+      );
+
+      if (response.data.message == "successfully commented") {
+        this.$router.push({
+          name: "issue",
+          params: { id: this.$route.params.id }
+        });
+      } else {
+        alert("Something wrong happened");
+      }
     }
   },
   mounted() {
-    if(this.$route.params.c) {
+    if (this.$route.params.c) {
       this.code = this.$route.params.c;
     } else {
-      this.$router.push({ name: 'feed' });
+      this.$router.push({ name: "feed" });
     }
-    
   }
 };
 </script>

@@ -92,7 +92,6 @@
 
     computed: {
       ...mapGetters('auth', ['isLoggedIn', 'getUser']),
-
     },
 
     methods: {
