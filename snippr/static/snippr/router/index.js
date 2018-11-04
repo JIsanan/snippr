@@ -50,7 +50,16 @@ const routes = [{
     meta: {
         loginRequired: true
     }
-}];
+},
+{
+    path: '/answer/:id',
+    component: () => import('source/pages/Answer.vue'),
+    name: 'answer',
+    meta: {
+        loginRequired: true
+    },
+    props: true
+},];
 
 const router = new VueRouter({
     routes,

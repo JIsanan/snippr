@@ -8,7 +8,7 @@
 				<div class="column">
 					<div class="buttons is-right">
 						<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
-						<router-link :to="{ name: 'createissue' }" class="button is-success is-outlined">Answer</router-link>
+						<router-link :to="{ name: 'answer', params: {c: issue.snippet.code, id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
 					</div>
 				</div>
 			</div>
@@ -37,11 +37,11 @@
 				</div>
 				<div class="column is-3 is-flex level is-marginless">
 					<div class="level-item vertical flex-right">
-							<span class="flex-vertical-center">
+							<span class="flex-vertical-center" v-if="issue">
 									<span class="icon">
 										<font-awesome-icon icon="comment-alt" />
 									</span>
-									<span>120</span>
+									<span>{{ issue.comments.length }}</span>
 							</span>
 							<div class="is-size-6">
 								<small>updated 2 days ago</small>
@@ -62,9 +62,9 @@
 			<div class="columns is-centered">
 				<div class="column is-11">
 					<div class="content code">
-						<p v-for="line in issue.snippet.code.split('\n')">
-							{{ line }}
-						</p>
+						<pre class="code-line" v-for="line in issue.snippet.code.split('\n')">
+{{ line }}
+						</pre>
 
 					</div>
 				</div>
@@ -74,19 +74,24 @@
 					Answers
 				</div>
 			</div>
-			<div v-for="comment in issue.comments" class="comment">
+			<div v-for="(comment, commentIndex) in issue.comments" class="comment">
 				<hr class="is-marginless">
 				<div class="columns is-marginless">
 					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
+								<button style="margin-bottom: 10px;" class="button is-warning" :class="{'is-outlined': !isResolved(commentIndex)}">
+									<span class="icon">
+										<font-awesome-icon icon="star" />	
+									</span>
+								</button>	
 									<div>
 											<span class="icon">
 												<font-awesome-icon icon="arrow-alt-circle-up" />
 											</span>
 									</div>
 									<div class="is-size-5 vote-count">
-											<strong>120</strong>
+											<strong>{{ comment.upvotes }}</strong>
 									</div>
 									<div>
 											<span class="icon">
@@ -101,17 +106,17 @@
 										</p>
 										<p class="subtitle">
 											<small>Answered {{ timestamp(comment.date_created) }} by</small>
-											<a><small>Xavier Luke Pulmones</small></a>
-											<span class="tag is-light">Java</span>
+											<a><small>{{ comment.username }}</small></a>
+											<!-- <span class="tag is-light">Java</span>
 											<span class="tag is-light">C#</span>
-											<span class="tag is-light">C++</span>
+											<span class="tag is-light">C++</span> -->
 										</p>
 										<div class="code">
-											<p class="code-line">
-												{{ comment.code }}
-											</p>
-											<p class="has-background-link code-line">printf("something");</p>
-											<p class="code-line">printf("something");</p>
+											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}">
+{{ line }}
+											</pre>
+											<!-- <p class="has-background-link code-line">printf("something");</p>
+											<p class="code-line">printf("something");</p> -->
 										</div>
 									</div>
 								</div>
@@ -138,7 +143,7 @@
 				<div class="content">
 					<p class="title is-5">Related Issues</p>
 					<ul class="related-list is-marginless">
-						<li v-for="related in relatedIssues" :keys="related.pk">
+						<li v-for="related in relatedIssues" :key="related.pk">
 							<span class="tag is-primary">{{ related.upvotes }}</span>
 							<a class="is-size-6">
 								{{ related.title }}
@@ -152,8 +157,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import moment from 'moment';
+import axios from "axios";
+import moment from "moment";
 
 import FormInput from "../components/_generics/FormInput.vue";
 import VoteButtonSet from "../components/_generics/VoteButtonSet.vue";
@@ -169,10 +174,10 @@ export default {
     return {
       tabOption: 0,
       search: "",
-			searchType: "",
-			issue: null,
-			relatedIssues: {},
-			hasComments: false,
+      searchType: "",
+      issue: null,
+      relatedIssues: {},
+      hasComments: false
     };
   },
   methods: {
@@ -181,41 +186,57 @@ export default {
     },
     isSignin() {
       this.register = false;
-		},
-		timestamp(date) {
+    },
+    timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
-    }
-	},
-
-	async mounted() {
-		let headers = {
-      headers: {
-        'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
-      }
-		};
-		
-		let response = await axios.get(`http://127.0.0.1:8000/api/commit/${this.$route.params.id}`, headers);
-
-		if(response.data.detail != "Not Found.") {
-			this.issue = response.data;
-			this.hasComments = this.issue.comments.length == 0 ? false: true;
+		},
+		isChanged(lineIndex, commentIndex) {
+			return lineIndex in this.issue.comments[commentIndex].line_changed
+		},
+		isResolved(commentIndex) {
+			return true;
 		}
+  },
 
-		response = await axios.get(`http://127.0.0.1:8000/api/commit?limit=5&language=${this.issue.language_name}`, headers)
-		this.relatedIssues = response.data.results.commits;
-	}
+  async mounted() {
+    let headers = {
+      headers: {
+        AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
+      }
+    };
+
+    let response = await axios.get(
+      `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
+      headers
+		);
+		
+
+    if (response.data.detail != "Not Found.") {
+			this.issue = response.data;
+			console.log(this.issue);
+      this.hasComments = this.issue.comments.length == 0 ? false : true;
+    }
+
+    response = await axios.get(
+      `http://127.0.0.1:8000/api/commit?limit=5&language=${
+        this.issue.language_name
+      }`,
+      headers
+    );
+    this.relatedIssues = response.data.results.commits;
+  }
 };
 </script>
 
 <style scoped>
 .main-issue {
-	margin-top: 12px;
+  margin-top: 12px;
 }
 .addon-content {
-	padding-top: 0px;
+  padding-top: 0px;
 }
 .related-list {
-	list-style: none;
+  list-style: none;
 }
 .tabs {
   margin-bottom: 0px;
@@ -263,13 +284,17 @@ export default {
 
 .code-line {
   margin-bottom: 0px !important;
+	line-height: normal;
+	padding: 0;
+	/* white-space: nowrap; */
+	overflow: hidden;
 }
 
 .comment {
-	margin-top: 12px;
+  margin-top: 12px;
 }
 
 .vote-count {
-	margin: 12px 0;
+  margin: 12px 0;
 }
 </style>
