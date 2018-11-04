@@ -26,6 +26,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
 router = routers.DefaultRouter()
 router.register(r'users', users.UserViews, base_name="users")
 router.register(r'register', users.RegistrationViews, base_name="register")
+router.register(r'feedback', users.FeedbackViews, base_name="feedback")
 router.register(r'commit', commit.CommitViews, base_name="commit")
 router.register(r'answer', commit.TrackingViews, base_name="answer")
 router.register(r'language', commit.LanguageViews, base_name="language")

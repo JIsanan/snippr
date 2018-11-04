@@ -65,5 +65,19 @@ class RegistrationViews(ViewSet):
         return Response(res)
 
 
+class FeedbackViews(ViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    def create(self, request):
+        obj = request.data.copy()
+        obj['user'] = request.user.pk
+        x = user.FeedbackSerializer(data=obj)
+        res = {"message": "Please input correct stuff", }
+        if x.is_valid() is True:
+            x.save()
+            res['message'] = "Successfully given feedback"
+        return Response(res)
+
+
 class LoginView(TokenObtainPairView):
     serializer_class = user.LoginSerializer

@@ -41,6 +41,7 @@ class TrackingSerializer(serializers.ModelSerializer):
             'upvotes',
             'snippet_code',
             'line_changed',
+            'is_resolved',
             'user_id',
             'username',)
         extra_kwargs = {
@@ -50,6 +51,9 @@ class TrackingSerializer(serializers.ModelSerializer):
     def get_upvotes(self, obj):
         ret = obj.upvote.count()
         return ret
+
+    def get_is_resolved(self, obj):
+        return obj.resolved is not None
 
     def get_username(self, obj):
         ret = obj.user.username
@@ -75,6 +79,7 @@ class CommitSerializer(serializers.ModelSerializer):
     has_upvoted = serializers.SerializerMethodField()
     has_downvoted = serializers.SerializerMethodField()
     language_name = serializers.SerializerMethodField()
+    is_resolved = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
     comments = TrackingSerializer(many=True, read_only=True)
@@ -124,6 +129,9 @@ class CommitSerializer(serializers.ModelSerializer):
         ret = obj.language.name
         return ret
 
+    def get_is_resolved(self, obj):
+        return obj.resolved is not None
+        
     def get_upvotes(self, obj):
         ret = obj.upvote.filter(is_active=True).count()
         return ret

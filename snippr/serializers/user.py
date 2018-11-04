@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
-from snippr.models.userprofile import UserProfile
+from snippr.models.userprofile import UserProfile, Feedback
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.six import text_type
 
@@ -29,6 +29,15 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     def get_id(self, obj):
         ret = obj.userprofile.id
         return ret
+
+
+class FeedbackSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = (
+            'user',
+            'message',
+        )
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
