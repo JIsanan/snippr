@@ -131,7 +131,7 @@ class CommitViews(ModelViewSet):
         tracking_data['snippet'] = commit.snippets.first().pk
         tracking_data['commit'] = commit.pk
         tracking = TrackingSerializer(data=tracking_data)
-        if tracking.is_valid() is True:
+        if tracking.is_valid() is True and commit.resolved is None:
             track = tracking.save()
             ret['message'] = "successfully commented"
             track = TrackingSerializer(track)
@@ -154,6 +154,21 @@ class CommitViews(ModelViewSet):
             ret['message'] = 'editing successful'
         return Response(ret)
 
+    @action(detail=True, methods=['post'])
+    def resolve(self, request, pk=None):
+        user_obj = request.user
+        commit = self.get_object()
+        ret = {}
+        if commit.user.pk != request.user.pk:
+            ret['message'] = 'not your commit'
+            return Response(ret)
+        track = Tracking.objects.filter(pk=request.data['track_id']).first()
+        ret['message'] = 'comment does not exist'
+        if track:
+            track.resolved = commit
+            track.save()
+            ret['message'] = 'resolved'
+        return Response(ret)
 
 class LanguageViews(ReadOnlyModelViewSet):
     authentication_classes = (JWTAuthentication,)

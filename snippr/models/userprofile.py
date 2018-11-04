@@ -10,3 +10,8 @@ class UserProfile(models.Model):
     firstname = models.CharField(max_length=100, blank=True, null=True)
     lastname = models.CharField(max_length=100, blank=True, null=True)
 
+
+class Feedback(models.Model):
+    user = models.ForeignKey(
+        User, related_name='feedback', on_delete=models.CASCADE)
+    feedback = models.CharField(max_length=300)

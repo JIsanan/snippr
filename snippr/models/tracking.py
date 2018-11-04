@@ -13,5 +13,7 @@ class Tracking(models.Model):
     code = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     upvote = GenericRelation(Activity)
+    resolved = models.OneToOneField(
+        Commit, related_name='resolved', on_delete=models.CASCADE, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     latest_update = models.DateTimeField(auto_now_add=True)
