@@ -25,7 +25,7 @@
 							/>
 							<div class="media-content">
 								<div class="content">
-									<p class="title is-size-4"><strong>{{ issue.title }}</strong> </p>
+									<p class="title is-size-4"><strong>{{ issue.title }}</strong> <span class="tag is-normal" :class="{'is-primary': true}">Resolved</span></p>
 									<p class="subtitle is-size-6">
 										<small>Opened {{ timestamp(issue.date_created) }} by</small>
 										<a><small>{{ issue.username }}</small></a>
@@ -62,7 +62,7 @@
 			<div class="columns is-centered">
 				<div class="column is-11">
 					<div class="content code">
-						<pre class="code-line" v-for="line in issue.snippet.code.split('\n')">
+						<pre class="code-line" v-for="(line, lineIndex) in issue.snippet.code.split('\n')" :key="lineIndex">
 {{ line }}
 						</pre>
 
@@ -74,30 +74,17 @@
 					Answers
 				</div>
 			</div>
-			<div v-for="(comment, commentIndex) in issue.comments" class="comment">
+			<div v-for="(comment, commentIndex) in issue.comments" class="comment" :key="comment.pk">
 				<hr class="is-marginless">
 				<div class="columns is-marginless">
 					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
-								<button style="margin-bottom: 10px;" class="button is-warning" :class="{'is-outlined': !isResolved(commentIndex)}">
-									<span class="icon">
-										<font-awesome-icon icon="star" />	
-									</span>
-								</button>	
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="arrow-alt-circle-up" />
-											</span>
-									</div>
-									<div class="is-size-5 vote-count">
-											<strong>{{ comment.upvotes }}</strong>
-									</div>
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="arrow-alt-circle-down" />
-											</span>
-									</div>
+									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-if="showResolveBtn" @click="resolveComment(comment.pk, commentIndex)">
+										<span class="icon">
+											<font-awesome-icon icon="star" />	
+										</span>
+									</button>	
 								</div>
 								<div class="media-content">
 									<div class="content">
@@ -112,7 +99,7 @@
 											<span class="tag is-light">C++</span> -->
 										</p>
 										<div class="code">
-											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}">
+											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}" :key="lineIndex">
 {{ line }}
 											</pre>
 											<!-- <p class="has-background-link code-line">printf("something");</p>
@@ -159,6 +146,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+import { mapGetters } from "vuex";
 
 import FormInput from "../components/_generics/FormInput.vue";
 import VoteButtonSet from "../components/_generics/VoteButtonSet.vue";
@@ -189,13 +177,37 @@ export default {
     },
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
+    },
+    isChanged(lineIndex, commentIndex) {
+      return lineIndex in this.issue.comments[commentIndex].line_changed;
 		},
-		isChanged(lineIndex, commentIndex) {
-			return lineIndex in this.issue.comments[commentIndex].line_changed
-		},
-		isResolved(commentIndex) {
-			return true;
+		async resolveComment(commentPk, commentIndex) {
+			let headers = {
+        headers: {
+          'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+        }
+			};
+			
+			let payload = {
+				track_id: commentPk
+			};
+
+			let response = await axios.post(`http://127.0.0.1:8000/api/commit/${this.issue.pk}/resolve/`, payload, headers);
+
+			if(response.data.message == 'resolved') {
+				this.issue.comments[commentIndex].is_resolved = true;
+			}
 		}
+  },
+  computed: {
+    ...mapGetters("auth", ["isLoggedIn", "getUser"]),
+    showResolveBtn() {
+      let ret = false;
+
+      if (this.getUser.username === this.issue.username) ret = true;
+
+      return ret;
+    }
   },
 
   async mounted() {
@@ -208,12 +220,11 @@ export default {
     let response = await axios.get(
       `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
       headers
-		);
-		
+    );
 
     if (response.data.detail != "Not Found.") {
-			this.issue = response.data;
-			console.log(this.issue);
+      this.issue = response.data;
+      console.log(this.issue);
       this.hasComments = this.issue.comments.length == 0 ? false : true;
     }
 
@@ -284,10 +295,10 @@ export default {
 
 .code-line {
   margin-bottom: 0px !important;
-	line-height: normal;
-	padding: 0;
-	/* white-space: nowrap; */
-	overflow: hidden;
+  line-height: normal;
+  padding: 0;
+  /* white-space: nowrap; */
+  overflow: hidden;
 }
 
 .comment {
