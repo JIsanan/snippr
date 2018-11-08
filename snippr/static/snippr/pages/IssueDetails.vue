@@ -3,7 +3,10 @@
 		<div class="column is-6 box">
 			<div class="columns is-marginless">
 				<div class="column is-3">
-					<span class="tag is-success is-large">Open</span>
+					<span class="tag is-large" :class="{'is-success': !issue.is_resolved, 'is-light': issue.is_resolved}">
+						<span v-if="!issue.is_resolved">Open</span>
+						<span v-else>Closed</span>
+					</span>
 				</div>
 				<div class="column">
 					<div class="buttons is-right">
@@ -25,7 +28,7 @@
 							/>
 							<div class="media-content">
 								<div class="content">
-									<p class="title is-size-4"><strong>{{ issue.title }}</strong> <span class="tag is-normal" :class="{'is-primary': true}">Resolved</span></p>
+									<p class="title is-size-4"><strong>{{ issue.title }}</strong></p>
 									<p class="subtitle is-size-6">
 										<small>Opened {{ timestamp(issue.date_created) }} by</small>
 										<a><small>{{ issue.username }}</small></a>

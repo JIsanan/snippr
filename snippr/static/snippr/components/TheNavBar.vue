@@ -39,6 +39,14 @@
             </span>
             <span>Create Issue</span>
           </router-link>
+          
+        </div>
+        <div class="navbar-item" v-if="isLoggedIn">
+          <router-link :to="{ name: 'feedback' }" class="button is-primary is-outlined is-inverted">
+            <span class="icon">
+              <font-awesome-icon icon="bullhorn" />
+            </span>
+          </router-link>
         </div>
       <div 
         v-if="isLoggedIn"

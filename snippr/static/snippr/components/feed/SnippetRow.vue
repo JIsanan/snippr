@@ -24,7 +24,7 @@
                        ]" >
                 {{ snippet.status }}
               </span>
-              <router-link :to="{name: 'issue', params: { id:snippet.pk }}" class="has-text-primary">
+              <router-link :to="{name: 'issue', params: { id: snippet.pk }}" class="has-text-primary">
                 <strong>{{ snippet.title }}</strong>
               </router-link>
             </div>
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import axios from 'source/plugins/axios';
-import moment from 'moment';
+import axios from "source/plugins/axios";
+import moment from "moment";
 
 import VoteButtonSet from "../_generics/VoteButtonSet.vue";
 
@@ -63,50 +63,45 @@ export default {
   name: "SnippetRow",
 
   components: {
-    VoteButtonSet,
+    VoteButtonSet
   },
 
   props: {
-  	snippet: {
-  		type: Object,
-      required: true,
-  	}
+    snippet: {
+      type: Object,
+      required: true
+    }
   },
 
   data() {
-    return {
-    };
-  },
-  computed: {
+    return {};
   },
   methods: {
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
-    },
+    }
   },
-  async mounted() {
-  }
+  async mounted() {}
 };
 </script>
 
 <style scoped lang="scss">
-  .snippet{
-    &:not(:last-child) {
-      border-bottom: 1px solid hsl(0, 0%, 86%);
-    }
+.snippet {
+  &:not(:last-child) {
+    border-bottom: 1px solid hsl(0, 0%, 86%);
   }
+}
 
-  .flex-right {
-    align-items: flex-end !important;
-  }
+.flex-right {
+  align-items: flex-end !important;
+}
 
-  .vertical {
-    flex-direction: column;
-  }
+.vertical {
+  flex-direction: column;
+}
 
-  .flex-vertical-center {
-    display: flex;
-    align-items: center;
-  }
-
+.flex-vertical-center {
+  display: flex;
+  align-items: center;
+}
 </style>
