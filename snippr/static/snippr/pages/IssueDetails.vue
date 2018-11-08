@@ -80,7 +80,7 @@
 					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
-									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-if="showResolveBtn" @click="resolveComment(comment.pk, commentIndex)">
+									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-if="showResolveBtn" @click="prompt(comment.pk, commentIndex)">
 										<span class="icon">
 											<font-awesome-icon icon="star" />	
 										</span>
@@ -140,6 +140,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal" :class="{'is-active': isActive}">
+			<div class="modal-background"></div>
+			<div class="modal-content">
+				<div class="card">
+					<header class="card-header">
+						<p class="card-header-title">
+							Confirm
+						</p>
+						<a href="#" class="card-header-icon" aria-label="more options">
+							<span class="icon">
+								<i class="fas fa-angle-down" aria-hidden="true"></i>
+							</span>
+						</a>
+					</header>
+					<div class="card-content">
+						<div class="content">
+							Once marked as resolved, you <strong>cannot undo it</strong>. Are you sure this answer works?
+							
+						</div>
+					</div>
+					<footer class="card-footer">
+						<a href="#" @click="resolveComment" class="card-footer-item">Yes</a>
+						<a href="#" @click="() => { isActive = false; }" class="card-footer-item">Cancel</a>
+					</footer>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -165,7 +192,10 @@ export default {
       searchType: "",
       issue: null,
       relatedIssues: {},
-      hasComments: false
+      hasComments: false,
+      isActive: false,
+      resolvedCommentPk: -1,
+      resolvedCommentIndex: -1
     };
   },
   methods: {
@@ -180,24 +210,37 @@ export default {
     },
     isChanged(lineIndex, commentIndex) {
       return lineIndex in this.issue.comments[commentIndex].line_changed;
-		},
-		async resolveComment(commentPk, commentIndex) {
-			let headers = {
-        headers: {
-          'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
+    },
+    prompt(commentPk, commentIndex) {
+      this.isActive = true;
+      this.resolvedCommentPk = commentPk;
+      this.resolvedCommentIndex = commentIndex;
+    },
+    async resolveComment() {
+      if (this.resolvedCommentPk > -1 && this.resolvedCommentIndex > -1) {
+        let headers = {
+          headers: {
+            AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
+          }
+        };
+
+        let payload = {
+          track_id: this.resolvedCommentPk
+        };
+
+        let response = await axios.post(
+          `http://127.0.0.1:8000/api/commit/${this.issue.pk}/resolve/`,
+          payload,
+          headers
+        );
+
+        if (response.data.message == "resolved") {
+          this.issue.comments[this.resolvedCommentIndex].is_resolved = true;
         }
-			};
-			
-			let payload = {
-				track_id: commentPk
-			};
+      }
 
-			let response = await axios.post(`http://127.0.0.1:8000/api/commit/${this.issue.pk}/resolve/`, payload, headers);
-
-			if(response.data.message == 'resolved') {
-				this.issue.comments[commentIndex].is_resolved = true;
-			}
-		}
+      this.isActive = false;
+    }
   },
   computed: {
     ...mapGetters("auth", ["isLoggedIn", "getUser"]),
@@ -224,7 +267,6 @@ export default {
 
     if (response.data.detail != "Not Found.") {
       this.issue = response.data;
-      console.log(this.issue);
       this.hasComments = this.issue.comments.length == 0 ? false : true;
     }
 
