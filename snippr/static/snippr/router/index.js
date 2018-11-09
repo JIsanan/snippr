@@ -59,7 +59,15 @@ const routes = [{
         loginRequired: true
     },
     props: true
-},];
+},
+{
+    path: '/feedback',
+    component: () => import('source/pages/Feedback.vue'),
+    name: 'feedback',
+    meta: {
+        loginRequired: true
+    }
+}];
 
 const router = new VueRouter({
     routes,

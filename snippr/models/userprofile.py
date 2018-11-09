@@ -14,4 +14,4 @@ class UserProfile(models.Model):
 class Feedback(models.Model):
     user = models.ForeignKey(
         User, related_name='feedback', on_delete=models.CASCADE)
-    feedback = models.CharField(max_length=300)
+    message = models.CharField(max_length=300)

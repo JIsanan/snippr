@@ -23,6 +23,7 @@ class LanguageSerializer(serializers.ModelSerializer):
 class TrackingSerializer(serializers.ModelSerializer):
     upvotes = serializers.SerializerMethodField()
     user_id = serializers.SerializerMethodField()
+    is_resolved = serializers.SerializerMethodField()
     username = serializers.SerializerMethodField()
     snippet_code = serializers.SerializerMethodField()
     line_changed = serializers.SerializerMethodField()
@@ -93,6 +94,7 @@ class CommitSerializer(serializers.ModelSerializer):
             'user',
             'comments',
             'user_id',
+            'is_resolved',
             'username',
             'language_name',
             'language',
@@ -130,7 +132,9 @@ class CommitSerializer(serializers.ModelSerializer):
         return ret
 
     def get_is_resolved(self, obj):
-        return obj.resolved is not None
+        if hasattr(obj, 'resolved'):
+            return True
+        return False
         
     def get_upvotes(self, obj):
         ret = obj.upvote.filter(is_active=True).count()

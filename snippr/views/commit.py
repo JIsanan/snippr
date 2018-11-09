@@ -165,6 +165,8 @@ class CommitViews(ModelViewSet):
         track = Tracking.objects.filter(pk=request.data['track_id']).first()
         ret['message'] = 'comment does not exist'
         if track:
+            commit.status = 'C'
+            commit.saved()
             track.resolved = commit
             track.save()
             ret['message'] = 'resolved'

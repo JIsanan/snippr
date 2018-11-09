@@ -76,6 +76,7 @@ class FeedbackViews(ViewSet):
         if x.is_valid() is True:
             x.save()
             res['message'] = "Successfully given feedback"
+
         return Response(res)
 
 

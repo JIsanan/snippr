@@ -8,10 +8,10 @@ import App from './components/App.vue';
 require('./stylesheets/index.scss');
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowAltCircleUp, faArrowAltCircleDown, faCommentAlt, faUser, faKey, faWrench, faPlus, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faArrowAltCircleUp, faArrowAltCircleDown, faCommentAlt, faUser, faKey, faWrench, faPlus, faSearch, faStar, faBullhorn} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faArrowAltCircleUp, faArrowAltCircleDown, faCommentAlt, faUser, faKey, faWrench, faPlus, faSearch, faStar);
+library.add(faArrowAltCircleUp, faArrowAltCircleDown, faCommentAlt, faUser, faKey, faWrench, faPlus, faSearch, faStar, faBullhorn);
 
 (async () => {
     router.beforeEach(async (to, from, next) => {

@@ -3,7 +3,10 @@
 		<div class="column is-6 box">
 			<div class="columns is-marginless">
 				<div class="column is-3">
-					<span class="tag is-success is-large">Open</span>
+					<span class="tag is-large" :class="{'is-success': !issue.is_resolved, 'is-light': issue.is_resolved}">
+						<span v-if="!issue.is_resolved">Open</span>
+						<span v-else>Closed</span>
+					</span>
 				</div>
 				<div class="column">
 					<div class="buttons is-right">
@@ -25,7 +28,7 @@
 							/>
 							<div class="media-content">
 								<div class="content">
-									<p class="title is-size-4"><strong>{{ issue.title }}</strong> </p>
+									<p class="title is-size-4"><strong>{{ issue.title }}</strong></p>
 									<p class="subtitle is-size-6">
 										<small>Opened {{ timestamp(issue.date_created) }} by</small>
 										<a><small>{{ issue.username }}</small></a>
@@ -62,7 +65,7 @@
 			<div class="columns is-centered">
 				<div class="column is-11">
 					<div class="content code">
-						<pre class="code-line" v-for="line in issue.snippet.code.split('\n')">
+						<pre class="code-line" v-for="(line, lineIndex) in issue.snippet.code.split('\n')" :key="lineIndex">
 {{ line }}
 						</pre>
 
@@ -74,30 +77,17 @@
 					Answers
 				</div>
 			</div>
-			<div v-for="(comment, commentIndex) in issue.comments" class="comment">
+			<div v-for="(comment, commentIndex) in issue.comments" class="comment" :key="comment.pk">
 				<hr class="is-marginless">
 				<div class="columns is-marginless">
 					<div class="column level is-marginless">
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
-								<button style="margin-bottom: 10px;" class="button is-warning" :class="{'is-outlined': !isResolved(commentIndex)}">
-									<span class="icon">
-										<font-awesome-icon icon="star" />	
-									</span>
-								</button>	
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="arrow-alt-circle-up" />
-											</span>
-									</div>
-									<div class="is-size-5 vote-count">
-											<strong>{{ comment.upvotes }}</strong>
-									</div>
-									<div>
-											<span class="icon">
-												<font-awesome-icon icon="arrow-alt-circle-down" />
-											</span>
-									</div>
+									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-if="showResolveBtn" @click="prompt(comment.pk, commentIndex)">
+										<span class="icon">
+											<font-awesome-icon icon="star" />	
+										</span>
+									</button>	
 								</div>
 								<div class="media-content">
 									<div class="content">
@@ -112,7 +102,7 @@
 											<span class="tag is-light">C++</span> -->
 										</p>
 										<div class="code">
-											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}">
+											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}" :key="lineIndex">
 {{ line }}
 											</pre>
 											<!-- <p class="has-background-link code-line">printf("something");</p>
@@ -153,12 +143,40 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal" :class="{'is-active': isActive}">
+			<div class="modal-background"></div>
+			<div class="modal-content">
+				<div class="card">
+					<header class="card-header">
+						<p class="card-header-title">
+							Confirm
+						</p>
+						<a href="#" class="card-header-icon" aria-label="more options">
+							<span class="icon">
+								<i class="fas fa-angle-down" aria-hidden="true"></i>
+							</span>
+						</a>
+					</header>
+					<div class="card-content">
+						<div class="content">
+							Once marked as resolved, you <strong>cannot undo it</strong>. Are you sure this answer works?
+							
+						</div>
+					</div>
+					<footer class="card-footer">
+						<a href="#" @click="resolveComment" class="card-footer-item">Yes</a>
+						<a href="#" @click="() => { isActive = false; }" class="card-footer-item">Cancel</a>
+					</footer>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import axios from "axios";
 import moment from "moment";
+import { mapGetters } from "vuex";
 
 import FormInput from "../components/_generics/FormInput.vue";
 import VoteButtonSet from "../components/_generics/VoteButtonSet.vue";
@@ -177,7 +195,10 @@ export default {
       searchType: "",
       issue: null,
       relatedIssues: {},
-      hasComments: false
+      hasComments: false,
+      isActive: false,
+      resolvedCommentPk: -1,
+      resolvedCommentIndex: -1
     };
   },
   methods: {
@@ -189,13 +210,50 @@ export default {
     },
     timestamp(date) {
       return moment(date, moment.ISO_8601).fromNow();
-		},
-		isChanged(lineIndex, commentIndex) {
-			return lineIndex in this.issue.comments[commentIndex].line_changed
-		},
-		isResolved(commentIndex) {
-			return true;
-		}
+    },
+    isChanged(lineIndex, commentIndex) {
+      return lineIndex in this.issue.comments[commentIndex].line_changed;
+    },
+    prompt(commentPk, commentIndex) {
+      this.isActive = true;
+      this.resolvedCommentPk = commentPk;
+      this.resolvedCommentIndex = commentIndex;
+    },
+    async resolveComment() {
+      if (this.resolvedCommentPk > -1 && this.resolvedCommentIndex > -1) {
+        let headers = {
+          headers: {
+            AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
+          }
+        };
+
+        let payload = {
+          track_id: this.resolvedCommentPk
+        };
+
+        let response = await axios.post(
+          `http://127.0.0.1:8000/api/commit/${this.issue.pk}/resolve/`,
+          payload,
+          headers
+        );
+
+        if (response.data.message == "resolved") {
+          this.issue.comments[this.resolvedCommentIndex].is_resolved = true;
+        }
+      }
+
+      this.isActive = false;
+    }
+  },
+  computed: {
+    ...mapGetters("auth", ["isLoggedIn", "getUser"]),
+    showResolveBtn() {
+      let ret = false;
+
+      if (this.getUser.username === this.issue.username) ret = true;
+
+      return ret;
+    }
   },
 
   async mounted() {
@@ -208,12 +266,10 @@ export default {
     let response = await axios.get(
       `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
       headers
-		);
-		
+    );
 
     if (response.data.detail != "Not Found.") {
-			this.issue = response.data;
-			console.log(this.issue);
+      this.issue = response.data;
       this.hasComments = this.issue.comments.length == 0 ? false : true;
     }
 
@@ -284,10 +340,10 @@ export default {
 
 .code-line {
   margin-bottom: 0px !important;
-	line-height: normal;
-	padding: 0;
-	/* white-space: nowrap; */
-	overflow: hidden;
+  line-height: normal;
+  padding: 0;
+  /* white-space: nowrap; */
+  overflow: hidden;
 }
 
 .comment {
