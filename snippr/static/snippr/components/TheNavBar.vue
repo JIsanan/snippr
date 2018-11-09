@@ -42,7 +42,7 @@
           
         </div>
         <div class="navbar-item" v-if="isLoggedIn">
-          <router-link :to="{ name: 'feedback' }" class="button is-primary is-outlined is-inverted">
+          <router-link :to="{ name: 'feedback' }" class="button is-dark">
             <span class="icon">
               <font-awesome-icon icon="bullhorn" />
             </span>
