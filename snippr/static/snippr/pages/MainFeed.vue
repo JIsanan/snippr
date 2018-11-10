@@ -89,7 +89,7 @@ export default {
       filterset: {},
       snippets: null,
       register: false,
-      statusFilter: 'O',
+      statusFilter: false,
       languageFilter: 'All',
       hasFilterAll: true,
       openCount: 0,

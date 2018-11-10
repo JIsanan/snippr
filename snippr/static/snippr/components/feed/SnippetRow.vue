@@ -6,7 +6,7 @@
           <div class="level is-marginless">
             <div class="level-item vertical has-text-centered">
               <p class="subheading">
-                <strong>30</strong>
+                <strong>{{ snippet.upvotes }}</strong>
               </p>
               <p class="heading is-marginless">
                 upvotes
@@ -43,11 +43,8 @@
           <span class="icon">
             <font-awesome-icon icon="comment-alt" />
           </span>
-          <span>120</span>
+          <span>{{ snippet.tracking_count }}</span>
         </span>
-        <div class="is-size-6">
-          <small>updated 2 days ago</small>
-        </div>
       </div>
     </div>
   </div>

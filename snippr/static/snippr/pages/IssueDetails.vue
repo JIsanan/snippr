@@ -102,7 +102,7 @@
 											<span class="tag is-light">C++</span> -->
 										</p>
 										<div class="code">
-											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex-1, commentIndex), 'has-text-white': isChanged(lineIndex-1, commentIndex)}" :key="lineIndex">
+											<pre class="code-line" v-for="(line, lineIndex) in comment.code.split('\n')" :class="{'has-background-grey-dark': isChanged(lineIndex, commentIndex), 'has-text-white': isChanged(lineIndex, commentIndex)}" :key="lineIndex">
 {{ line }}
 											</pre>
 											<!-- <p class="has-background-link code-line">printf("something");</p>
@@ -212,7 +212,13 @@ export default {
       return moment(date, moment.ISO_8601).fromNow();
     },
     isChanged(lineIndex, commentIndex) {
-      return lineIndex in this.issue.comments[commentIndex].line_changed;
+      let ctr = 0;
+      for(; ctr < this.issue.comments[commentIndex].line_changed.length; ctr++){
+      	if(this.issue.comments[commentIndex].line_changed[ctr] == lineIndex){
+      		return true;
+      	}
+      }
+      return false;
     },
     prompt(commentPk, commentIndex) {
       this.isActive = true;
