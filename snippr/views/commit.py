@@ -26,7 +26,7 @@ class CommitFilter(filters.FilterSet):
 class CommitViews(ModelViewSet):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = Commit.objects.all().annotate(num_of_upvotes=Count('upvote')).order_by('-num_of_upvotes')
+    queryset = Commit.objects.all().annotate(num_of_upvotes=Count('upvote')).order_by('-num_of_upvotes', '-date_created')
     serializer_class = CommitSerializer
     filterset_class = CommitFilter
     pagination_class = LimitOffsetPagination
