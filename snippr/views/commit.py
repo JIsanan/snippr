@@ -1,4 +1,5 @@
 from django_filters import rest_framework as filters
+from django.db.models import Count
 from rest_framework.viewsets import ViewSet, ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
@@ -25,7 +26,7 @@ class CommitFilter(filters.FilterSet):
 class CommitViews(ModelViewSet):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
-    queryset = Commit.objects.all()
+    queryset = Commit.objects.all().annotate(num_of_upvotes=Count('upvote')).order_by('-num_of_upvotes')
     serializer_class = CommitSerializer
     filterset_class = CommitFilter
     pagination_class = LimitOffsetPagination
