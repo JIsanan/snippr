@@ -50,6 +50,13 @@ class Commit(models.Model):
     status = models.CharField(max_length=1, default=OPEN, choices=STATUS_TAG)
 
 
+class Report(models.Model):
+    user = models.ForeignKey(
+        User, related_name='reports', on_delete=models.CASCADE)
+    commit = models.ForeignKey(
+        Commit, related_name='reports', on_delete=models.CASCADE)
+
+
 class Snippet(models.Model):
     #for status field
     commit = models.ForeignKey(Commit, related_name='snippets', on_delete=models.CASCADE)

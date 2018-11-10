@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
-from snippr.models.commit import Commit, Language, Snippet, Activity
+from snippr.models.commit import Commit, Language, Snippet, Activity, Report
 from snippr.models.tracking import Tracking
 from snippr.serializers.user import UserSerializer
 from snippr.serializers.commit import CommitSerializer, SnippetSerializer, LanguageSerializer, TrackingSerializer
@@ -171,6 +171,14 @@ class CommitViews(ModelViewSet):
             track.save()
             ret['message'] = 'resolved'
         return Response(ret)
+
+    @action(detail=True, methods=['get'])
+    def report(self, request, pk=None):
+        commit = self.get_object()
+        Report.objects.create(commit=commit,user=request.user)
+        ret = {'message': 'successfully reported'}
+        return Response(ret)
+
 
 class LanguageViews(ReadOnlyModelViewSet):
     authentication_classes = (JWTAuthentication,)

@@ -24,11 +24,6 @@
       >
         Submit
     </button>
-     <div class="level">
-      <div class="level-item">
-        <a class="">Forget your password?</a>
-      </div>
-     </div>
     </div>
   </Card>
 </template>

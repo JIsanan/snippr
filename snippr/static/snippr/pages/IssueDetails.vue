@@ -10,7 +10,7 @@
 				</div>
 				<div class="column">
 					<div class="buttons is-right">
-						<router-link :to="{ name: 'createissue' }" class="button is-danger is-outlined">Report Abuse</router-link>
+						<a class="button is-danger is-outlined" @click="promptReport()">Report Abuse</a>
 						<router-link :to="{ name: 'answer', params: {c: issue.snippet.code, id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
 					</div>
 				</div>
@@ -135,9 +135,9 @@
 					<ul class="related-list is-marginless">
 						<li v-for="related in relatedIssues" :key="related.pk">
 							<span class="tag is-primary">{{ related.upvotes }}</span>
-							<a class="is-size-6">
+							<router-link class="is-size-6" :to="{name: 'issue', params: { id: related.pk }}">
 								{{ related.title }}
-							</a>
+							</router-link>
 						</li>
 					</ul>
 				</div>
@@ -170,6 +170,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal" :class="{'is-active': isActiveReport}">
+			<div class="modal-background"></div>
+			<div class="modal-content">
+				<div class="card">
+					<header class="card-header">
+						<p class="card-header-title">
+							Confirm
+						</p>
+						<a href="#" class="card-header-icon" aria-label="more options">
+							<span class="icon">
+								<i class="fas fa-angle-down" aria-hidden="true"></i>
+							</span>
+						</a>
+					</header>
+					<div class="card-content">
+						<div class="content">
+							Are you sure you want to report this?
+							
+						</div>
+					</div>
+					<footer class="card-footer">
+						<a href="#" @click="report" class="card-footer-item">Yes</a>
+						<a href="#" @click="() => { isActiveReport = false; }" class="card-footer-item">Cancel</a>
+					</footer>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -197,6 +224,7 @@ export default {
       relatedIssues: {},
       hasComments: false,
       isActive: false,
+      isActiveReport: false,
       resolvedCommentPk: -1,
       resolvedCommentIndex: -1
     };
@@ -225,6 +253,9 @@ export default {
       this.resolvedCommentPk = commentPk;
       this.resolvedCommentIndex = commentIndex;
     },
+    promptReport() {
+      this.isActiveReport = true;
+    },
     async resolveComment() {
       if (this.resolvedCommentPk > -1 && this.resolvedCommentIndex > -1) {
         let headers = {
@@ -249,6 +280,24 @@ export default {
       }
 
       this.isActive = false;
+    },
+    async report() {
+        let headers = {
+          headers: {
+            AUTHORIZATION: `Bearer ${localStorage.getItem("token")}`
+          }
+        };
+
+        let payload = {
+          track_id: this.resolvedCommentPk
+        };
+
+        let response = await axios.get(
+          `http://127.0.0.1:8000/api/commit/${this.issue.pk}/report/`,
+          headers
+        );
+
+      	this.isActiveReport = false;
     }
   },
   computed: {
