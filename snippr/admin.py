@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models.userprofile import UserProfile
+from .models.userprofile import UserProfile, Feedback
 from .models.commit import Commit, Activity, Language, Snippet
 from .models.tracking import Tracking
 
@@ -17,5 +17,6 @@ admin.site.register(UserProfile)
 admin.site.register(Commit)
 admin.site.register(Snippet, SnippetAdmin)
 admin.site.register(Activity)
+admin.site.register(Feedback)
 admin.site.register(Language, LanguageAdmin)
 admin.site.register(Tracking)

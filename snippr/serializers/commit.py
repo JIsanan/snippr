@@ -83,6 +83,7 @@ class CommitSerializer(serializers.ModelSerializer):
     is_resolved = serializers.SerializerMethodField()
     snippet = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    tracking_count = serializers.SerializerMethodField()
     comments = TrackingSerializer(many=True, read_only=True)
 
     class Meta:
@@ -97,6 +98,7 @@ class CommitSerializer(serializers.ModelSerializer):
             'is_resolved',
             'username',
             'language_name',
+            'tracking_count',
             'language',
             'date_created',
             'title',
@@ -115,6 +117,10 @@ class CommitSerializer(serializers.ModelSerializer):
 
     def get_username(self, obj):
         ret = obj.user.username
+        return ret
+
+    def get_tracking_count(self, obj):
+        ret = obj.comments.all().count()
         return ret
 
     def get_user_id(self, obj):

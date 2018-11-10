@@ -131,7 +131,7 @@ class CommitViews(ModelViewSet):
         tracking_data['snippet'] = commit.snippets.first().pk
         tracking_data['commit'] = commit.pk
         tracking = TrackingSerializer(data=tracking_data)
-        if tracking.is_valid() is True and commit.resolved is None:
+        if tracking.is_valid() is True and not hasattr(commit, 'resolved'):
             track = tracking.save()
             ret['message'] = "successfully commented"
             track = TrackingSerializer(track)
@@ -166,7 +166,7 @@ class CommitViews(ModelViewSet):
         ret['message'] = 'comment does not exist'
         if track:
             commit.status = 'C'
-            commit.saved()
+            commit.save()
             track.resolved = commit
             track.save()
             ret['message'] = 'resolved'
