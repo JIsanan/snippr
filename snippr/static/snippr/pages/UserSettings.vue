@@ -8,10 +8,7 @@
 						<span class="title is-size-4">Manage your Account</span>
 					</p>
 					<p class="subtitle info-description">
-						Lorem ipsum dolor sit amet, 
-						consectetur adipiscing elit. Nam massa nibh, ullamcorper eget 
-						tortor non, blandit congue massa. Donec fermentum lobortis 
-						tempus.
+						Change your personal information and account credentials here.
 					</p>
 				</div>
 				</div>
