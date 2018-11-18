@@ -52,8 +52,14 @@ class RegistrationViews(ViewSet):
 
     def create(self, request):
         obj = request.data
-        x = user.RegisterSerializer(data=obj)
+        if_exists = User.objects.filter(email=request.data['email']).first()
         res = {"message": "Please input correct credentials", }
+        if if_exists:
+            res['message'] = []
+            res['message'].append('Email has already been taken')
+            res['status'] = status.HTTP_400_BAD_REQUEST
+            return Response(res)
+        x = user.RegisterSerializer(data=obj)
         if x.is_valid() is True:
             x.save()
             res['message'] = "Successfully registered"
