@@ -3,12 +3,17 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth.models import User
 from snippr.models.userprofile import UserProfile, Feedback
+from snippr.models.tracking import Tracking
+from snippr.serializers.commit import CommitSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.utils.six import text_type
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     issue_count = serializers.SerializerMethodField()
+    issues = serializers.SerializerMethodField()
+    comment_count = serializers.SerializerMethodField()
+    resolved_count = serializers.SerializerMethodField()
     id = serializers.SerializerMethodField()
 
     class Meta:
@@ -18,12 +23,28 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'first_name',
             'last_name',
             'email',
+            'issues',
             'issue_count',
+            'comment_count',
+            'resolved_count',
             'id'
         )
 
     def get_issue_count(self, obj):
         ret = obj.commits.count()
+        return ret
+
+    def get_issues(self, obj):
+        commits = obj.commits.order_by('-id')[:10]
+        ret = CommitSerializer(commits, many=True)
+        return ret.data
+
+    def get_comment_count(self, obj):
+        ret = obj.comments.count()
+        return ret
+
+    def get_resolved_count(self, obj):
+        ret = Tracking.objects.filter(user=obj).exclude(resolved__isnull=True).count()
         return ret
 
     def get_id(self, obj):

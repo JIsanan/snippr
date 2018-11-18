@@ -68,7 +68,7 @@ export default {
         }
       };
 
-      let response = await axios.post('http://127.0.0.1:8000/api/feedback/', payload, headers);
+      let response = await axios.post('https://1b7c4ba8.ngrok.io/api/feedback/', payload, headers);
       console.log(response);
     },
 

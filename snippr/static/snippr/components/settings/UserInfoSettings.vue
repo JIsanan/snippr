@@ -126,7 +126,7 @@
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         };
-        let query = 'http://127.0.0.1:8000/api/users/'
+        let query = 'https://1b7c4ba8.ngrok.io/api/users/'
         let response = await axios.patch(query, ret, headers);
         if(response) {
           this.messageUpdate = "Successfully Updated"

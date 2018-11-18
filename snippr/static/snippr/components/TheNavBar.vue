@@ -46,6 +46,7 @@
             <span class="icon">
               <font-awesome-icon icon="bullhorn" />
             </span>
+            <span>Leave a feedback?</span>
           </router-link>
         </div>
       <div 

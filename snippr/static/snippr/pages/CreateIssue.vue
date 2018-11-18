@@ -108,7 +108,7 @@ export default {
         }
       };
 
-      let response = await axios.post('http://127.0.0.1:8000/api/commit/', payload, headers);
+      let response = await axios.post('https://1b7c4ba8.ngrok.io/api/commit/', payload, headers);
 
       if(response.data.message === "successfully created") {
         this.$router.push({ 

@@ -52,7 +52,7 @@ export default {
       };
 
       let response = await axios.post(
-        `http://127.0.0.1:8000/api/commit/${this.$route.params.id}/comment/`,
+        `https://1b7c4ba8.ngrok.io/api/commit/${this.$route.params.id}/comment/`,
         payload,
         headers
       );

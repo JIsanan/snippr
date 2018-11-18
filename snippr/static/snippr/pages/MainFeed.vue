@@ -123,7 +123,7 @@ export default {
       }
     };
     let languageFilter = null
-    let query = 'http://127.0.0.1:8000/api/commit' 
+    let query = 'https://1b7c4ba8.ngrok.io/api/commit' 
     let route = this.$route.query
     if(route.filter || route.status || route.title){
     	query = query + '?'

@@ -53,7 +53,7 @@ export default {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       }
-      let query = `http://127.0.0.1:8000/api/commit/${this.issueId}/upvote/`
+      let query = `https://1b7c4ba8.ngrok.io/api/commit/${this.issueId}/upvote/`
       let response = await axios.get(query, headers);
       this.hasUpvoted = response.upvote;
       this.hasDownvoted = response.downvote;
@@ -65,7 +65,7 @@ export default {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       }
-      let query = `http://127.0.0.1:8000/api/commit/${this.issueId}/downvote/`
+      let query = `https://1b7c4ba8.ngrok.io/api/commit/${this.issueId}/downvote/`
       let response = await axios.get(query, headers);
       this.hasUpvoted = response.upvote;
       this.hasDownvoted = response.downvote;
@@ -79,7 +79,7 @@ export default {
       }
     };
     let languageFilter = this.languageFilter
-    let query = 'http://127.0.0.1:8000/api/language/'
+    let query = 'https://1b7c4ba8.ngrok.io/api/language/'
     let response = await axios.get(query, headers);
     this.languages = response;
   }

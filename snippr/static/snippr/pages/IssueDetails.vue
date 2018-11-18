@@ -11,7 +11,7 @@
 				<div class="column">
 					<div class="buttons is-right">
 						<a class="button is-danger is-outlined" @click="promptReport()">Report Abuse</a>
-						<router-link :to="{ name: 'answer', params: {c: issue.snippet.code, id: this.$route.params.id}}" class="button is-success is-outlined">Answer</router-link>
+						<router-link :to="{ name: 'answer', params: {c: issue.snippet.code, id: this.$route.params.id}}" class="button is-success is-outlined" v-if="!issue.is_resolved">Answer</router-link>
 					</div>
 				</div>
 			</div>
@@ -84,6 +84,11 @@
 							<article class="media flex-vertical-center">
 								<div class="media-left has-text-centered">
 									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-if="showResolveBtn" @click="prompt(comment.pk, commentIndex)">
+										<span class="icon">
+											<font-awesome-icon icon="star" />	
+										</span>
+									</button>	
+									<button class="button is-success" :class="{'is-outlined': !comment.is_resolved}" v-else-if="comment.is_resolved">
 										<span class="icon">
 											<font-awesome-icon icon="star" />	
 										</span>
@@ -269,7 +274,7 @@ export default {
         };
 
         let response = await axios.post(
-          `http://127.0.0.1:8000/api/commit/${this.issue.pk}/resolve/`,
+          `https://1b7c4ba8.ngrok.io/api/commit/${this.issue.pk}/resolve/`,
           payload,
           headers
         );
@@ -293,7 +298,7 @@ export default {
         };
 
         let response = await axios.get(
-          `http://127.0.0.1:8000/api/commit/${this.issue.pk}/report/`,
+          `https://1b7c4ba8.ngrok.io/api/commit/${this.issue.pk}/report/`,
           headers
         );
 
@@ -319,7 +324,7 @@ export default {
     };
 
     let response = await axios.get(
-      `http://127.0.0.1:8000/api/commit/${this.$route.params.id}`,
+      `https://1b7c4ba8.ngrok.io/api/commit/${this.$route.params.id}`,
       headers
     );
 
@@ -329,7 +334,7 @@ export default {
     }
 
     response = await axios.get(
-      `http://127.0.0.1:8000/api/commit?limit=5&language=${
+      `https://1b7c4ba8.ngrok.io/api/commit?limit=5&language=${
         this.issue.language_name
       }`,
       headers

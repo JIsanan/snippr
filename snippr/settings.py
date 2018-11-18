@@ -159,7 +159,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = os.environ.get('STATIC_URL', 'http://localhost:9001/')
+STATIC_URL = os.environ.get('STATIC_URL', 'https://frugi.serveo.net/')
 
 STATIC_ROOT = 'static-root'
 

@@ -20,7 +20,7 @@ const actions = {
         'AUTHORIZATION': `Bearer ${localStorage.getItem('token')}`
       }
     };
-    return axios.get(`http://127.0.0.1:8000/api/users/${data}`, headers).then(response => {
+    return axios.get(`https://1b7c4ba8.ngrok.io/api/users/${data}`, headers).then(response => {
       return response;
     }).catch(response => {
       console.error(response);
