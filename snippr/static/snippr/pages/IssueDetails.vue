@@ -31,7 +31,7 @@
 									<p class="title is-size-4"><strong>{{ issue.title }}</strong></p>
 									<p class="subtitle is-size-6">
 										<small>Opened {{ timestamp(issue.date_created) }} by</small>
-										<a><small>{{ issue.username }}</small></a>
+										<router-link :to="{name:'user', params: {id:issue.user_id} }"><small>{{ issue.username }}</small></router-link>
 										<span class="tag is-light">{{ issue.language_name }}</span>
 									</p>
 								</div>
@@ -101,7 +101,7 @@
 										</p>
 										<p class="subtitle">
 											<small>Answered {{ timestamp(comment.date_created) }} by</small>
-											<a><small>{{ comment.username }}</small></a>
+											<router-link :to="{name:'user', params: {id:comment.user_id} }"><small>{{ comment.username }}</small></router-link>
 											<!-- <span class="tag is-light">Java</span>
 											<span class="tag is-light">C#</span>
 											<span class="tag is-light">C++</span> -->
