@@ -70,6 +70,9 @@ export default {
 
       let response = await axios.post('https://1b7c4ba8.ngrok.io/api/feedback/', payload, headers);
       console.log(response);
+        this.$router.push({ 
+          name: 'feed',
+        });
     },
 
     selectLanguage(value){
