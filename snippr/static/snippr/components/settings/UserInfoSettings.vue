@@ -128,6 +128,7 @@
         let response = await axios.patch(query, ret, headers);
         if(response) {
           this.messageUpdate = "Successfully Updated"
+          this.$store.dispatch('auth/getProfile');
         }
       },
       setData(data){
