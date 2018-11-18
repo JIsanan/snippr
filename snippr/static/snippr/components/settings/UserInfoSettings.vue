@@ -9,9 +9,7 @@
           Personal Information
         </p>
         <p class="subtitle info-description">
-          Lorem ipsum dolor sit amet, 
-          consectetur adipiscing elit. Nam massa nibh, ullamcorper eget 
-          tortor non, blandit congue massa.
+          You can change your personal information using this module.
         </p>
       </div>
     </div>
