@@ -30,6 +30,11 @@ class UserViews(ViewSet):
     def patch(self, request, pk=None):
         user_obj = request.user
         res = {"message": "Please input correct credentials", }
+        if 'password' in request.data:
+            res['message'] = "Successfully updated"
+            request.user.set_password(request.data['password'])
+            request.user.save()
+            return Response(res)
         if(user_obj):
             serializer = user.UserSerializer(user_obj, data=request.data, partial=True)
             if(serializer.is_valid()):
