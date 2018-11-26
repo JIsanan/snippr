@@ -10,7 +10,7 @@ class Tracking(models.Model):
         User, related_name='comments', on_delete=models.CASCADE)
     commit = models.ForeignKey(Commit, related_name='comments', on_delete=models.CASCADE)
     snippet = models.ForeignKey(Snippet, related_name='comments', on_delete=models.CASCADE)
-    code = models.CharField(max_length=100)
+    code = models.CharField(max_length=1000)
     description = models.CharField(max_length=500)
     upvote = GenericRelation(Activity)
     resolved = models.OneToOneField(

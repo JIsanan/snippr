@@ -1,7 +1,7 @@
 import path from 'path';
 import VueLoaderPlugin from 'vue-loader/lib/plugin';
 
-const STATIC_URL = process.env.STATIC_URL || 'https://frugi.serveo.net/';
+const STATIC_URL = process.env.STATIC_URL || 'https://nota.serveo.net/';
 
 export default {
     entry: [

@@ -60,7 +60,7 @@ class Report(models.Model):
 class Snippet(models.Model):
     #for status field
     commit = models.ForeignKey(Commit, related_name='snippets', on_delete=models.CASCADE)
-    code = models.CharField(max_length=500)
+    code = models.CharField(max_length=1000)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

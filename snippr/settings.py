@@ -119,7 +119,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 1000
 }
 
 
@@ -159,7 +159,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = os.environ.get('STATIC_URL', 'https://frugi.serveo.net/')
+STATIC_URL = os.environ.get('STATIC_URL', 'https://nota.serveo.net/')
 
 STATIC_ROOT = 'static-root'
 
