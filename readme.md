@@ -1,5 +1,7 @@
 # Snippr
 
+Snippr is a web-application done in Django and Vue.js. It mimics github but it forces the users to upload code as well and the users who'll comment on the issue are forced to change the code of the user. It highlights the changes in the user's code via the snipprcomparison package.
+https://github.com/Zeshiba/snipprcomparison
 
 ## Requirements
 
